@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementação Projeto de Primeira — METRIK Instituto</title>
+<link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<style>
+/* ============================================
+   LANDING v3 — DESIGN REVIEW APPLIED
+   UI/UX Pro Max checklist:
+   ✓ No emojis as icons → SVG Lucide
+   ✓ Sections have min-height → no "striped" effect
+   ✓ Images have aspect-ratio → no layout shift
+   ✓ Split images fixed height → consistent blocks
+   ✓ Alternating backgrounds → clear section separation
+   ✓ cursor-pointer on clickable
+   ✓ 44px min touch targets
+   ✓ prefers-reduced-motion
+   ✓ Responsive: 375, 768, 1024, 1440
+   ============================================ */
+
+:root {
+  --black: #1E1E1E;
+  --graphite: #3D3D3A;
+  --g700: #5F5E5A;
+  --g500: #888780;
+  --g300: #B4B2A9;
+  --g100: #D3D1C7;
+  --offwhite: #F5F4F0;
+  --white: #FFFFFF;
+  --dark: #1A1A1A;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: hidden; }
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  color: var(--black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+.fm { font-family: 'Maven Pro', sans-serif; }
+.fs { font-family: 'DM Serif Display', Georgia, serif; }
+img { max-width: 100%; height: auto; display: block; }
+a { cursor: pointer; }
+button { cursor: pointer; }
+
+/* GSAP visibility */
+.gs { visibility: hidden; }
+
+/* ================================
+   NAV
+   ================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(211,209,199,0.25);
+  will-change: transform;
+}
+.nav-in {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px;
+}
+.nav-logo {
+  font-family: 'Maven Pro'; font-weight: 700; font-size: 18px;
+  color: var(--black); letter-spacing: -0.01em;
+}
+.nav-logo span { font-weight: 300; color: var(--g500); margin-left: 4px; }
+.nav-cta {
+  display: none; padding: 12px 28px;
+  background: var(--black); color: #fff;
+  font-family: 'Maven Pro'; font-weight: 600; font-size: 13px;
+  letter-spacing: 0.05em; border: none; text-decoration: none;
+  transition: background 0.3s; min-height: 44px;
+  align-items: center;
+}
+.nav-cta:hover { background: var(--graphite); }
+@media(min-width:768px) { .nav-cta { display: inline-flex; } }
+.progress-bar {
+  height: 2px; background: var(--black);
+  width: 0%; transform-origin: left;
+}
+
+/* ================================
+   GRAIN TEXTURE
+   ================================ */
+.grain {
+  position: absolute; inset: 0; opacity: 0.03; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ================================
+   SVG ICONS (replace emojis)
+   ================================ */
+.icon {
+  width: 24px; height: 24px; flex-shrink: 0;
+  stroke: var(--black); stroke-width: 1.5;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+.icon-lg { width: 32px; height: 32px; }
+.icon-light { stroke: var(--g300); }
+
+/* ================================
+   SECTIONS — CONSISTENT SPACING
+   Every section has min-height to
+   prevent "striped" appearance
+   ================================ */
+section {
+  position: relative;
+  overflow: hidden;
+}
+.sec {
+  padding: 96px 24px;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+.sec-short {
+  padding: 80px 24px;
+  min-height: auto;
+}
+@media(min-width:768px) {
+  .sec { padding: 120px 48px; }
+  .sec-short { padding: 96px 48px; }
+}
+@media(min-width:1024px) {
+  .sec { padding: 140px 64px; }
+}
+
+.si { max-width: 1100px; margin: 0 auto; width: 100%; }
+.sn { max-width: 700px; margin: 0 auto; width: 100%; }
+.tc { text-align: center; }
+
+/* Alternating backgrounds */
+.bg-w { background: var(--white); }
+.bg-o { background: var(--offwhite); }
+.bg-d { background: var(--dark); color: var(--offwhite); }
+
+/* ================================
+   LABEL / TAG
+   ================================ */
+.label {
+  font-family: 'Maven Pro'; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--g500);
+}
+.tag {
+  display: inline-block; padding: 6px 18px;
+  border: 1px solid var(--g300); border-radius: 999px;
+  font-family: 'Maven Pro'; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--g500);
+}
+.tag-strong { border-color: var(--black); color: var(--black); font-weight: 600; }
+
+/* ================================
+   HERO — Full viewport
+   ================================ */
+.hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: var(--dark);
+}
+.hero-bg {
+  display: none;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; max-width: 760px;
+  padding: 100px 24px 60px;
+}
+.hero-logo {
+  font-family: 'Maven Pro'; font-weight: 800;
+  font-size: clamp(11px, 1.5vw, 14px);
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 48px;
+}
+.hero-promise {
+  font-family: 'Maven Pro'; font-weight: 700;
+  font-size: clamp(26px, 5vw, 48px);
+  line-height: 1.15; color: #fff;
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  margin-top: 28px;
+  font-size: clamp(13px, 1.8vw, 17px);
+  color: rgba(255,255,255,0.45);
+  font-weight: 400; letter-spacing: 0.08em;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 48px; padding: 18px 48px;
+  background: #fff; color: var(--black);
+  font-family: 'Maven Pro'; font-weight: 700; font-size: 14px;
+  letter-spacing: 0.06em; text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+  min-height: 56px;
+}
+.hero-cta:hover { background: var(--offwhite); transform: translateY(-1px); }
+
+.scroll-ind {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  width: 22px; height: 36px; border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 999px; display: flex; justify-content: center; padding-top: 8px;
+}
+.scroll-dot {
+  width: 3px; height: 8px; background: rgba(255,255,255,0.4);
+  border-radius: 2px; animation: sb 2s infinite;
+}
+@keyframes sb { 0%,100%{transform:translateY(0);opacity:.4} 50%{transform:translateY(10px);opacity:.8} }
+
+/* ================================
+   FULLBLEED SECTIONS
+   ================================ */
+.fullbleed {
+  position: relative;
+  min-height: 80vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.fullbleed-bg {
+  position: absolute; inset: 0;
+}
+.fullbleed-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; filter: saturate(0.8);
+}
+.fullbleed-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,26,26,0.5) 0%, rgba(26,26,26,0.8) 100%);
+}
+.fullbleed-content {
+  position: relative; z-index: 2;
+  padding: 100px 24px;
+  max-width: 680px; text-align: center;
+}
+
+/* ================================
+   SPLIT LAYOUT
+   Images always have fixed aspect ratio
+   ================================ */
+.split {
+  display: flex; flex-direction: column;
+  gap: 40px; align-items: stretch;
+}
+@media(min-width:768px) {
+  .split { flex-direction: row; gap: 64px; align-items: center; }
+}
+.split-img {
+  flex: 1; border-radius: 6px; overflow: hidden;
+}
+.split-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; filter: saturate(0.85);
+  aspect-ratio: 4/3;
+}
+@media(min-width:768px) {
+  .split-img img { aspect-ratio: 3/2; min-height: 360px; }
+}
+.split-text { flex: 1; }
+.split-reverse { flex-direction: column; }
+@media(min-width:768px) { .split-reverse { flex-direction: row-reverse; } }
+
+/* ================================
+   PILARES + G4
+   ================================ */
+.pilares-section {
+  padding: 120px 24px 100px;
+  min-height: auto;
+}
+@media(min-width:768px) { .pilares-section { padding: 160px 48px 120px; } }
+
+.pilares-title {
+  font-family: 'Maven Pro'; font-weight: 800;
+  font-size: clamp(18px, 3.5vw, 32px);
+  text-align: center; color: var(--black);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.pilares-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 24px; margin-top: 56px;
+  position: relative; z-index: 2;
+}
+@media(min-width:768px) { .pilares-grid { grid-template-columns: repeat(3,1fr); gap: 28px; } }
+
+.pilar-col-title {
+  font-family: 'Maven Pro';
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 600; color: var(--graphite);
+  text-align: center; margin-bottom: 16px;
+  min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1.3;
+}
+.pilar-card {
+  background: var(--white); border-radius: 8px;
+  padding: 32px 24px;
+  border: 1px solid var(--g100);
+  display: flex; flex-direction: column; gap: 12px;
+  height: 100%;
+}
+.pilar-card-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--offwhite); border-radius: 8px;
+  margin-bottom: 4px;
+}
+.pilar-label {
+  font-family: 'Maven Pro'; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--g500);
+}
+.pilar-name {
+  font-family: 'Maven Pro'; font-size: 18px;
+  font-weight: 700; color: var(--black);
+}
+.pilar-desc {
+  font-size: 14px; line-height: 1.65; color: var(--g700);
+}
+.pilar-hl {
+  font-size: 13px; font-weight: 600;
+  color: var(--graphite); font-style: italic;
+  margin-top: auto;
+}
+
+.g4-wrap {
+  margin-top: -12px; position: relative; z-index: 1;
+  padding: 0 4px;
+}
+@media(min-width:768px) { .g4-wrap { margin-top: -28px; } }
+
+/* ================================
+   CHECKLIST (SVG checks, not emoji)
+   ================================ */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.checklist li {
+  display: flex; align-items: flex-start;
+  gap: 14px; font-size: 16px;
+  color: var(--graphite); line-height: 1.5;
+}
+.chk {
+  flex-shrink: 0; width: 24px; height: 24px;
+  border: 2px solid var(--black); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.chk svg {
+  width: 12px; height: 12px;
+  stroke: var(--black); stroke-width: 2.5;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+.chk-l { border-color: var(--g300); }
+.chk-l svg { stroke: var(--g300); }
+
+/* ================================
+   STATS
+   ================================ */
+.stats {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 32px;
+}
+@media(min-width:768px) { .stats { grid-template-columns: repeat(4,1fr); } }
+.stat-n {
+  font-family: 'Maven Pro'; font-weight: 800;
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--black);
+}
+.stat-l { font-size: 13px; color: var(--g500); margin-top: 6px; }
+
+/* ================================
+   CREDENTIALS
+   ================================ */
+.cred {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 0; font-size: 15px; color: var(--graphite);
+  border-bottom: 1px solid rgba(211,209,199,0.4);
+}
+.cred:last-child { border-bottom: none; }
+.cred-i {
+  flex-shrink: 0; width: 40px; height: 40px;
+  background: var(--white); border: 1px solid var(--g100);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cred-i svg { width: 20px; height: 20px; stroke: var(--graphite); stroke-width: 1.5; fill: none; }
+
+/* ================================
+   TESTIMONIALS
+   ================================ */
+.tg { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media(min-width:768px) { .tg { grid-template-columns: repeat(2,1fr); } }
+.tc-card {
+  background: var(--white); border-radius: 8px;
+  padding: 32px; display: flex; flex-direction: column;
+  gap: 14px; border: 1px solid var(--g100);
+}
+.tc-qm {
+  font-family: 'DM Serif Display'; font-size: 48px;
+  color: var(--g100); line-height: 0.8; user-select: none;
+}
+.tc-qt {
+  font-family: 'DM Serif Display'; font-style: italic;
+  font-size: 16px; color: var(--graphite);
+  line-height: 1.5; flex: 1;
+}
+.tc-nm {
+  font-family: 'Maven Pro'; font-weight: 600;
+  font-size: 13px; color: var(--black);
+  border-top: 1px solid var(--g100); padding-top: 14px;
+}
+.tc-cta {
+  font-family: 'Maven Pro'; font-weight: 700;
+  font-size: 15px; color: var(--black);
+}
+
+/* ================================
+   PRICE TABLE
+   ================================ */
+.pr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--g100); gap: 20px;
+}
+.pr:last-child { border-bottom: none; }
+.pr-i { font-size: 14px; color: var(--g700); line-height: 1.5; flex: 1; }
+.pr-v {
+  font-family: 'Maven Pro'; font-weight: 600;
+  color: var(--g300); text-decoration: line-through;
+  font-size: 15px; white-space: nowrap;
+}
+.pr-total {
+  background: var(--black); border-radius: 8px;
+  padding: 20px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 20px;
+}
+
+.big-price {
+  font-family: 'Maven Pro'; font-weight: 800;
+  font-size: clamp(36px, 7vw, 76px);
+  color: var(--black); line-height: 1;
+}
+
+/* ================================
+   ROI
+   ================================ */
+.roi-g { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media(min-width:768px) { .roi-g { grid-template-columns: repeat(3,1fr); } }
+.roi-c {
+  border: 1px solid var(--g100); border-radius: 8px;
+  padding: 32px 24px; text-align: center;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--white);
+}
+.roi-icon {
+  width: 48px; height: 48px; margin: 0 auto;
+  background: var(--offwhite); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.roi-icon svg { width: 24px; height: 24px; stroke: var(--black); stroke-width: 1.5; fill: none; }
+
+/* ================================
+   CTA BUTTONS
+   ================================ */
+.cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 18px 48px; min-height: 56px;
+  background: var(--black); color: #fff;
+  font-family: 'Maven Pro'; font-weight: 700;
+  font-size: 14px; letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+}
+.cta:hover { background: var(--graphite); transform: translateY(-1px); }
+.cta-w { background: #fff; color: var(--black); }
+.cta-w:hover { background: var(--offwhite); }
+
+/* ================================
+   FAQ
+   ================================ */
+details { border-bottom: 1px solid var(--g100); }
+details summary {
+  padding: 20px 0; cursor: pointer; list-style: none;
+  font-family: 'Maven Pro'; font-weight: 600;
+  font-size: 16px; color: var(--black);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; min-height: 60px;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: '+'; font-size: 24px; font-weight: 300;
+  color: var(--g300); transition: transform 0.3s;
+  flex-shrink: 0;
+}
+details[open] summary::after { transform: rotate(45deg); }
+details p {
+  padding: 0 0 20px; font-size: 15px;
+  color: var(--g700); line-height: 1.7;
+  max-width: 600px;
+}
+
+/* ================================
+   MOBILE CTA
+   ================================ */
+.mob-cta {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--g100);
+  transform: translateY(100%);
+  will-change: transform;
+}
+@media(min-width:768px) { .mob-cta { display: none !important; } }
+.mob-cta a {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 16px;
+  background: var(--black); color: #fff;
+  font-family: 'Maven Pro'; font-weight: 700;
+  font-size: 14px; text-decoration: none;
+  letter-spacing: 0.05em; min-height: 52px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--dark); padding: 40px 24px; text-align: center;
+}
+footer p {
+  font-family: 'Maven Pro'; font-size: 11px;
+  color: var(--g500); letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Entregáveis grid responsive */
+@media(max-width:767px) {
+  #entregaveis [style*="grid-template-columns: 1fr 1fr"],
+  #entregaveis [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Safe area for mobile CTA */
+@media(max-width:767px) { body { padding-bottom: 20px; } }
+
+/* Reduced motion */
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG sprite for icons (hidden) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-graduation" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1ZM7 21h10M12 3v18M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
+  <symbol id="i-trending" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+</svg>
+
+<!-- PROGRESS BAR ONLY (no nav) -->
+<div id="navbar" style="position:fixed;top:0;left:0;right:0;z-index:100;pointer-events:none">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- ============================== -->
+<!-- 1. HERO                        -->
+<!-- ============================== -->
+<section class="hero" id="hero">
+  <div class="grain"></div>
+  <div class="hero-content">
+    <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs" id="h-logo" style="max-width:clamp(200px,40vw,400px);margin:0 auto 40px;opacity:0.9">
+    <h1 class="hero-promise gs" id="h-promise">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</h1>
+    <p class="gs" id="h-sub" style="margin-top:24px;font-size:clamp(15px,2.2vw,20px);color:rgba(255,255,255,0.7);font-weight:300;line-height:1.5;max-width:620px;margin-left:auto;margin-right:auto">Implemente o processo de projeto profissional que dá clareza, direção e velocidade ao seu trabalho — com acompanhamento semanal.</p>
+    <div class="gs" id="h-pillars" style="display:flex;flex-direction:column;gap:12px;margin-top:36px;max-width:560px;margin-left:auto;margin-right:auto">
+      <div style="display:flex;gap:12px">
+        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">Acompanhamento semanal</span>
+        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">Processo profissional</span>
+        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">IA para acelerar</span>
+      </div>
+    </div>
+    <!-- CTA removido — modo apresentação -->
+  </div>
+  <div class="scroll-ind"><div class="scroll-dot"></div></div>
+</section>
+
+<!-- ============================== -->
+<!-- 2. PROBLEMA                    -->
+<!-- ============================== -->
+<section class="fullbleed" id="antes-depois">
+  <div class="fullbleed-bg"><img src="img/chaos_vs._order.png" alt="Do caos à ordem" loading="lazy"></div>
+  <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,0.75) 0%,rgba(26,26,26,0.95) 100%)"></div>
+  <div class="fullbleed-content">
+    <p class="gs label" style="color:var(--g300);margin-bottom:20px">O QUE REALMENTE TRAVA O SEU CRESCIMENTO</p>
+    <p class="gs fm" style="font-size:clamp(24px,4.5vw,40px);font-weight:700;color:#fff;line-height:1.2">Os projetos saem, mas os bastidores continuam uma bagunça.</p>
+    <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g100);line-height:1.6;margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto">Você trabalha 10, 12 horas por dia — e ainda assim sente que está sempre correndo, sempre apagando incêndio.</p>
+    <p class="gs fm" style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-top:28px">O problema não é falta de talento. É falta de processo.</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 3. ESPELHO DA DOR              -->
+<!-- ============================== -->
+<section class="sec bg-w" id="espelho-dor">
+  <div class="sn tc" style="margin:0 auto">
+    <p class="gs label" style="margin-bottom:32px">124 PROFISSIONAIS RESPONDERAM. ISSO PARECE FAMILIAR?</p>
+
+    <!-- Stats reais do diagnóstico -->
+    <div class="gs" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:480px;margin:0 auto 40px">
+      <div style="text-align:center;padding:20px;background:var(--offwhite);border-radius:8px">
+        <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">82%</p>
+        <p style="font-size:12px;color:var(--g500);margin-top:4px">"Sei o que fazer, mas não executo"</p>
+      </div>
+      <div style="text-align:center;padding:20px;background:var(--offwhite);border-radius:8px">
+        <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">92%</p>
+        <p style="font-size:12px;color:var(--g500);margin-top:4px">se sentem sozinhos na gestão</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:24px;text-align:left;max-width:560px;margin:0 auto">
+      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Quem faz tudo não tá fazendo nada. Atendo cliente, equipe, fornecedor, obra, criativo, operacional, prospecção, DP, RH..."</p>
+      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Não contrato porque não tenho como ensinar alguém. O prazo do projeto já está correndo."</p>
+      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Tenho muitos cursos, muitos materiais — e tudo solto. Minha mente não se organiza."</p>
+    </div>
+    <p class="gs" style="margin-top:40px;font-size:clamp(14px,2vw,16px);color:var(--g500);line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto">Não importa se você está começando agora ou se já tem 10 anos de escritório. Sem processo, o resultado é o mesmo: trabalhar demais e sentir que nunca dá conta.</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 3b. PARA QUEM É                -->
+<!-- ============================== -->
+<section class="sec-short bg-o" style="padding:80px 24px" id="para-quem">
+  <div class="si">
+    <p class="gs label tc" style="margin-bottom:40px">PARA QUEM É A IMPLEMENTAÇÃO</p>
+    <div style="display:grid;grid-template-columns:1fr;gap:20px;max-width:900px;margin:0 auto">
+      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
+        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-users"/></svg>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem projeta sozinho</strong> e quer parar de centralizar tudo — para montar processos que permitam delegar sem perder qualidade.</p>
+      </div>
+      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
+        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-award"/></svg>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem já tem experiência</strong> mas sente que os bastidores do escritório não acompanham a qualidade dos projetos que entrega.</p>
+      </div>
+      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
+        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-book"/></svg>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem está começando</strong> e quer construir o escritório já com a estrutura certa — para nunca precisar passar pelo caos que a maioria enfrenta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 4. PONTE                       -->
+<!-- ============================== -->
+<section class="sec bg-o" id="ponte">
+  <div class="sn tc" style="margin:0 auto">
+    <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:300;color:var(--graphite);line-height:1.25">Existe um jeito de sair desse ciclo.</p>
+    <p class="gs" style="font-size:clamp(15px,2vw,17px);color:var(--g500);margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">Não é mais conteúdo. É um sistema de implementação que se instala em 6 semanas — com alguém do lado te guiando.</p>
+    <div style="display:flex;flex-direction:column;gap:28px;align-items:center;margin-top:52px" id="bridge-items">
+      <div class="gs" style="text-align:center">
+        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">Acompanhamento semanal</p>
+        <p style="font-size:14px;color:var(--g500);margin-top:6px">Encontros em grupo com o Rodrigo, toda semana</p>
+      </div>
+      <div style="width:40px;height:1px;background:var(--g300)"></div>
+      <div class="gs" style="text-align:center">
+        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">Processo de projeto profissional</p>
+        <p style="font-size:14px;color:var(--g500);margin-top:6px">Método patenteado, do contrato aos executivos</p>
+      </div>
+      <div style="width:40px;height:1px;background:var(--g300)"></div>
+      <div class="gs" style="text-align:center">
+        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">IA para acelerar com qualidade</p>
+        <p style="font-size:14px;color:var(--g500);margin-top:6px">Aprenda a usar e receba ferramentas prontas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 5. REVELAÇÃO                   -->
+<!-- ============================== -->
+<section class="bg-d" style="min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative" id="reveal-pin">
+  <div class="grain"></div>
+  <div style="position:relative;z-index:1;text-align:center;padding:24px">
+    <div id="reveal-clip" style="clip-path:inset(50% 0);will-change:clip-path">
+      <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" style="max-width:clamp(240px,45vw,480px);margin:0 auto 32px;opacity:0.95">
+    </div>
+    <p class="gs fm" id="reveal-h1" style="font-weight:600;font-size:clamp(18px,3vw,26px);color:var(--g100);line-height:1.35;max-width:520px;margin:32px auto 0">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</p>
+    <p class="gs" id="reveal-desc" style="color:var(--g500);font-size:clamp(14px,1.8vw,17px);max-width:520px;margin:24px auto 0;line-height:1.6">Acompanhamento semanal · Processo de projeto profissional · IA para acelerar com qualidade</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 6. POSICIONAMENTO              -->
+<!-- ============================== -->
+<section class="sec bg-w" id="posicionamento">
+  <div class="sn tc" style="margin:0 auto">
+    <p class="gs fm" style="font-size:clamp(22px,4vw,32px);font-weight:600;line-height:1.3">Não é mais curso para assistir <span style="text-decoration:line-through;color:var(--g300)">quando sobrar tempo</span> <span style="color:var(--g500);font-weight:400;font-size:clamp(16px,2.5vw,22px)">(que nunca sobra).</span></p>
+    <p class="gs fm" style="font-size:clamp(22px,4vw,32px);font-weight:600;line-height:1.3;margin-top:20px">É alguém te guiando exatamente o que fazer: <span style="font-weight:800">clareza, direção e velocidade.</span></p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 7. PILARES + G4                -->
+<!-- ============================== -->
+<section class="bg-o" id="pilares" style="padding:0;min-height:auto">
+  <div class="si" style="padding:120px 24px 100px;position:relative">
+    <p class="gs pilares-title">OS 3 PILARES DA IMPLEMENTAÇÃO PROJETO DE PRIMEIRA</p>
+    <div class="pilares-grid">
+      <div class="gs" id="pilar-col-1">
+        <p class="pilar-col-title">Conquiste seu tempo de volta</p>
+        <div class="pilar-card">
+          <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-users"/></svg></div>
+          <p class="pilar-label">PILAR 1 — ACOMPANHAMENTO</p>
+          <p class="pilar-name">Desafio de Implementação</p>
+          <p class="pilar-desc">6 semanas de acompanhamento no WhatsApp enquanto você implementa os processos do PDP. Encontros semanais em grupo com o Rodrigo.</p>
+          <p class="pilar-hl">Clareza, direção e ritmo desde a semana 1.</p>
+        </div>
+      </div>
+      <div class="gs" id="pilar-col-2">
+        <p class="pilar-col-title">Processo profissional pronto</p>
+        <div class="pilar-card">
+          <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-award"/></svg></div>
+          <p class="pilar-label">PILAR 2 — MÉTODO</p>
+          <p class="pilar-name">Projeto de Primeira</p>
+          <p class="pilar-desc">Você não precisa criar nada do zero. Toda a documentação do Método PDP pronta para usar e customizar como quiser.</p>
+          <p class="pilar-hl">Método patenteado com chancela MEC.</p>
+        </div>
+      </div>
+      <div class="gs" id="pilar-col-3">
+        <p class="pilar-col-title">Acelere com inteligência</p>
+        <div class="pilar-card">
+          <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-cpu"/></svg></div>
+          <p class="pilar-label">PILAR 3 — TECNOLOGIA</p>
+          <p class="pilar-name">IA de Primeira</p>
+          <p class="pilar-desc">Seu processo de projeto otimizado com inteligência artificial de ponta a ponta. Ferramentas e assistentes exclusivos prontos para usar.</p>
+          <p class="pilar-hl">O que levava horas, leva minutos.</p>
+        </div>
+      </div>
+    </div>
+    <div class="g4-wrap">
+      <svg id="g4" viewBox="0 0 1100 180" fill="none" width="100%" preserveAspectRatio="xMidYMid meet">
+        <text x="183" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PESSOAS</text>
+        <text x="550" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PROCESSOS</text>
+        <text x="917" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">TECNOLOGIA</text>
+        <line x1="366" y1="150" x2="366" y2="15" stroke="#D3D1C7" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="733" y1="150" x2="733" y2="15" stroke="#D3D1C7" stroke-width=".5" stroke-dasharray="4,4"/>
+        <path id="g4-p1" d="M20 110 C60 85 80 130 120 100 C160 70 180 120 220 95 C260 65 300 110 366 80" stroke="#B4B2A9" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="g4-p2" d="M366 80 L733 76" stroke="#3D3D3A" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="g4-p3" d="M733 76 C790 62 840 45 890 30 C940 18 980 12 1080 8" stroke="#1E1E1E" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <circle id="g4-dot" cx="120" cy="100" r="4" fill="var(--black)" opacity="0"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 8. AS 6 SEMANAS                -->
+<!-- ============================== -->
+<section class="sec bg-w" id="sprints">
+  <div class="si">
+    <p class="gs label tc" style="margin-bottom:12px">COMO FUNCIONA</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,34px);margin-bottom:16px">Semana a semana, o processo toma forma.</p>
+    <p class="gs tc" style="font-size:15px;color:var(--g500);max-width:540px;margin:0 auto 56px;line-height:1.6">O desafio de 6 semanas acontece toda segunda às 9h, ao vivo com o Rodrigo. Cada semana tem uma missão clara. Você executa no seu ritmo, com dupla de implementação e grupo de apoio.</p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:900px;margin:0 auto">
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">01</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">No controle do seu tempo</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Agenda blindada, faxina operacional e clareza de prioridades. O foco é esvaziar o copo, não adicionar tarefas.</p>
+        </div>
+      </div>
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">02</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Pré-projeto no lugar</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Contratos, briefing, checklist e planejamento — tudo padronizado com modelos prontos que você só adequa ao seu escritório.</p>
+        </div>
+      </div>
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">03</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Do caos à ordem</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">O backlog do PDP implementado no seu gestor de tarefas. Todos os projetos em andamento organizados num sistema só.</p>
+        </div>
+      </div>
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">04</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Processos que se adaptam</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Variações de templates para cada tipo de serviço que você entrega. Constância vale mais que velocidade.</p>
+        </div>
+      </div>
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">05</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Templates alinhados com processos</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Seus arquivos de projeto conversando com o gestor de tarefas. Estrutura, nomenclatura e ordem das pranchas no lugar.</p>
+        </div>
+      </div>
+      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
+        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">06</span>
+        <div>
+          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Criação e executivos documentados</p>
+          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Processo criativo e detalhamento implementados. Premiação para quem conclui. Acesso ao grupo de profissionais graduados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 9. TUDO PRONTO PARA USAR       -->
+<!-- ============================== -->
+<section class="sec bg-o" id="metodo-pdp">
+  <div class="si">
+    <div class="split">
+      <div class="split-img gs"><img src="img/packaging_mockup_design.png" alt="Kit completo do método PDP" loading="lazy"></div>
+      <div class="split-text">
+        <p class="gs label" style="margin-bottom:16px">O MÉTODO PDP</p>
+        <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);line-height:1.2">Tudo que você precisa já está pronto. Você não cria nada do zero.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">O PDP é uma metodologia completa, patenteada e com chancela MEC, que documenta todo o processo de projeto de interiores. Em vez de assistir aulas por semanas, você consulta o que precisa, quando precisa — e ganha velocidade.</p>
+        <div class="gs" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Contratos prontos</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Checklists por etapa</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Workbooks 200pg</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Templates de projeto</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Notion para interiores</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Canvas criativo</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Modelo de proposta</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Mapeamento de processos</span></div>
+        </div>
+        <div class="gs" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Briefing</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Layout</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Criação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Apresentação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Detalhamento F1</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Detalhamento F2</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Especificação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Executivos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 9b. TUDO QUE ESTÁ PRONTO       -->
+<!-- ============================== -->
+<section class="sec-short bg-d" style="padding:80px 24px" id="entregaveis">
+  <div class="si" style="position:relative;z-index:1">
+    <p class="gs label tc" style="color:var(--g300);margin-bottom:12px">TUDO ISSO JÁ ESTÁ PRONTO PARA VOCÊ</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);color:#fff;margin-bottom:48px">Você não precisa criar nada do zero.</p>
+
+    <!-- Grid de entregáveis -->
+    <div style="display:grid;grid-template-columns:1fr;gap:24px;max-width:1000px;margin:0 auto">
+
+      <!-- Linha 1: Templates + Workbooks -->
+      <div style="display:grid;grid-template-columns:1fr;gap:24px">
+
+        <!-- Templates de Projeto -->
+        <div class="gs" style="display:flex;flex-direction:column;gap:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Templates de Projeto</p>
+            <p style="font-size:14px;color:var(--g300);line-height:1.5">Modelos prontos para o seu software, já adaptados ao método PDP. Compatíveis com Revit, AutoCAD, Archicad, SketchUp e Layout.</p>
+          </div>
+          <img src="img/bonus-templates.png" alt="Templates de projeto para Revit, AutoCAD, Archicad, SketchUp" loading="lazy" style="width:100%;border-radius:6px;filter:saturate(0.8)">
+        </div>
+      </div>
+
+      <!-- Linha 2: 2 colunas -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+        <!-- Workbooks -->
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+          <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Workbooks de Projeto</p>
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo e ilustrado com 213 páginas. Checklists de verificação para cada etapa — do briefing ao detalhamento executivo.</p>
+          <img src="img/bonus-workbooks.png" alt="Workbooks de Projeto PDP — 213 páginas" loading="lazy" style="width:100%;border-radius:6px;margin-top:auto;filter:saturate(0.8)">
+        </div>
+
+        <!-- Documentação Completa -->
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+          <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Kit Documentos de Primeira</p>
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Atas e contratos, checklist de briefing, planejador de orçamento de obras, checklists de executivos, canvas criativo e slides das aulas.</p>
+          <img src="img/bonus-docs.png" alt="Documentação completa do PDP" loading="lazy" style="width:100%;border-radius:6px;margin-top:auto;filter:saturate(0.8)">
+        </div>
+      </div>
+
+      <!-- Linha 3: 2 colunas -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+        <!-- Notion -->
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+          <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Notion para Interiores</p>
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Sua central de controle. Acompanhe cronograma, progresso e organize os processos de cada projeto com o mesmo template que o Rodrigo usa.</p>
+          <img src="img/bonus-notion.png" alt="Template Notion para Interiores" loading="lazy" style="width:100%;border-radius:6px;margin-top:auto;filter:saturate(0.8)">
+        </div>
+
+        <!-- Parceria Autodesk -->
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+          <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Parceria Autodesk</p>
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Licença estudantil em todos os softwares da Autodesk enquanto sua matrícula estiver ativa. Revit, AutoCAD e mais.</p>
+          <img src="img/bonus-autodesk.png" alt="Parceria Autodesk — licença estudantil" loading="lazy" style="width:100%;border-radius:6px;margin-top:auto;filter:saturate(0.8)">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 10. IA                          -->
+<!-- ============================== -->
+<section class="sec bg-w" id="ia">
+  <div class="si">
+    <div class="split split-reverse">
+      <div class="split-img gs"><img src="img/workspace_inspiration.png" alt="IA integrada ao fluxo" loading="lazy"></div>
+      <div class="split-text">
+        <p class="gs label" style="margin-bottom:16px">IA DE PRIMEIRA</p>
+        <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);line-height:1.2">Aprenda a usar IA no seu processo — e receba ferramentas prontas.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">Você vai aprender a usar inteligência artificial de verdade no seu fluxo de projeto. E vai receber agentes já treinados com o método PDP: briefing, memorial, cronograma e proposta — no seu padrão, em minutos.</p>
+        <div class="gs" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Prompts prontos por etapa</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Assistentes configurados</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Templates Notion conectados</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Automações do lead à entrega</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 11. EXTRAS                      -->
+<!-- ============================== -->
+<section class="sec bg-o" id="extras">
+  <div class="si">
+    <div class="split split-reverse">
+      <div class="split-img gs"><img src="img/minimalist_interior_design.png" alt="Organização" loading="lazy"></div>
+      <div class="split-text">
+        <p class="gs label" style="margin-bottom:16px">COMUNIDADE E SUPORTE</p>
+        <p class="gs fm" style="font-weight:700;font-size:clamp(24px,3.5vw,32px);margin-bottom:28px">Você não implementa sozinho</p>
+        <ul class="checklist">
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo do Desafio com o Rodrigo</strong> — acesso direto durante as 6 semanas</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo das Mães de Primeira</strong> — espaço exclusivo para mães que projetam</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo pós-desafio</strong> — rede permanente de quem já implementou</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Implementação Notion ao vivo</strong> — software nunca mais é desculpa</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Premiações do Desafio</strong> — AirPods Pro, PIX e livros para quem conclui</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 12. CREDENCIAIS                 -->
+<!-- ============================== -->
+<section class="sec-short bg-w" style="padding-top:100px;padding-bottom:100px" id="credenciais">
+  <div class="si">
+    <p class="gs label tc" style="color:var(--black);margin-bottom:48px">UM MÉTODO COM HISTÓRIA E RESULTADO</p>
+    <div class="stats gs" style="margin-bottom:56px">
+      <div class="tc"><p class="stat-n" data-count="26">0</p><p class="stat-l">turmas</p></div>
+      <div class="tc"><p class="stat-n" data-count="7000" data-suffix="+">0</p><p class="stat-l">alunos</p></div>
+      <div class="tc"><p class="stat-n" data-count="12">0</p><p class="stat-l">países</p></div>
+      <div class="tc"><p class="stat-n" data-count="97">0</p><p class="stat-l">dias de garantia</p></div>
+    </div>
+    <div class="sn">
+      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-graduation"/></svg></span>Extensão Universitária com chancela do MEC</div>
+      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-book"/></svg></span>Válido no seu Currículo Lattes</div>
+      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-scale"/></svg></span>Método Patenteado</div>
+      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-users"/></svg></span>24 turmas · +4.000 alunos pelo mundo</div>
+      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-check-circle"/></svg></span>Milhares de Aprovações de Primeira</div>
+    </div>
+    <p class="gs fs tc" style="font-style:italic;font-size:clamp(16px,2vw,20px);color:var(--g500);margin-top:48px">&ldquo;Eu só ensino o que já validei.&rdquo;</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 13. BÔNUS HOJE                  -->
+<!-- ============================== -->
+<section class="sec bg-o" id="bonus">
+  <div class="si">
+    <p class="gs label tc" style="margin-bottom:48px">BÔNUS EXCLUSIVOS</p>
+
+    <!-- Bônus 1: Imersão de Vendas (quem entrar hoje) -->
+    <div class="split" style="margin-bottom:80px">
+      <div class="split-img gs"><img src="img/commercial_proposal_display.png" alt="Proposta comercial" loading="lazy"></div>
+      <div class="split-text">
+        <div class="gs" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px">
+          <span class="tag tag-strong">BÔNUS PARA QUEM ENTRAR HOJE</span>
+        </div>
+        <p class="gs fm" style="font-weight:700;font-size:clamp(24px,3.5vw,32px)">Imersão de Vendas</p>
+        <p class="gs" style="color:var(--g700);font-size:16px;margin-top:8px;line-height:1.6">Captação de clientes, networking estratégico, e o modelo de proposta que o Rodrigo usa no próprio escritório.</p>
+        <ul class="checklist" style="margin-top:24px">
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>Como atrair clientes que valorizam o seu trabalho</li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>Networking que gera indicações de verdade</li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>A proposta de projetos real do Rodrigo — pronta para adaptar e usar</li>
+        </ul>
+        <p class="gs fm" style="font-weight:600;font-size:14px;color:var(--g500);margin-top:20px">Disponível apenas para quem se matricular hoje, domingo.</p>
+      </div>
+    </div>
+
+    <!-- Bônus 2 movido para depois da garantia -->
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 14. DEPOIMENTOS                 -->
+<!-- ============================== -->
+<section class="sec-short bg-w" style="padding:100px 24px" id="depoimentos">
+  <div class="si">
+    <p class="gs label tc" style="margin-bottom:48px">QUEM JÁ PASSOU PELA TRANSFORMAÇÃO</p>
+    <div class="tg">
+      <div class="tc-card gs"><span class="tag" style="align-self:flex-start">ALUNA PDP</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Juntei um pouquinho de um, do outro... virou o <strong>Frankenstein</strong>. O workshop foi a virada de chave.</p><p class="tc-nm">Amanda Colombo</p></div>
+      <div class="tc-card gs"><span class="tag tag-strong" style="align-self:flex-start">ALUNA DO DESAFIO</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Mais de <strong>20 anos</strong> sobrecarregada... Era falta de processos.</p><p class="tc-cta">20 ANOS → PRONTA PARA CONTRATAR</p><p class="tc-nm">Priscilla Chaccur</p></div>
+      <div class="tc-card gs"><span class="tag tag-strong" style="align-self:flex-start">ALUNO DO DESAFIO</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Colocar minha filha pra dormir... estava em falta. <strong>NÃO TEM PREÇO.</strong></p><p class="tc-nm">Armonstrong Gomes</p></div>
+      <div class="tc-card gs"><span class="tag" style="align-self:flex-start">ALUNA PDP</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Hoje eu pagaria <strong>DUAS, TRÊS VEZES</strong> de olhos fechados.</p><p class="tc-nm">Amanda Cagliari</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 15. EXCLUSIVIDADE               -->
+<!-- ============================== -->
+<section class="sec bg-d" id="exclusividade">
+  <div class="sn" style="position:relative;z-index:1;margin:0 auto">
+    <div class="gs"><svg class="icon icon-lg icon-light"><use href="#i-star"/></svg></div>
+    <p class="gs fm" style="font-weight:700;font-size:clamp(24px,4vw,34px);color:#fff;margin-top:20px;line-height:1.2">Acesso ao pré-lançamento. Turma fundadora.</p>
+    <p class="gs" style="font-size:16px;color:var(--g300);margin-top:16px;line-height:1.6;max-width:520px">Quem entrar agora entra antes de todo mundo — e ajuda a construir o programa junto com o Rodrigo.</p>
+    <ul class="checklist" style="margin-top:36px">
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso antes da primeira turma oficial</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Pode opinar e sugerir conteúdos</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Participa da construção junto com ele</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Condição que não vai se repetir depois</li>
+    </ul>
+    <p class="gs fs" style="font-style:italic;font-size:18px;color:var(--g300);margin-top:48px">&ldquo;Quero que você seja o meu melhor case.&rdquo;</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 16. ANCORAGEM + PRODUTO         -->
+<!-- ============================== -->
+<section class="sec-short bg-w" style="padding:80px 24px" id="ancoragem">
+  <div class="sn" style="margin:0 auto">
+    <p class="gs label tc" style="margin-bottom:32px">VALOR REAL DA IMPLEMENTAÇÃO</p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:0;font-size:14px" class="gs">
+      <!-- Acompanhamento -->
+      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black)">Acompanhamento</p>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Desafio 6 semanas no WhatsApp com Rodrigo + Premiação</span><span class="pr-v" style="font-size:13px">R$ 2.000</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Repetir o desafio 4 vezes se quiser</span><span class="pr-v" style="font-size:13px">R$ 8.000</span></div>
+
+      <!-- Método -->
+      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black);margin-top:8px">Método</p>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Método PDP completo + Chancela MEC</span><span class="pr-v" style="font-size:13px">R$ 3.497</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Kit Documentos de Primeira</span><span class="pr-v" style="font-size:13px">R$ 1.997</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Templates de Projeto (Revit, Archicad, SketchUp, AutoCAD)</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Workbooks de detalhamento — 213 páginas</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Template Notion + implementação ao vivo</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Licença estudantil e desconto em ferramentas</span><span class="pr-v" style="font-size:13px;text-decoration:none;color:var(--g500)">—</span></div>
+
+      <!-- IA -->
+      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black);margin-top:8px">Inteligência Artificial</p>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Novo Curso IA de Primeira</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Ferramentas e assistentes IA prontos</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
+      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Aprenda a criar suas próprias soluções</span><span class="pr-v" style="font-size:13px;text-decoration:none;color:var(--g500);font-style:italic">inestimável</span></div>
+
+      <!-- Comunidade -->
+      <div class="pr" style="padding:8px 0;margin-top:8px;border-top:2px solid var(--black)"><span class="pr-i" style="font-size:13px">Comunidade + Suporte</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
+    </div>
+
+    <div class="gs pr-total" style="margin-top:16px"><span style="color:var(--offwhite);font-size:14px">Total em valor real</span><span class="fm" style="font-weight:800;font-size:22px;color:#fff">R$ 22.985</span></div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 17. PREÇO                       -->
+<!-- ============================== -->
+<section class="sec bg-o" id="preco">
+  <div class="sn tc" style="margin:0 auto">
+    <p class="gs" style="color:var(--g500);font-size:16px">Investimento para a turma fundadora:</p>
+    <p class="big-price gs" id="big-price" style="margin-top:16px;color:var(--black)">12x de R$ 390</p>
+    <p class="gs" style="color:var(--g700);font-size:15px;margin-top:8px">sem juros, no plano anual</p>
+    <p class="gs" style="color:var(--g500);font-size:17px;margin-top:16px">ou R$ 3.997 no PIX <span style="font-size:14px">(15% de desconto)</span></p>
+    <div class="gs" style="border-top:1px solid var(--g300);padding-top:32px;margin-top:40px">
+      <span class="tag tag-strong" style="font-size:12px;padding:8px 24px">CONDIÇÃO DE PRÉ-LANÇAMENTO</span>
+      <p style="color:var(--g700);font-size:14px;max-width:440px;margin:16px auto 0;line-height:1.6">Esse valor é exclusivo para quem entra agora, na turma fundadora. Depois do lançamento oficial, o preço muda.</p>
+    </div>
+    <div class="gs" style="margin-top:40px"><a href="#" class="cta">MATRÍCULAS ABREM ÀS 15:00</a></div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 18. ROI                         -->
+<!-- ============================== -->
+<section class="sec-short bg-w" style="padding:100px 24px" id="roi">
+  <div class="si">
+    <p class="gs label" style="margin-bottom:32px">RETORNO DO INVESTIMENTO</p>
+    <div class="roi-g">
+      <div class="roi-c gs">
+        <div class="roi-icon"><svg><use href="#i-check-circle"/></svg></div>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Uma reunião a menos <strong>refazendo</strong> o que o cliente pediu errado</p>
+        <p class="fm" style="font-weight:700;font-size:15px">Já pagou o investimento.</p>
+      </div>
+      <div class="roi-c gs">
+        <div class="roi-icon"><svg><use href="#i-trending"/></svg></div>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Se evitar <strong>UM</strong> projeto no prejuízo</p>
+        <p class="fm" style="font-weight:700;font-size:15px">Pagou 3 vezes.</p>
+      </div>
+      <div class="roi-c gs">
+        <div class="roi-icon"><svg><use href="#i-clock"/></svg></div>
+        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Se parar de <strong>apagar incêndio</strong> 2 horas por semana</p>
+        <p class="fm" style="font-weight:700;font-size:15px">100 horas por ano de volta.</p>
+      </div>
+    </div>
+    <p class="gs fs tc" style="font-style:italic;font-size:18px;color:var(--graphite);margin-top:48px">Quanto vale 100 horas por ano da sua vida?</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 19. GARANTIA + 18:00            -->
+<!-- ============================== -->
+<section class="fullbleed" id="garantia">
+  <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Escritório às 18h — paz" loading="lazy"></div>
+  <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.55) 0%,rgba(26,26,26,.85) 100%)"></div>
+  <div class="fullbleed-content">
+    <div class="gs"><svg class="icon icon-lg" style="stroke:#fff;margin:0 auto"><use href="#i-shield"/></svg></div>
+    <p class="gs label" style="color:var(--g300);margin:20px 0">GARANTIA DE PRIMEIRA</p>
+    <p class="gs fm" style="font-size:clamp(20px,3vw,26px);font-weight:500;color:#fff">97 dias para aplicar o método.</p>
+    <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:700;color:#fff;margin-top:16px;line-height:1.2">Se não funcionar, devolvo tudo + R$ 1.000 de volta.</p>
+    <p class="gs fs" style="font-style:italic;font-size:18px;color:var(--g300);margin-top:28px">Na pior das hipóteses, você ganha dinheiro.</p>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 20. INSCRIÇÕES ÀS 15H + BÔNUS  -->
+<!-- ============================== -->
+<section class="bg-d" style="padding:0;min-height:auto" id="inscricoes">
+  <div class="grain"></div>
+
+  <!-- Bloco 1: Inscrições às 15h -->
+  <div style="padding:80px 24px 48px;text-align:center;position:relative;z-index:1">
+    <p class="gs fm" style="font-weight:800;font-size:clamp(36px,7vw,64px);color:#fff;letter-spacing:0.02em">INSCRIÇÕES ABREM ÀS 15H.</p>
+    <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g300);margin-top:20px;max-width:460px;margin:20px auto 0;line-height:1.6">Aproveite o intervalo para pensar. Nos vemos às 15h.</p>
+    <p class="gs" style="font-size:16px;color:var(--g500);margin-top:24px">12x de R$ 390 sem juros · ou R$ 3.997 no PIX</p>
+  </div>
+
+  <!-- Bloco 2: Bônus urgência — consultoria 1x1, das 15:00 às 15:20 -->
+  <div style="padding:32px 24px 80px;position:relative;z-index:1">
+    <div class="gs sn" style="margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:clamp(32px,5vw,56px);text-align:center">
+      <p class="fm" style="font-weight:700;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--g500)">BÔNUS EXTRA</p>
+      <p class="fm" style="font-weight:800;font-size:clamp(24px,4.5vw,40px);color:#fff;margin-top:16px;line-height:1.15">Consultoria individual<br>com o Rodrigo</p>
+      <p style="font-size:15px;color:var(--g300);margin-top:16px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.6">Uma sessão 1 a 1 durante o Desafio de Implementação. Exclusivo para quem se inscrever entre <strong style="color:#fff">15:00 e 15:20</strong>.</p>
+      <div style="margin-top:32px;padding:24px;background:rgba(255,255,255,0.04);border-radius:8px;display:inline-block">
+        <p class="fm" style="font-weight:800;font-size:clamp(14px,2vw,18px);color:#fff;letter-spacing:0.08em">DAS 15:00 ÀS 15:20</p>
+        <p style="font-size:13px;color:var(--g500);margin-top:8px">Apenas 20 minutos. Depois, esse bônus desaparece.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 21. FAQ                         -->
+<!-- ============================== -->
+<section class="sec-short bg-w" style="padding:100px 24px" id="faq">
+  <div class="sn" style="margin:0 auto">
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,32px);margin-bottom:48px">Perguntas frequentes</p>
+    <div class="gs"><details><summary>Preciso ter experiência com IA?</summary><p>Não. Os agentes já vêm treinados com o método PDP. Se sabe usar WhatsApp, consegue usar as ferramentas.</p></details></div>
+    <div class="gs"><details><summary>Quanto tempo por semana?</summary><p>2 a 4 horas. Tarefas objetivas e práticas — foco em implementar, não assistir aulas.</p></details></div>
+    <div class="gs"><details><summary>Já tenho o PDP. Preciso comprar de novo?</summary><p>A Implementação inclui acesso completo atualizado. Se não implementou, o Desafio é exatamente o que faltava.</p></details></div>
+    <div class="gs"><details><summary>Funciona para quem está começando agora?</summary><p>Sim. O método PDP cobre todo o processo de projeto, do contrato aos executivos. Se você está começando, vai construir o escritório já com a estrutura certa — e não precisar refazer tudo depois. Se já tem experiência, vai organizar o que já faz e ganhar velocidade.</p></details></div>
+    <div class="gs"><details><summary>Como funciona a garantia?</summary><p>97 dias para aplicar. Se não funcionar, devolvo 100% do valor + R$ 1.000 do meu bolso. O risco é zero.</p></details></div>
+    <div class="gs"><details><summary>Posso parcelar?</summary><p>Sim. 12x de R$ 390 no cartão, ou R$ 3.997 à vista com desconto. Pagamento via Hotmart.</p></details></div>
+    <div class="gs"><details><summary>Tem suporte se eu travar?</summary><p>Grupo do desafio com Rodrigo + implementação Notion ao vivo + comunidade + suporte contínuo.</p></details></div>
+  </div>
+</section>
+
+<!-- MOBILE CTA (desativado — modo apresentação) -->
+<!-- <div class="mob-cta" id="mobCta"><a href="#">GARANTIR MINHA VAGA</a></div> -->
+
+<!-- FOOTER -->
+<footer><p>METRIK Instituto · Todos os direitos reservados</p></footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Lenis smooth scroll
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// PROGRESS BAR only
+const pb = document.getElementById('progressBar');
+ScrollTrigger.create({
+  trigger: document.body,
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: s => { pb.style.width = (s.progress * 100) + '%'; }
+});
+
+// Mobile CTA — desativado (modo apresentação)
+
+// HERO timeline
+const ht = gsap.timeline({ defaults: { ease: 'power3.out' } });
+ht.from('#h-logo', { autoAlpha: 0, y: 20, duration: 0.7 })
+  .from('#h-promise', { autoAlpha: 0, y: 30, duration: 0.8 }, '-=0.3')
+  .from('#h-sub', { autoAlpha: 0, y: 20, duration: 0.6 }, '-=0.4')
+  .from('#h-pillars', { autoAlpha: 0, y: 20, duration: 0.5 }, '-=0.3')
+;
+document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visible');
+
+// REVEAL clip-path
+gsap.fromTo('#reveal-clip',
+  { clipPath: 'inset(50% 0 50% 0)' },
+  { clipPath: 'inset(0% 0 0% 0)', duration: 1.2, ease: 'power3.inOut',
+    scrollTrigger: { trigger: '#reveal-pin', start: 'top 60%', end: 'top 20%', scrub: 1 }
+  }
+);
+
+// PILARES + G4 — pinned: graph first, then cards rise
+const pilSec = document.getElementById('pilares');
+
+// Phase 1: draw the G4 graph as you scroll into view
+const g4Tl = gsap.timeline({
+  scrollTrigger: { trigger: pilSec, start: 'top 60%', end: 'top 20%', scrub: 1 }
+});
+g4Tl
+  .to('#g4-p1', { strokeDashoffset: 0, duration: 0.3 })
+  .to('#g4-dot', { opacity: 1, duration: 0.1 }, 0.15)
+  .to('#g4-p2', { strokeDashoffset: 0, duration: 0.3 }, 0.3)
+  .to('#g4-p3', { strokeDashoffset: 0, duration: 0.3 }, 0.6);
+
+// Phase 2: pin the section, then cards appear one by one
+const pinTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: pilSec,
+    start: 'center center',
+    end: '+=1200',
+    pin: true,
+    scrub: 1,
+  }
+});
+pinTl
+  .from('#pilar-col-1', { autoAlpha: 0, y: 60, duration: 0.25 }, 0)
+  .from('#pilar-col-2', { autoAlpha: 0, y: 60, duration: 0.25 }, 0.15)
+  .from('#pilar-col-3', { autoAlpha: 0, y: 60, duration: 0.25 }, 0.3)
+  .to({}, { duration: 0.2 }); // hold for a beat before unpin
+
+// COUNTER animation
+document.querySelectorAll('[data-count]').forEach(el => {
+  const t = parseInt(el.dataset.count), s = el.dataset.suffix || '';
+  ScrollTrigger.create({
+    trigger: el, start: 'top 80%', once: true,
+    onEnter: () => {
+      gsap.to({ v: 0 }, {
+        v: t, duration: 1.5, ease: 'power2.out',
+        onUpdate: function () {
+          el.textContent = Math.round(this.targets()[0].v).toLocaleString('pt-BR') + s;
+        }
+      });
+    }
+  });
+});
+
+// BIG PRICE
+ScrollTrigger.create({
+  trigger: '#big-price', start: 'top 75%', once: true,
+  onEnter: () => gsap.from('#big-price', { scale: 0.8, autoAlpha: 0, duration: 0.7, ease: 'back.out(1.4)' })
+});
+
+// BONUS COUNTDOWN — 20 minutes
+const countdownEl = document.getElementById('bonus-countdown');
+if (countdownEl) {
+  let totalSec = 20 * 60;
+  const tick = () => {
+    if (totalSec <= 0) {
+      countdownEl.textContent = '00:00';
+      countdownEl.style.color = 'var(--g500)';
+      return;
+    }
+    totalSec--;
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    countdownEl.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  };
+  // Start countdown when section enters viewport
+  ScrollTrigger.create({
+    trigger: '#bonus',
+    start: 'top 80%',
+    once: true,
+    onEnter: () => setInterval(tick, 1000)
+  });
+}
+
+// GENERAL REVEAL — all .gs elements
+document.querySelectorAll('.gs').forEach(el => {
+  if (el.closest('#hero') || el.id === 'reveal-clip' || el.id === 'reveal-desc' || el.closest('#pilares .pilares-grid')) return;
+  gsap.from(el, {
+    autoAlpha: 0, y: 32, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+</script>
+</body>
+</html>
