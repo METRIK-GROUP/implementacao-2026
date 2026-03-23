@@ -1324,9 +1324,11 @@ document.querySelectorAll('[data-count]').forEach(el => {
 
 // BIG PRICE
 ScrollTrigger.create({
-  trigger: '#big-price', start: 'top 75%', once: true,
-  onEnter: () => gsap.from('#big-price', { scale: 0.8, autoAlpha: 0, duration: 0.7, ease: 'back.out(1.4)' })
+  trigger: '#big-price', start: 'top 85%', once: true,
+  onEnter: () => gsap.fromTo('#big-price', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.4)' })
 });
+// Fallback: garantir visibilidade após 3s
+setTimeout(() => { const el = document.getElementById('big-price'); if (el) el.style.opacity = '1'; }, 3000);
 
 // BONUS COUNTDOWN — 20 minutes
 const countdownEl = document.getElementById('bonus-countdown');
