@@ -1112,7 +1112,11 @@ footer p {
       <span class="tag tag-strong" style="font-size:12px;padding:8px 24px">CONDIÇÃO DE PRÉ-LANÇAMENTO</span>
       <p style="color:var(--g700);font-size:14px;max-width:440px;margin:16px auto 0;line-height:1.6">Esse valor é exclusivo para quem entra agora, na turma fundadora. Depois do lançamento oficial, o preço muda.</p>
     </div>
-    <div class="gs" style="margin-top:40px"><a href="#" class="cta">MATRÍCULAS ABREM ÀS 15:00</a></div>
+    <div class="gs" style="margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:640px;margin-left:auto;margin-right:auto">
+      <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px">PIX COM 15% OFF</a>
+      <a href="https://pay.hotmart.com/U104887798W?bid=1774198329832" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px;background:var(--graphite)">CARTÃO 12X SEM JUROS</a>
+      <a href="https://pay.tmbeducacao.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px;background:var(--g700)">BOLETO PARCELADO</a>
+    </div>
   </div>
 </section>
 
@@ -1196,7 +1200,7 @@ footer p {
     <div class="gs"><details><summary>Já tenho o PDP. Preciso comprar de novo?</summary><p>A Implementação inclui acesso completo atualizado. Se não implementou, o Desafio é exatamente o que faltava.</p></details></div>
     <div class="gs"><details><summary>Funciona para quem está começando agora?</summary><p>Sim. O método PDP cobre todo o processo de projeto, do contrato aos executivos. Se você está começando, vai construir o escritório já com a estrutura certa — e não precisar refazer tudo depois. Se já tem experiência, vai organizar o que já faz e ganhar velocidade.</p></details></div>
     <div class="gs"><details><summary>Como funciona a garantia?</summary><p>97 dias para aplicar. Se não funcionar, devolvo 100% do valor + R$ 1.000 do meu bolso. O risco é zero.</p></details></div>
-    <div class="gs"><details><summary>Posso parcelar?</summary><p>Sim. 12x de R$ 390 no cartão, ou R$ 3.997 à vista com desconto. Pagamento via Hotmart.</p></details></div>
+    <div class="gs"><details><summary>Posso parcelar?</summary><p>Sim. 3 opções: PIX com 15% de desconto (R$ 3.997), cartão em 12x de R$ 390 sem juros, ou boleto parcelado.</p></details></div>
     <div class="gs"><details><summary>Tem suporte se eu travar?</summary><p>Grupo do desafio com Rodrigo + implementação Notion ao vivo + comunidade + suporte contínuo.</p></details></div>
   </div>
 </section>
@@ -1257,21 +1261,32 @@ g4Tl
   .to('#g4-p2', { strokeDashoffset: 0, duration: 0.3 }, 0.3)
   .to('#g4-p3', { strokeDashoffset: 0, duration: 0.3 }, 0.6);
 
-// Phase 2: pin the section, then cards appear one by one
-const pinTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: pilSec,
-    start: 'center center',
-    end: '+=1200',
-    pin: true,
-    scrub: 1,
-  }
-});
-pinTl
-  .from('#pilar-col-1', { autoAlpha: 0, y: 60, duration: 0.25 }, 0)
-  .from('#pilar-col-2', { autoAlpha: 0, y: 60, duration: 0.25 }, 0.15)
-  .from('#pilar-col-3', { autoAlpha: 0, y: 60, duration: 0.25 }, 0.3)
-  .to({}, { duration: 0.2 }); // hold for a beat before unpin
+// Phase 2: pin the section on desktop, simple fade on mobile
+const isMobile = window.innerWidth < 768;
+if (!isMobile) {
+  const pinTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: pilSec,
+      start: 'center center',
+      end: '+=1000',
+      pin: true,
+      scrub: 1,
+    }
+  });
+  pinTl
+    .from('#pilar-col-1', { autoAlpha: 0, y: 40, duration: 0.2 }, 0)
+    .from('#pilar-col-2', { autoAlpha: 0, y: 40, duration: 0.2 }, 0.1)
+    .from('#pilar-col-3', { autoAlpha: 0, y: 40, duration: 0.2 }, 0.2)
+    .to({}, { duration: 0.15 });
+} else {
+  // Mobile: simple staggered reveal without pin
+  ['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach((sel, i) => {
+    gsap.from(sel, {
+      autoAlpha: 0, y: 30, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: sel, start: 'top 85%', once: true }
+    });
+  });
+}
 
 // COUNTER animation
 document.querySelectorAll('[data-count]').forEach(el => {
