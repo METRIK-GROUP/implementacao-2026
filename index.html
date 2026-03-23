@@ -1282,19 +1282,44 @@ g4Tl
   .to('#g4-p2', { strokeDashoffset: 0, duration: 0.3 }, 0.3)
   .to('#g4-p3', { strokeDashoffset: 0, duration: 0.3 }, 0.6);
 
-// Phase 2: staggered reveal for both desktop and mobile
-['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach((sel, i) => {
+// Phase 2: pin on desktop with robust visibility, simple fade on mobile
+const isMobile = window.innerWidth < 768;
+
+// Always make pillar cols visible (override .gs hidden)
+['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach(sel => {
   const el = document.querySelector(sel);
-  if (el) {
-    el.style.visibility = 'visible';
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-  }
-  gsap.to(sel, {
-    opacity: 1, y: 0, duration: 0.6, delay: i * 0.15, ease: 'power2.out',
-    scrollTrigger: { trigger: pilSec, start: 'top 55%', once: true }
-  });
+  if (el) { el.style.visibility = 'visible'; el.style.opacity = '0'; el.style.transform = 'translateY(40px)'; }
 });
+
+if (!isMobile) {
+  const pinTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: pilSec,
+      start: 'top top',
+      end: '+=900',
+      pin: true,
+      scrub: 0.8,
+      onLeave: () => {
+        // Guarantee visible after scroll past
+        ['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach(sel => {
+          gsap.set(sel, { opacity: 1, y: 0 });
+        });
+      }
+    }
+  });
+  pinTl
+    .to('#pilar-col-1', { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }, 0.1)
+    .to('#pilar-col-2', { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }, 0.25)
+    .to('#pilar-col-3', { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }, 0.4)
+    .to({}, { duration: 0.2 }); // hold after all visible
+} else {
+  ['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach((sel, i) => {
+    gsap.to(sel, {
+      opacity: 1, y: 0, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: sel, start: 'top 85%', once: true }
+    });
+  });
+}
 
 // COUNTER animation
 document.querySelectorAll('[data-count]').forEach(el => {
