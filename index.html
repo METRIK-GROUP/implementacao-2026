@@ -1282,34 +1282,19 @@ g4Tl
   .to('#g4-p2', { strokeDashoffset: 0, duration: 0.3 }, 0.3)
   .to('#g4-p3', { strokeDashoffset: 0, duration: 0.3 }, 0.6);
 
-// Phase 2: pin the section on desktop, simple fade on mobile
-const isMobile = window.innerWidth < 768;
-if (!isMobile) {
-  const pinTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: pilSec,
-      start: 'center center',
-      end: '+=1000',
-      pin: true,
-      scrub: 1,
-    }
+// Phase 2: staggered reveal for both desktop and mobile
+['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach((sel, i) => {
+  const el = document.querySelector(sel);
+  if (el) {
+    el.style.visibility = 'visible';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+  }
+  gsap.to(sel, {
+    opacity: 1, y: 0, duration: 0.6, delay: i * 0.15, ease: 'power2.out',
+    scrollTrigger: { trigger: pilSec, start: 'top 55%', once: true }
   });
-  pinTl
-    .fromTo('#pilar-col-1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.2 }, 0)
-    .fromTo('#pilar-col-2', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.2 }, 0.1)
-    .fromTo('#pilar-col-3', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.2 }, 0.2)
-    .to({}, { duration: 0.15 });
-} else {
-  // Mobile: simple staggered reveal without pin
-  ['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach((sel, i) => {
-    const el = document.querySelector(sel);
-    if (el) { el.style.opacity = '1'; el.style.visibility = 'visible'; }
-    gsap.fromTo(sel, { opacity: 0, y: 30 }, {
-      opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: sel, start: 'top 90%', once: true }
-    });
-  });
-}
+});
 
 // COUNTER animation
 document.querySelectorAll('[data-count]').forEach(el => {
