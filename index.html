@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Implementação Projeto de Primeira — METRIK Instituto</title>
+<title>Implementação Projeto de Primeira | METRIK Instituto</title>
 <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <style>
 /* ============================================
-   LANDING v3 — DESIGN REVIEW APPLIED
+   LANDING v3.DESIGN REVIEW APPLIED
    UI/UX Pro Max checklist:
    ✓ No emojis as icons → SVG Lucide
    ✓ Sections have min-height → no "striped" effect
@@ -51,6 +51,10 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { cursor: pointer; }
 button { cursor: pointer; }
+
+/* Tipografia: balanço natural de quebras (sem viúvas) */
+h1, h2, h3, .hero-promise { text-wrap: balance; }
+p, li { text-wrap: pretty; }
 
 /* GSAP visibility */
 .gs { visibility: hidden; }
@@ -111,7 +115,7 @@ button { cursor: pointer; }
 .icon-light { stroke: var(--g300); }
 
 /* ================================
-   SECTIONS — CONSISTENT SPACING
+   SECTIONS.CONSISTENT SPACING
    Every section has min-height to
    prevent "striped" appearance
    ================================ */
@@ -150,9 +154,23 @@ section {
    LABEL / TAG
    ================================ */
 .label {
+  display: inline-block;
+  padding: 5px 12px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 8px;
   font-family: 'Maven Pro'; font-size: 11px; font-weight: 600;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--g500);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--graphite);
+}
+.label.tc {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.bg-d .label, .fullbleed-content .label {
+  background: rgba(255,255,255,0.08);
+  color: var(--g100);
 }
 .tag {
   display: inline-block; padding: 6px 18px;
@@ -164,7 +182,7 @@ section {
 .tag-strong { border-color: var(--black); color: var(--black); font-weight: 600; }
 
 /* ================================
-   HERO — Full viewport
+   HERO.Full viewport
    ================================ */
 .hero {
   min-height: 100vh;
@@ -202,14 +220,65 @@ section {
 }
 .hero-cta {
   display: inline-flex; align-items: center; justify-content: center;
-  margin-top: 48px; padding: 18px 48px;
+  gap: 10px;
+  margin-top: 48px; padding: 18px 36px;
   background: #fff; color: var(--black);
   font-family: 'Maven Pro'; font-weight: 700; font-size: 14px;
-  letter-spacing: 0.06em; text-decoration: none;
-  transition: background 0.3s, transform 0.2s;
+  letter-spacing: 0.08em; text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 8px 32px rgba(255,255,255,0.12), 0 0 0 8px rgba(255,255,255,0.04);
+  transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.3s, background 0.3s;
   min-height: 56px;
 }
-.hero-cta:hover { background: var(--offwhite); transform: translateY(-1px); }
+.hero-cta::after {
+  content: '';
+  width: 18px; height: 12px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path fill='black' d='M16.4 0 15 1.4 19.6 6H0v2h19.6L15 14.6 16.4 16 24 8z'/></svg>") no-repeat center / contain;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path fill='black' d='M16.4 0 15 1.4 19.6 6H0v2h19.6L15 14.6 16.4 16 24 8z'/></svg>") no-repeat center / contain;
+  transition: transform 0.25s cubic-bezier(.16,1,.3,1);
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255,255,255,0.2), 0 0 0 12px rgba(255,255,255,0.06);
+}
+.hero-cta:hover::after { transform: translateX(4px); }
+
+/* HERO PILLARS.pills clicáveis */
+.h-pillars {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.h-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Maven Pro';
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+@media (max-width: 640px) {
+  .h-pillars { flex-wrap: wrap; gap: 8px; padding: 0 8px; }
+  .h-pill { padding: 9px 14px; font-size: 11.5px; }
+  .h-pill svg { width: 12px !important; height: 12px !important; }
+}
+.h-pill svg { stroke: currentColor; opacity: 0.8; }
 
 .scroll-ind {
   position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
@@ -260,19 +329,29 @@ section {
   .split { flex-direction: row; gap: 64px; align-items: center; }
 }
 .split-img {
-  flex: 1; border-radius: 6px; overflow: hidden;
+  flex: 1; border-radius: 14px; overflow: hidden;
 }
 .split-img img {
   width: 100%; height: 100%;
   object-fit: cover; filter: saturate(0.85);
   aspect-ratio: 4/3;
+  transition: transform 0.7s cubic-bezier(.16,1,.3,1);
 }
+.split-img:hover img { transform: scale(1.04); }
 @media(min-width:768px) {
   .split-img img { aspect-ratio: 3/2; min-height: 360px; }
 }
 .split-text { flex: 1; }
 .split-reverse { flex-direction: column; }
 @media(min-width:768px) { .split-reverse { flex-direction: row-reverse; } }
+
+/* Hover zoom utility.wrap qualquer img/foto */
+.img-z { overflow: hidden; }
+.img-z img { transition: transform 0.7s cubic-bezier(.16,1,.3,1); }
+.img-z:hover img { transform: scale(1.04); }
+@media (prefers-reduced-motion: reduce) {
+  .split-img:hover img, .img-z:hover img { transform: none; }
+}
 
 /* ================================
    PILARES + G4
@@ -307,7 +386,7 @@ section {
   line-height: 1.3;
 }
 .pilar-card {
-  background: var(--white); border-radius: 8px;
+  background: var(--white); border-radius: 14px;
   padding: 32px 24px;
   border: 1px solid var(--g100);
   display: flex; flex-direction: column; gap: 12px;
@@ -316,7 +395,7 @@ section {
 .pilar-card-icon {
   width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--offwhite); border-radius: 8px;
+  background: var(--offwhite); border-radius: 14px;
   margin-bottom: 4px;
 }
 .pilar-label {
@@ -382,7 +461,7 @@ section {
 .stat-l { font-size: 13px; color: var(--g500); margin-top: 6px; }
 
 /* ================================
-   PDP DESTRINCHADO — Módulos & Junto
+   PDP DESTRINCHADO.Módulos & Junto
    ================================ */
 .modulos-grid {
   display: grid; grid-template-columns: 1fr;
@@ -395,7 +474,7 @@ section {
 .modulo-card {
   background: var(--white);
   border: 1px solid var(--g100);
-  border-radius: 8px;
+  border-radius: 14px;
   padding: 24px 20px;
   display: flex; flex-direction: column;
   gap: 10px;
@@ -433,18 +512,53 @@ section {
 @media(min-width:1024px) { .junto-grid { grid-template-columns: repeat(3,1fr); } }
 
 .junto-card {
-  display: flex; gap: 16px;
-  align-items: flex-start;
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 14px;
   background: var(--white);
-  border: 1px solid var(--g100);
-  border-radius: 8px;
-  padding: 22px 20px;
+  border: 1.5px solid var(--g100);
+  border-radius: 18px;
+  padding: 28px 26px 24px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
-.junto-card svg {
-  margin-top: 2px;
-  stroke: var(--graphite);
+.junto-card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 16px; right: 22px;
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-size: 22px;
+  color: var(--g300);
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.3s, color 0.3s;
+}
+.junto-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+.junto-card:hover::before { opacity: 1; color: var(--black); }
+.junto-card:hover .junto-icon {
+  background: var(--black);
+  border-color: var(--black);
+}
+.junto-card:hover .junto-icon svg { stroke: #fff; }
+.junto-icon {
+  width: 48px; height: 48px;
+  border-radius: 999px;
+  background: var(--offwhite);
+  border: 1px solid var(--g100);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.3s, border-color 0.3s;
+}
+.junto-icon svg {
+  width: 22px; height: 22px;
+  stroke: var(--black);
   stroke-width: 1.6;
   fill: none;
+  transition: stroke 0.3s;
 }
 .junto-name {
   font-family: 'Maven Pro';
@@ -461,7 +575,7 @@ section {
 }
 
 /* ================================
-   MARQUEE — prova social horizontal
+   MARQUEE.prova social horizontal
    ================================ */
 .marquee {
   position: relative;
@@ -472,34 +586,22 @@ section {
   padding: 18px 0;
 }
 .marquee-track {
-  display: flex; width: max-content;
-  animation: mq-scroll 40s linear infinite;
-  will-change: transform;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
 }
-.marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee-item {
   display: inline-flex; align-items: center;
-  gap: 14px; padding: 0 28px;
   font-family: 'Maven Pro';
   font-weight: 600;
-  font-size: 13px;
-  color: var(--graphite);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  font-size: 15px;
+  color: var(--black);
+  letter-spacing: 0;
+  text-align: center;
 }
-.marquee-dot {
-  width: 4px; height: 4px;
-  background: var(--g300);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-@keyframes mq-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+@media (max-width: 720px) {
+  .marquee-item { font-size: 13px; }
 }
 
 /* ================================
@@ -515,7 +617,7 @@ section {
   position: relative;
   background: var(--white);
   border: 1px solid var(--g100);
-  border-radius: 8px;
+  border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.5s cubic-bezier(.4,0,.2,1);
@@ -559,6 +661,41 @@ section {
 .mat-item.active .mat-num { color: rgba(255,255,255,0.4); }
 .mat-item.active .mat-name { color: #fff; }
 .mat-item.active .mat-desc { color: rgba(245,244,240,0.75); }
+
+/* Cards com imagem de fundo: B&W default, color no hover/active */
+.mat-item.mat-img {
+  background: #1a1a1a;
+  border-color: transparent;
+}
+.mat-item.mat-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--mat-img);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) brightness(0.85);
+  transition: filter 0.5s ease;
+  z-index: 0;
+}
+.mat-item.mat-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.92) 100%);
+  z-index: 1;
+}
+.mat-item.mat-img:hover::before,
+.mat-item.mat-img.active::before {
+  filter: grayscale(0%) brightness(1);
+}
+.mat-item.mat-img .mat-item-inner {
+  position: relative;
+  z-index: 2;
+}
+.mat-item.mat-img .mat-num { color: rgba(255,255,255,0.55); }
+.mat-item.mat-img .mat-name { color: #fff; }
+.mat-item.mat-img .mat-desc { color: rgba(245,244,240,0.85); }
 
 @media (min-width: 1024px) {
   .mat-acc {
@@ -656,7 +793,7 @@ section {
 }
 
 /* ================================
-   COUNT-UP — números com tabular nums
+   COUNT-UP.números com tabular nums
    ================================ */
 .count-n {
   font-variant-numeric: tabular-nums;
@@ -693,12 +830,602 @@ section {
 }
 .cred:last-child { border-bottom: none; }
 .cred-i {
-  flex-shrink: 0; width: 40px; height: 40px;
+  flex-shrink: 0; width: 44px; height: 44px;
   background: var(--white); border: 1px solid var(--g100);
-  border-radius: 10px;
+  border-radius: 999px;
   display: flex; align-items: center; justify-content: center;
 }
 .cred-i svg { width: 20px; height: 20px; stroke: var(--graphite); stroke-width: 1.5; fill: none; }
+
+/* PARA QUEM É.cards verticais sofisticados */
+.pq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 16px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media(min-width: 768px) {
+  .pq-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+}
+.pq-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  padding: 32px 28px 28px;
+  background: var(--white);
+  border-radius: 18px;
+  border: 2px solid var(--g100);
+  align-self: stretch;
+  height: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.pq-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+.pq-num {
+  position: absolute;
+  top: 20px; right: 24px;
+  font-family: 'Maven Pro';
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--g300);
+  letter-spacing: 0.05em;
+}
+.pq-icon {
+  width: 48px; height: 48px;
+  border-radius: 999px;
+  background: var(--offwhite);
+  border: 1px solid var(--g100);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 4px;
+}
+.pq-icon svg { stroke: var(--black); }
+.pq-title {
+  font-weight: 700;
+  font-size: clamp(17px, 2.2vw, 19px);
+  color: var(--black);
+  line-height: 1.25;
+}
+.pq-desc {
+  font-size: 14px;
+  color: var(--g700);
+  line-height: 1.55;
+  margin-top: 2px;
+}
+
+/* DASHBOARD MOCKUP.desafiopdp */
+.dash-wrap { background: transparent; padding: 0; overflow: visible; }
+.dash-wrap:hover img { transform: none; }
+.dash-frame {
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid var(--g100);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.04);
+  width: 100%;
+  display: flex; flex-direction: column;
+}
+.dash-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: var(--offwhite);
+  border-bottom: 1px solid var(--g100);
+}
+.dash-dot {
+  width: 10px; height: 10px;
+  border-radius: 999px;
+}
+.dash-dot:nth-child(1) { background: #FF5F57; opacity: 0.85; }
+.dash-dot:nth-child(2) { background: #FEBC2E; opacity: 0.85; }
+.dash-dot:nth-child(3) { background: #28C840; opacity: 0.85; }
+.dash-url {
+  margin-left: 10px;
+  flex: 1;
+  font-family: 'Maven Pro';
+  font-size: 11px;
+  color: var(--g500);
+  background: var(--white);
+  border: 1px solid var(--g100);
+  border-radius: 999px;
+  padding: 3px 12px;
+  text-align: center;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.dash-body {
+  padding: 18px 18px 16px;
+  background: var(--white);
+}
+.dash-section-label {
+  font-family: 'Maven Pro';
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--g500);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.dash-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 6px;
+  padding: 10px 11px;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--g100);
+  min-height: 78px;
+}
+.dash-card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 4px;
+}
+.dash-num {
+  font-family: 'Maven Pro';
+  font-weight: 800;
+  font-size: 8px;
+  color: var(--g500);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.dash-title {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 10.5px;
+  color: var(--black);
+  line-height: 1.2;
+}
+.dash-link {
+  font-family: 'Maven Pro';
+  font-size: 8.5px;
+  color: var(--g500);
+  margin-top: auto;
+  font-weight: 500;
+}
+.dash-link.success { color: #15803d; font-weight: 700; }
+.dash-badge {
+  display: inline-flex; align-items: center;
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 7.5px;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.dash-badge.sent { background: #052e1a; color: #4ade80; }
+.dash-badge.prep { background: var(--g100); color: var(--graphite); }
+.dash-target {
+  width: 16px; height: 16px;
+  background: #052e1a;
+  color: #4ade80;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+}
+.dash-progress {
+  width: 100%; height: 3px;
+  background: var(--g100);
+  border-radius: 999px;
+  margin-top: 2px;
+  overflow: hidden;
+}
+.dash-progress-fill {
+  height: 100%;
+  background: var(--black);
+  border-radius: 999px;
+}
+.dash-progress.success { background: #dcfce7; }
+.dash-progress-fill.success { background: #16a34a; }
+.dash-card.final {
+  border: 1px solid var(--graphite);
+  background: linear-gradient(135deg, var(--white) 0%, var(--offwhite) 100%);
+}
+.dash-card.final .dash-title { color: var(--black); }
+.dash-card.prize {
+  background: linear-gradient(160deg, var(--offwhite) 0%, #ebe9e2 100%);
+  border: 1px solid var(--g100);
+  padding: 8px 11px 10px;
+  gap: 4px;
+}
+.dash-card.prize .dash-num { color: var(--graphite); font-weight: 800; }
+
+/* TOOL GRID.4 ferramentas (plataforma, whatsapp, notion, premiação) */
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tool-card {
+  background: var(--white);
+  border: 1px solid var(--g100);
+  border-radius: 10px;
+  padding: 12px 14px 14px;
+  display: flex; flex-direction: column;
+  gap: 4px;
+  min-height: 130px;
+}
+.tool-art {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  margin-bottom: 8px;
+  min-height: 60px;
+}
+.tool-name {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--black);
+  line-height: 1.2;
+}
+.tool-sub {
+  font-family: 'Maven Pro';
+  font-size: 9.5px;
+  color: var(--g500);
+  margin-top: 1px;
+}
+
+/* Plataforma.sprints dots + barra */
+.tool-pl-row {
+  display: flex; gap: 6px;
+  margin-bottom: 8px;
+}
+.tool-pl-dot {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--g100);
+}
+.tool-pl-dot.done { background: var(--black); }
+.tool-pl-dot.active { background: var(--graphite); position: relative; }
+.tool-pl-dot.active::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 50%;
+  background: var(--g100);
+  border-radius: 0 3px 3px 0;
+}
+.tool-pl-bar {
+  width: 100%; height: 3px;
+  background: var(--g100);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.tool-pl-fill {
+  height: 100%;
+  background: var(--black);
+  border-radius: 999px;
+}
+
+/* WhatsApp.balões */
+.tool-wa { gap: 4px; position: relative; padding-bottom: 14px; }
+.tool-bub {
+  display: inline-block;
+  font-family: 'Maven Pro';
+  font-size: 9px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  max-width: 92%;
+  line-height: 1.2;
+}
+.tool-bub.left { background: var(--offwhite); color: var(--graphite); align-self: flex-start; border-bottom-left-radius: 2px; }
+.tool-bub.right { background: #d9fdd3; color: #1d3a2f; align-self: flex-end; border-bottom-right-radius: 2px; }
+.tool-online {
+  position: absolute; bottom: 0; right: 0;
+  font-family: 'Maven Pro';
+  font-size: 8px;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Notion.checklist */
+.tool-no { gap: 3px; }
+.tool-no-head {
+  display: flex; align-items: center; gap: 5px;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--g100);
+}
+.tool-no-icon {
+  width: 14px; height: 14px;
+  background: var(--black);
+  color: #fff;
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display';
+  font-size: 10px;
+  font-weight: 800;
+}
+.tool-no-title {
+  font-family: 'Maven Pro';
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--graphite);
+}
+.tool-no-row {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Maven Pro';
+  font-size: 9px;
+  color: var(--graphite);
+}
+.tool-no-check {
+  width: 9px; height: 9px;
+  border: 1px solid var(--g300);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.tool-no-check.on {
+  background: var(--black);
+  border-color: var(--black);
+  position: relative;
+}
+.tool-no-check.on::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 0;
+  width: 3px; height: 6px;
+  border: solid #fff;
+  border-width: 0 1.2px 1.2px 0;
+  transform: rotate(45deg);
+}
+
+/* Premiação card (mais largo) */
+.tool-card.prize-card {
+  background: linear-gradient(160deg, var(--offwhite) 0%, #ebe9e2 100%);
+}
+.tool-pr { align-items: center; justify-content: center; }
+.tool-pr svg {
+  width: 100%;
+  max-width: 160px;
+  max-height: 56px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+
+@media (max-width: 700px) {
+  .tool-card { min-height: 110px; padding: 10px 11px 12px; }
+  .tool-name { font-size: 10.5px; }
+  .tool-sub { font-size: 9px; }
+  .tool-bub { font-size: 8px; padding: 3px 6px; }
+}
+@media (max-width: 700px) {
+  .dash-grid { gap: 5px; }
+  .dash-card { padding: 8px 9px; min-height: 70px; }
+  .dash-title { font-size: 9.5px; }
+  .dash-link { font-size: 8px; }
+  .dash-badge { font-size: 7px; padding: 1px 5px; }
+}
+
+/* SPRINTS.timeline visual */
+.sp-timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding-left: 8px;
+}
+.sp-line {
+  position: absolute;
+  left: 31px; top: 24px; bottom: 24px;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent 0%, var(--g300) 8%, var(--g300) 92%, transparent 100%);
+  z-index: 0;
+}
+.sp-step {
+  position: relative;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 12px 0;
+  z-index: 1;
+}
+.sp-step + .sp-step { margin-top: 8px; }
+.sp-num {
+  flex-shrink: 0;
+  width: 64px; height: 64px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 2px solid var(--g100);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.4s, background 0.4s, transform 0.3s;
+}
+.sp-num span {
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-size: 26px;
+  color: var(--graphite);
+  line-height: 1;
+  transition: color 0.3s;
+}
+.sp-card {
+  flex: 1;
+  padding: 22px 26px;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--g100);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.sp-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transform: translateX(4px);
+}
+.sp-step:hover .sp-num {
+  border-color: var(--black);
+  background: var(--black);
+}
+.sp-step:hover .sp-num span { color: #fff; }
+.sp-title {
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 18px);
+  color: var(--black);
+  line-height: 1.3;
+}
+.sp-desc {
+  font-size: 14px;
+  color: var(--g700);
+  margin-top: 6px;
+  line-height: 1.55;
+}
+@media (max-width: 540px) {
+  .sp-timeline { padding-left: 0; }
+  .sp-line { left: 23px; }
+  .sp-num { width: 48px; height: 48px; }
+  .sp-num span { font-size: 20px; }
+  .sp-step { gap: 16px; }
+  .sp-card { padding: 18px 20px; }
+  .sp-card:hover { transform: none; }
+}
+/* CREDENCIAIS.stats horizontais com dividers */
+.cr-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--offwhite);
+  border-radius: 18px;
+  padding: 28px 24px;
+  border: 1px solid var(--g100);
+}
+.cr-stat {
+  text-align: center;
+  padding: 12px 0;
+}
+.cr-num {
+  font-family: 'DM Serif Display';
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 58px);
+  color: var(--black);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.cr-lab {
+  font-family: 'Maven Pro';
+  font-size: 12px;
+  color: var(--g500);
+  margin-top: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.cr-divider {
+  width: 80%;
+  height: 1px;
+  background: var(--g300);
+  margin: 0 auto;
+  opacity: 0.5;
+}
+@media (min-width: 768px) {
+  .cr-stats { grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; padding: 36px 32px; }
+  .cr-stat { padding: 0 8px; }
+  .cr-divider { width: 1px; height: 56px; margin: 0; }
+}
+
+/* Cred cards verticais */
+.cred-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+@media(min-width: 768px) {
+  .cred-row { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+.cred-card {
+  position: relative;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 14px;
+  padding: 32px 28px;
+  background: var(--white);
+  border-radius: 18px;
+  border: 1.5px solid var(--g100);
+  height: 100%;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.cred-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+.cred-card:hover .cred-seal { transform: scale(1.1) rotate(8deg); opacity: 0.12; }
+.cred-seal {
+  position: absolute;
+  top: -28px; right: -28px;
+  width: 110px; height: 110px;
+  border-radius: 999px;
+  border: 2px solid var(--black);
+  opacity: 0.06;
+  transition: transform 0.5s cubic-bezier(.16,1,.3,1), opacity 0.4s;
+  pointer-events: none;
+}
+.cred-seal::after {
+  content: '';
+  position: absolute;
+  top: 16px; left: 16px;
+  width: calc(100% - 32px); height: calc(100% - 32px);
+  border-radius: 999px;
+  border: 1px solid var(--black);
+}
+.cred-name {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: clamp(17px, 2.2vw, 19px);
+  color: var(--black);
+  line-height: 1.25;
+  position: relative;
+  z-index: 1;
+}
+.cred-desc {
+  font-size: 14px;
+  color: var(--g700);
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+/* Quote editorial final */
+.cr-quote {
+  text-align: center;
+  margin-top: 88px;
+  position: relative;
+  padding-top: 32px;
+}
+.cr-qmark {
+  display: block;
+  font-family: 'DM Serif Display';
+  font-size: 80px;
+  color: var(--g300);
+  line-height: 0.5;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.cr-quote-text {
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 26px);
+  color: var(--graphite);
+  line-height: 1.4;
+  max-width: 540px;
+  margin: 0 auto 14px;
+}
+.cr-quote-by {
+  font-family: 'Maven Pro';
+  font-size: 11px;
+  color: var(--g500);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
 
 /* ================================
    TESTIMONIALS
@@ -706,7 +1433,7 @@ section {
 .tg { display: grid; grid-template-columns: 1fr; gap: 20px; }
 @media(min-width:768px) { .tg { grid-template-columns: repeat(2,1fr); } }
 .tc-card {
-  background: var(--white); border-radius: 8px;
+  background: var(--white); border-radius: 14px;
   padding: 32px; display: flex; flex-direction: column;
   gap: 14px; border: 1px solid var(--g100);
 }
@@ -728,6 +1455,48 @@ section {
   font-family: 'Maven Pro'; font-weight: 700;
   font-size: 15px; color: var(--black);
 }
+.tc-video {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+.tc-video::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+  transition: background 0.3s;
+}
+.tc-video:hover::before {
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%);
+}
+.tc-play {
+  position: absolute; inset: 0; margin: auto;
+  width: 64px; height: 64px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.4s cubic-bezier(.16,1,.3,1), background 0.3s;
+  pointer-events: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 2;
+}
+.tc-video:hover { transform: scale(1.01); }
+.tc-video:hover .tc-play { transform: scale(1.1); background: white; }
+.tc-play svg { width: 22px; height: 22px; fill: var(--black); margin-left: 3px; }
+.tc-video.playing { background: #000; cursor: default; }
+.tc-video.playing::before, .tc-video.playing .tc-play { display: none; }
+.tc-video iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
 
 /* ================================
    PRICE TABLE
@@ -744,10 +1513,247 @@ section {
   font-size: 15px; white-space: nowrap;
 }
 .pr-total {
-  background: var(--black); border-radius: 8px;
+  background: var(--black); border-radius: 14px;
   padding: 20px 28px;
   display: flex; align-items: center; justify-content: space-between;
   margin-top: 20px;
+}
+
+/* BÔNUS — card sofisticado */
+.bonus-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--g100);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+}
+@media (min-width: 900px) {
+  .bonus-card { grid-template-columns: 1fr 1.1fr; }
+}
+.bonus-img {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--offwhite);
+}
+.bonus-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(.16,1,.3,1);
+}
+.bonus-card:hover .bonus-img img { transform: scale(1.04); }
+.bonus-stamp {
+  position: absolute;
+  top: 20px; left: 20px;
+  background: var(--black);
+  color: #fff;
+  font-family: 'Maven Pro';
+  font-weight: 800;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  padding: 7px 14px;
+  border-radius: 999px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.bonus-text {
+  padding: 40px 44px 36px;
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.bonus-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  background: var(--offwhite);
+  border: 1px solid var(--g100);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 4px;
+}
+.bonus-name {
+  font-weight: 700;
+  font-size: clamp(26px, 3.5vw, 36px);
+  color: var(--black);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.bonus-desc {
+  font-size: 15px;
+  color: var(--g700);
+  line-height: 1.55;
+}
+.bonus-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 8px;
+  display: flex; flex-direction: column;
+  gap: 12px;
+}
+.bonus-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 14.5px;
+  color: var(--graphite);
+  line-height: 1.5;
+}
+.bonus-chk {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 999px;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+.bonus-chk svg {
+  width: 12px; height: 12px;
+  stroke: #fff;
+  stroke-width: 3;
+  fill: none;
+}
+.bonus-foot {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--g100);
+  font-family: 'Maven Pro';
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--g500);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 640px) {
+  .bonus-text { padding: 32px 28px 28px; }
+  .bonus-name { font-size: 24px; }
+}
+
+/* ANCORAGEM — recibo único elegante */
+.anc-receipt {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--g100);
+  border-radius: 22px;
+  padding: 48px 56px 0;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+.anc-section {
+  margin-bottom: 36px;
+}
+.anc-section:last-of-type { margin-bottom: 32px; }
+.anc-cat-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px;
+}
+.anc-cat-num {
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-size: 22px;
+  color: var(--g300);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.anc-cat-name {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--black);
+  flex-shrink: 0;
+}
+.anc-cat-line {
+  flex: 1;
+  height: 1px;
+  background: var(--g100);
+}
+.anc-row {
+  display: flex; align-items: baseline;
+  gap: 8px;
+  padding: 10px 0;
+}
+.anc-name {
+  font-size: 14px;
+  color: var(--graphite);
+  line-height: 1.45;
+  flex-shrink: 1;
+}
+.anc-dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--g300);
+  margin: 0 4px;
+  min-width: 20px;
+  position: relative;
+  top: -3px;
+  opacity: 0.6;
+}
+.anc-val {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  color: var(--g500);
+  text-decoration: line-through;
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.anc-val.anc-na, .anc-val.anc-pri {
+  text-decoration: none;
+  color: var(--graphite);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Total bar dentro do recibo */
+.anc-total-row {
+  margin: 0 -56px;
+  padding: 28px 56px;
+  background: linear-gradient(135deg, #1a1a18 0%, #2a2a28 100%);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.anc-total-row::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 60%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.anc-total-label {
+  font-family: 'Maven Pro';
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  position: relative;
+}
+.anc-total-val {
+  font-weight: 800;
+  font-size: clamp(26px, 4vw, 36px);
+  color: #fff;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+@media (max-width: 640px) {
+  .anc-receipt { padding: 32px 24px 0; border-radius: 18px; }
+  .anc-name { font-size: 13px; }
+  .anc-val { font-size: 13px; }
+  .anc-cat-num { font-size: 18px; }
+  .anc-cat-name { font-size: 10px; letter-spacing: 0.15em; }
+  .anc-total-row { margin: 0 -24px; padding: 22px 24px; flex-direction: column; align-items: stretch; text-align: center; gap: 8px; }
 }
 
 .big-price {
@@ -756,20 +1762,327 @@ section {
   color: var(--black); line-height: 1;
 }
 
+/* PRICE CARD — preço sofisticado */
+.pr-card {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 56px 36px 36px;
+  background: var(--white);
+  border: 1px solid var(--g100);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+  text-align: center;
+}
+.pr-ribbon {
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--black);
+  color: #fff;
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  padding: 8px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pr-intro {
+  font-family: 'Maven Pro';
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--g500);
+  margin-bottom: 10px;
+}
+.pr-old {
+  font-size: 15px;
+  color: var(--g500);
+  margin-bottom: 6px;
+}
+.pr-old s { color: var(--g300); }
+.pr-main {
+  display: flex; align-items: baseline; justify-content: center;
+  gap: 6px;
+  font-family: 'Maven Pro';
+  color: var(--black);
+  line-height: 1;
+  margin: 8px 0 6px;
+}
+.pr-tx { font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: var(--graphite); }
+.pr-rs { font-weight: 600; font-size: clamp(15px, 2vw, 19px); color: var(--g500); }
+.pr-val {
+  font-weight: 800;
+  font-size: clamp(56px, 9vw, 96px);
+  color: var(--black);
+  letter-spacing: -0.03em;
+}
+.pr-meta {
+  font-size: 14px;
+  color: var(--g500);
+  margin-top: 4px;
+}
+.pr-or {
+  display: flex; align-items: center;
+  margin: 28px 0 20px;
+  gap: 12px;
+}
+.pr-or::before, .pr-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--g300);
+  opacity: 0.6;
+}
+.pr-or span {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  color: var(--g500);
+}
+.pr-pix-row {
+  background: var(--offwhite);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
+.pr-pix-val {
+  font-family: 'Maven Pro';
+  font-weight: 800;
+  font-size: clamp(22px, 3.5vw, 28px);
+  color: var(--black);
+  line-height: 1.1;
+}
+.pr-pix-tag {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--g500);
+  margin-left: 4px;
+}
+.pr-pix-save {
+  font-family: 'Maven Pro';
+  font-weight: 600;
+  font-size: 12px;
+  color: #15803d;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+.pr-actions {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.pr-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.3s, border-color 0.3s;
+}
+.pr-btn.primary {
+  background: var(--black);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.pr-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+}
+.pr-btn-tag {
+  background: #15803d;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+}
+.pr-btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pr-btn.ghost {
+  background: transparent;
+  color: var(--graphite);
+  border: 1px solid var(--g300);
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.pr-btn.ghost:hover {
+  border-color: var(--black);
+  color: var(--black);
+  background: var(--offwhite);
+}
+.pr-trust {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  font-family: 'Maven Pro';
+  font-size: 11.5px;
+  color: var(--g500);
+  font-weight: 500;
+}
+.pr-trust span {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.pr-trust svg { stroke: var(--g500); }
+.pr-dot {
+  width: 3px !important; height: 3px;
+  background: var(--g300);
+  border-radius: 999px;
+  padding: 0 !important;
+}
+.pr-note {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--g100);
+  font-size: 13px;
+  color: var(--g500);
+  line-height: 1.6;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 540px) {
+  .pr-card { padding: 48px 24px 28px; border-radius: 18px; }
+  .pr-btn-row { grid-template-columns: 1fr; }
+  .pr-trust { gap: 8px; font-size: 11px; }
+}
+
 /* ================================
    ROI
    ================================ */
-.roi-g { display: grid; grid-template-columns: 1fr; gap: 20px; }
-@media(min-width:768px) { .roi-g { grid-template-columns: repeat(3,1fr); } }
+.roi-g { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1080px; margin: 0 auto; }
+@media(min-width:768px) { .roi-g { grid-template-columns: repeat(3,1fr); gap: 24px; } }
+
+/* ROI cards editoriais */
+.roi-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 12px;
+  padding: 36px 32px 32px;
+  background: var(--white);
+  border: 1.5px solid var(--g100);
+  border-radius: 18px;
+  height: 100%;
+  align-self: stretch;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.roi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+}
+.roi-card:hover {
+  border-color: var(--black);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+.roi-card:hover::before { transform: scaleX(1); }
+.roi-num {
+  font-family: 'DM Serif Display';
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 92px);
+  color: var(--black);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+  display: flex; align-items: baseline;
+}
+.roi-num-x {
+  font-style: italic;
+  font-size: 0.7em;
+  color: var(--graphite);
+  margin-left: 4px;
+}
+.roi-num-unit {
+  font-style: italic;
+  font-size: 0.5em;
+  color: var(--graphite);
+  margin-left: 2px;
+  font-weight: 400;
+  font-family: 'DM Serif Display';
+}
+.roi-headline {
+  font-family: 'Maven Pro';
+  font-weight: 700;
+  font-size: clamp(17px, 2.2vw, 19px);
+  color: var(--black);
+  line-height: 1.25;
+}
+.roi-desc {
+  font-size: 14px;
+  color: var(--g700);
+  line-height: 1.55;
+  flex: 1;
+}
+.roi-desc strong { color: var(--black); }
+.roi-pill {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  background: var(--black);
+  color: #fff;
+  font-family: 'Maven Pro';
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+.roi-card-feature {
+  background: linear-gradient(165deg, var(--white) 0%, var(--offwhite) 100%);
+  border-color: var(--graphite);
+}
+
+/* Quote final ROI */
+.roi-quote {
+  text-align: center;
+  margin-top: 80px;
+  padding-top: 32px;
+  position: relative;
+}
+.roi-qmark {
+  display: block;
+  font-family: 'DM Serif Display';
+  font-size: 80px;
+  color: var(--g300);
+  line-height: 0.5;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.roi-quote-text {
+  font-family: 'DM Serif Display';
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--black);
+  line-height: 1.35;
+  max-width: 580px;
+  margin: 0 auto;
+}
 .roi-c {
-  border: 1px solid var(--g100); border-radius: 8px;
+  border: 1px solid var(--g100); border-radius: 14px;
   padding: 32px 24px; text-align: center;
   display: flex; flex-direction: column; gap: 12px;
   background: var(--white);
 }
 .roi-icon {
   width: 48px; height: 48px; margin: 0 auto;
-  background: var(--offwhite); border-radius: 12px;
+  background: var(--offwhite); border-radius: 18px;
   display: flex; align-items: center; justify-content: center;
 }
 .roi-icon svg { width: 24px; height: 24px; stroke: var(--black); stroke-width: 1.5; fill: none; }
@@ -898,13 +2211,20 @@ footer p {
   <div class="hero-content">
     <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs" id="h-logo" style="max-width:clamp(200px,40vw,400px);margin:0 auto 40px;opacity:0.9">
     <h1 class="hero-promise gs" id="h-promise">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</h1>
-    <p class="gs" id="h-sub" style="margin-top:24px;font-size:clamp(15px,2.2vw,20px);color:rgba(255,255,255,0.7);font-weight:300;line-height:1.5;max-width:620px;margin-left:auto;margin-right:auto">Implemente o processo de projeto profissional que dá clareza, direção e velocidade ao seu trabalho — com acompanhamento semanal.</p>
-    <div class="gs" id="h-pillars" style="display:flex;flex-direction:column;gap:12px;margin-top:36px;max-width:560px;margin-left:auto;margin-right:auto">
-      <div style="display:flex;gap:12px">
-        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">Acompanhamento semanal</span>
-        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">Processo profissional</span>
-        <span style="flex:1;padding:12px 16px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;text-align:center;font-family:'Maven Pro';font-size:clamp(12px,1.5vw,14px);font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.04em">IA para acelerar</span>
-      </div>
+    <p class="gs" id="h-sub" style="margin-top:24px;font-size:clamp(15px,2.2vw,20px);color:rgba(255,255,255,0.7);font-weight:300;line-height:1.5;max-width:620px;margin-left:auto;margin-right:auto">Implemente o processo de projeto profissional que dá clareza, direção e velocidade ao seu trabalho, com acompanhamento semanal.</p>
+    <div class="gs h-pillars" id="h-pillars">
+      <span class="h-pill">
+        <svg class="icon" style="width:14px;height:14px"><use href="#i-users"/></svg>
+        <span>Acompanhamento semanal</span>
+      </span>
+      <span class="h-pill">
+        <svg class="icon" style="width:14px;height:14px"><use href="#i-award"/></svg>
+        <span>Processo profissional</span>
+      </span>
+      <span class="h-pill">
+        <svg class="icon" style="width:14px;height:14px"><use href="#i-cpu"/></svg>
+        <span>IA para acelerar</span>
+      </span>
     </div>
     <a href="#preco" class="hero-cta gs" style="margin-top:36px;display:inline-block">QUERO ME INSCREVER</a>
   </div>
@@ -918,10 +2238,10 @@ footer p {
   <div class="fullbleed-bg"><img src="img/chaos_vs._order.png" alt="Do caos à ordem" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,0.75) 0%,rgba(26,26,26,0.95) 100%)"></div>
   <div class="fullbleed-content">
-    <p class="gs label" style="color:var(--g300);margin-bottom:20px">O QUE REALMENTE TRAVA O SEU CRESCIMENTO</p>
-    <p class="gs fm" style="font-size:clamp(24px,4.5vw,40px);font-weight:700;color:#fff;line-height:1.2">Os projetos saem, mas os bastidores continuam uma bagunça.</p>
-    <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g100);line-height:1.6;margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto">Você trabalha 10, 12 horas por dia — e ainda assim sente que está sempre correndo, sempre apagando incêndio.</p>
-    <p class="gs fm" style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-top:28px">O problema não é falta de talento. É falta de processo.</p>
+    <p class="gs label" style="margin-bottom:20px">O QUE REALMENTE TRAVA O SEU CRESCIMENTO</p>
+    <p class="gs fm" style="font-size:clamp(24px,4.5vw,40px);font-weight:700;color:#fff;line-height:1.2;text-wrap:balance;max-width:18ch;margin-left:auto;margin-right:auto">Os projetos saem, mas os bastidores continuam uma bagunça.</p>
+    <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g100);line-height:1.6;margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto;text-wrap:pretty">Você trabalha 10, 12 horas por dia. E ainda assim sente que está sempre correndo, sempre apagando incêndio.</p>
+    <p class="gs fm" style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-top:28px;text-wrap:balance;max-width:22ch;margin-left:auto;margin-right:auto">O problema não é falta de talento. É falta de processo.</p>
   </div>
 </section>
 
@@ -929,48 +2249,61 @@ footer p {
 <!-- 3. ESPELHO DA DOR              -->
 <!-- ============================== -->
 <section class="sec bg-w" id="espelho-dor">
-  <div class="sn tc" style="margin:0 auto">
-    <p class="gs label" style="margin-bottom:32px">124 PROFISSIONAIS RESPONDERAM. ISSO PARECE FAMILIAR?</p>
+  <div class="si">
+    <div class="split">
+      <div class="split-img gs" data-r="left"><img src="img/office_document_scene.png" alt="Sensação de sobrecarga no escritório" loading="lazy" class="clip-r"></div>
+      <div class="split-text">
+        <p class="gs label" style="margin-bottom:28px">124 PROFISSIONAIS RESPONDERAM</p>
 
-    <!-- Stats reais do diagnóstico -->
-    <div class="gs" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:480px;margin:0 auto 40px">
-      <div style="text-align:center;padding:20px;background:var(--offwhite);border-radius:8px">
-        <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">82%</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:4px">"Sei o que fazer, mas não executo"</p>
-      </div>
-      <div style="text-align:center;padding:20px;background:var(--offwhite);border-radius:8px">
-        <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">92%</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:4px">se sentem sozinhos na gestão</p>
+        <div class="gs" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px">
+          <div style="padding:20px;background:var(--offwhite);border-radius:14px">
+            <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">82%</p>
+            <p style="font-size:12px;color:var(--g500);margin-top:4px;line-height:1.4">"Sei o que fazer, mas não executo"</p>
+          </div>
+          <div style="padding:20px;background:var(--offwhite);border-radius:14px">
+            <p class="fm" style="font-weight:800;font-size:28px;color:var(--black)">92%</p>
+            <p style="font-size:12px;color:var(--g500);margin-top:4px;line-height:1.4">se sentem sozinhos na gestão</p>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <p class="gs" style="font-size:15px;color:var(--graphite);line-height:1.5;padding-left:18px;border-left:3px solid var(--g100)">"Quem faz tudo não tá fazendo nada. Atendo cliente, equipe, fornecedor, obra, criativo, operacional..."</p>
+          <p class="gs" style="font-size:15px;color:var(--graphite);line-height:1.5;padding-left:18px;border-left:3px solid var(--g100)">"Não contrato porque não tenho como ensinar alguém. O prazo do projeto já está correndo."</p>
+          <p class="gs" style="font-size:15px;color:var(--graphite);line-height:1.5;padding-left:18px;border-left:3px solid var(--g100)">"Tenho muitos cursos, muitos materiais. E tudo solto. Minha mente não se organiza."</p>
+        </div>
+
+        <p class="gs" style="margin-top:32px;font-size:14px;color:var(--g500);line-height:1.6">Não importa se você está começando agora ou se já tem 10 anos de escritório. Sem processo, o resultado é o mesmo: trabalhar demais e sentir que nunca dá conta.</p>
       </div>
     </div>
-
-    <div style="display:flex;flex-direction:column;gap:24px;text-align:left;max-width:560px;margin:0 auto">
-      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Quem faz tudo não tá fazendo nada. Atendo cliente, equipe, fornecedor, obra, criativo, operacional, prospecção, DP, RH..."</p>
-      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Não contrato porque não tenho como ensinar alguém. O prazo do projeto já está correndo."</p>
-      <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--graphite);line-height:1.5;padding-left:24px;border-left:3px solid var(--g100)">"Tenho muitos cursos, muitos materiais — e tudo solto. Minha mente não se organiza."</p>
-    </div>
-    <p class="gs" style="margin-top:40px;font-size:clamp(14px,2vw,16px);color:var(--g500);line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto">Não importa se você está começando agora ou se já tem 10 anos de escritório. Sem processo, o resultado é o mesmo: trabalhar demais e sentir que nunca dá conta.</p>
   </div>
 </section>
 
 <!-- ============================== -->
 <!-- 3b. PARA QUEM É                -->
 <!-- ============================== -->
-<section class="sec-short bg-o" style="padding:80px 24px" id="para-quem">
+<section class="sec-short bg-o" style="padding:96px 24px" id="para-quem">
   <div class="si">
-    <p class="gs label tc" style="margin-bottom:40px">PARA QUEM É A IMPLEMENTAÇÃO</p>
-    <div style="display:grid;grid-template-columns:1fr;gap:20px;max-width:900px;margin:0 auto">
-      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
-        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-users"/></svg>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem projeta sozinho</strong> e quer parar de centralizar tudo — para montar processos que permitam delegar sem perder qualidade.</p>
+    <p class="gs label tc" style="margin-bottom:16px">PARA QUEM É</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.2;max-width:640px;margin:0 auto 56px">Pensada para três momentos do escritório.</p>
+
+    <div class="pq-grid">
+      <div class="pq-card gs">
+        <span class="pq-num">01</span>
+        <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-users"/></svg></span>
+        <p class="fm pq-title">Quem projeta sozinho</p>
+        <p class="pq-desc">Quer parar de centralizar tudo. Montar processos que permitam delegar sem perder qualidade.</p>
       </div>
-      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
-        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-award"/></svg>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem já tem experiência</strong> mas sente que os bastidores do escritório não acompanham a qualidade dos projetos que entrega.</p>
+      <div class="pq-card gs">
+        <span class="pq-num">02</span>
+        <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-award"/></svg></span>
+        <p class="fm pq-title">Quem já tem experiência</p>
+        <p class="pq-desc">Mas sente que os bastidores do escritório não acompanham a qualidade dos projetos que entrega.</p>
       </div>
-      <div class="gs" style="display:flex;gap:16px;align-items:flex-start;padding:24px;background:var(--white);border-radius:8px;border:1px solid var(--g100)">
-        <svg class="icon" style="flex-shrink:0;margin-top:2px"><use href="#i-book"/></svg>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5"><strong style="color:var(--black)">Quem está começando</strong> e quer construir o escritório já com a estrutura certa — para nunca precisar passar pelo caos que a maioria enfrenta.</p>
+      <div class="pq-card gs">
+        <span class="pq-num">03</span>
+        <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-book"/></svg></span>
+        <p class="fm pq-title">Quem está começando</p>
+        <p class="pq-desc">Quer construir o escritório já com a estrutura certa. Pra não precisar passar pelo caos que a maioria enfrenta.</p>
       </div>
     </div>
   </div>
@@ -980,23 +2313,35 @@ footer p {
 <!-- 4. PONTE                       -->
 <!-- ============================== -->
 <section class="sec bg-o" id="ponte">
-  <div class="sn tc" style="margin:0 auto">
-    <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:300;color:var(--graphite);line-height:1.25">Existe um jeito de sair desse ciclo.</p>
-    <p class="gs" style="font-size:clamp(15px,2vw,17px);color:var(--g500);margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">Não é mais conteúdo. É um sistema de implementação que se instala em 6 semanas — com alguém do lado te guiando.</p>
-    <div style="display:flex;flex-direction:column;gap:28px;align-items:center;margin-top:52px" id="bridge-items">
-      <div class="gs" style="text-align:center">
-        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">Acompanhamento semanal</p>
-        <p style="font-size:14px;color:var(--g500);margin-top:6px">Encontros em grupo com o Rodrigo, toda semana</p>
-      </div>
-      <div style="width:40px;height:1px;background:var(--g300)"></div>
-      <div class="gs" style="text-align:center">
-        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">Processo de projeto profissional</p>
-        <p style="font-size:14px;color:var(--g500);margin-top:6px">Método patenteado, do contrato aos executivos</p>
-      </div>
-      <div style="width:40px;height:1px;background:var(--g300)"></div>
-      <div class="gs" style="text-align:center">
-        <p class="fm" style="font-weight:700;font-size:clamp(17px,2.5vw,21px)">IA para acelerar com qualidade</p>
-        <p style="font-size:14px;color:var(--g500);margin-top:6px">Aprenda a usar e receba ferramentas prontas</p>
+  <div class="si">
+    <div class="split">
+      <div class="split-img gs" data-r="left"><img src="img/mockuprodrigo.jpg" alt="Sistema de implementação PDP — Rodrigo guiando" loading="lazy" class="clip-r" style="aspect-ratio:16/9;min-height:0"></div>
+      <div class="split-text">
+        <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:700;color:var(--black);line-height:1.2">Existe um jeito de sair desse ciclo.</p>
+        <p class="gs" style="font-size:clamp(15px,2vw,17px);color:var(--g500);margin-top:20px;line-height:1.6">Não é mais conteúdo. É um sistema de implementação que se instala em 6 semanas, com alguém do lado te guiando.</p>
+        <div style="display:flex;flex-direction:column;gap:24px;margin-top:36px" id="bridge-items" data-s>
+          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
+            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-users"/></svg></span>
+            <div>
+              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">Acompanhamento semanal</p>
+              <p style="font-size:14px;color:var(--g500);margin-top:4px">Encontros em grupo com o Rodrigo, toda semana</p>
+            </div>
+          </div>
+          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
+            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-award"/></svg></span>
+            <div>
+              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">Processo de projeto profissional</p>
+              <p style="font-size:14px;color:var(--g500);margin-top:4px">Método patenteado, do contrato aos executivos</p>
+            </div>
+          </div>
+          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
+            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-cpu"/></svg></span>
+            <div>
+              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">IA para acelerar com qualidade</p>
+              <p style="font-size:14px;color:var(--g500);margin-top:4px">Aprenda a usar e receba ferramentas prontas</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1037,7 +2382,7 @@ footer p {
         <p class="pilar-col-title">Conquiste seu tempo de volta</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-users"/></svg></div>
-          <p class="pilar-label">PILAR 1 — ACOMPANHAMENTO</p>
+          <p class="pilar-label">PILAR 1 · ACOMPANHAMENTO</p>
           <p class="pilar-name">Desafio de Implementação</p>
           <p class="pilar-desc">6 semanas de acompanhamento no WhatsApp enquanto você implementa os processos do PDP. Encontros semanais em grupo com o Rodrigo.</p>
           <p class="pilar-hl">Clareza, direção e ritmo desde a semana 1.</p>
@@ -1047,7 +2392,7 @@ footer p {
         <p class="pilar-col-title">Processo profissional pronto</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-award"/></svg></div>
-          <p class="pilar-label">PILAR 2 — MÉTODO</p>
+          <p class="pilar-label">PILAR 2 · MÉTODO</p>
           <p class="pilar-name">Projeto de Primeira</p>
           <p class="pilar-desc">Você não precisa criar nada do zero. Toda a documentação do Método PDP pronta para usar e customizar como quiser.</p>
           <p class="pilar-hl">Método patenteado com chancela MEC.</p>
@@ -1057,7 +2402,7 @@ footer p {
         <p class="pilar-col-title">Acelere com inteligência</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-cpu"/></svg></div>
-          <p class="pilar-label">PILAR 3 — TECNOLOGIA</p>
+          <p class="pilar-label">PILAR 3 · TECNOLOGIA</p>
           <p class="pilar-name">IA de Primeira</p>
           <p class="pilar-desc">Seu processo de projeto otimizado com inteligência artificial de ponta a ponta. Ferramentas e assistentes exclusivos prontos para usar.</p>
           <p class="pilar-hl">O que levava horas, leva minutos.</p>
@@ -1089,47 +2434,48 @@ footer p {
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,34px);margin-bottom:16px">Semana a semana, o processo toma forma.</p>
     <p class="gs tc" style="font-size:15px;color:var(--g500);max-width:540px;margin:0 auto 56px;line-height:1.6">O desafio de 6 semanas acontece toda segunda às 9h, ao vivo com o Rodrigo. Cada semana tem uma missão clara. Você executa no seu ritmo, com dupla de implementação e grupo de apoio.</p>
 
-    <div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:900px;margin:0 auto">
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">01</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">No controle do seu tempo</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Agenda blindada, faxina operacional e clareza de prioridades. O foco é esvaziar o copo, não adicionar tarefas.</p>
+    <div class="sp-timeline">
+      <div class="sp-line"></div>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>01</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">No controle do seu tempo</p>
+          <p class="sp-desc">Agenda blindada, faxina operacional e clareza de prioridades. O foco é esvaziar o copo, não adicionar tarefas.</p>
         </div>
       </div>
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">02</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Pré-projeto no lugar</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Contratos, briefing, checklist e planejamento — tudo padronizado com modelos prontos que você só adequa ao seu escritório.</p>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>02</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">Pré-projeto no lugar</p>
+          <p class="sp-desc">Contratos, briefing, checklist e planejamento. Tudo padronizado com modelos prontos que você só adequa ao seu escritório.</p>
         </div>
       </div>
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">03</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Do caos à ordem</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">O backlog do PDP implementado no seu gestor de tarefas. Todos os projetos em andamento organizados num sistema só.</p>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>03</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">Do caos à ordem</p>
+          <p class="sp-desc">O backlog do PDP implementado no seu gestor de tarefas. Todos os projetos em andamento organizados num sistema só.</p>
         </div>
       </div>
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">04</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Processos que se adaptam</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Variações de templates para cada tipo de serviço que você entrega. Constância vale mais que velocidade.</p>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>04</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">Processos que se adaptam</p>
+          <p class="sp-desc">Variações de templates para cada tipo de serviço que você entrega. Constância vale mais que velocidade.</p>
         </div>
       </div>
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">05</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Templates alinhados com processos</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Seus arquivos de projeto conversando com o gestor de tarefas. Estrutura, nomenclatura e ordem das pranchas no lugar.</p>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>05</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">Templates alinhados com processos</p>
+          <p class="sp-desc">Seus arquivos de projeto conversando com o gestor de tarefas. Estrutura, nomenclatura e ordem das pranchas no lugar.</p>
         </div>
       </div>
-      <div class="gs" style="display:flex;gap:20px;align-items:flex-start;padding:24px 28px;background:var(--offwhite);border-radius:8px;border-left:3px solid var(--black)">
-        <span class="fm" style="font-weight:800;font-size:20px;color:var(--g300);flex-shrink:0;width:24px">06</span>
-        <div>
-          <p class="fm" style="font-weight:700;font-size:16px;color:var(--black)">Criação e executivos documentados</p>
-          <p style="font-size:14px;color:var(--g700);margin-top:4px;line-height:1.5">Processo criativo e detalhamento implementados. Premiação para quem conclui. Acesso ao grupo de profissionais graduados.</p>
+      <div class="sp-step gs">
+        <div class="sp-num"><span>06</span></div>
+        <div class="sp-card">
+          <p class="fm sp-title">Criação e executivos documentados</p>
+          <p class="sp-desc">Processo criativo e detalhamento implementados. Premiação para quem conclui. Acesso ao grupo de profissionais graduados.</p>
         </div>
       </div>
     </div>
@@ -1142,11 +2488,11 @@ footer p {
 <section class="sec bg-o" id="metodo-pdp">
   <div class="si">
     <div class="split">
-      <div class="split-img gs"><img src="img/packaging_mockup_design.png" alt="Kit completo do método PDP" loading="lazy" class="clip-r"></div>
+      <div class="split-img gs" data-r="left" style="background:transparent;border-radius:0;overflow:visible"><img src="img/mockups-pdp.png" alt="Mockups do método PDP — devices apresentando o conteúdo" loading="lazy" class="clip-r" style="object-fit:contain;aspect-ratio:auto;height:auto;width:100%;min-height:0;filter:none"></div>
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">POR DENTRO DO PDP</p>
         <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);line-height:1.2">O método que você vai aplicar com a gente.</p>
-        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">PDP é o <strong>o quê</strong>: a metodologia validada, com chancela MEC, que documenta todo o processo de projeto de interiores. Implementação é o <strong>como</strong>: a gente te puxa pela mão pra aplicar — sem você precisar engolir 80 horas de curso sozinho.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">PDP é o <strong>o quê</strong>: a metodologia validada, com chancela MEC, que documenta todo o processo de projeto de interiores. Implementação é o <strong>como</strong>: a gente te puxa pela mão pra aplicar, sem você precisar engolir 80 horas de curso sozinho.</p>
         <div class="gs" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Contratos prontos</span></div>
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Checklists por etapa</span></div>
@@ -1158,14 +2504,14 @@ footer p {
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Mapeamento de processos</span></div>
         </div>
         <div class="gs" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:8px">
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Briefing</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Layout</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Criação</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Apresentação</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Detalhamento F1</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Detalhamento F2</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Especificação</span>
-          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:4px;color:var(--g500)">Executivos</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Briefing</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Layout</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Criação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Apresentação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Detalhamento F1</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Detalhamento F2</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Especificação</span>
+          <span style="font-size:11px;padding:5px 12px;background:var(--white);border:1px solid var(--g100);border-radius:8px;color:var(--g500)">Executivos</span>
         </div>
       </div>
     </div>
@@ -1173,26 +2519,11 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 9-mq. MARQUEE — prova social   -->
+<!-- 9-mq. MARQUEE.prova social   -->
 <!-- ============================== -->
-<div class="marquee" aria-hidden="true">
+<div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item">+2.000 alunos formados</span><span class="marquee-dot"></span>
-    <span class="marquee-item">9 países</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Chancela MEC</span><span class="marquee-dot"></span>
-    <span class="marquee-item">+80h documentadas</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Suporte direto Rodrigo</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Notion para Interiores</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Comunidade ativa</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Parceria Autodesk</span><span class="marquee-dot"></span>
-    <span class="marquee-item">+2.000 alunos formados</span><span class="marquee-dot"></span>
-    <span class="marquee-item">9 países</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Chancela MEC</span><span class="marquee-dot"></span>
-    <span class="marquee-item">+80h documentadas</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Suporte direto Rodrigo</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Notion para Interiores</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Comunidade ativa</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Parceria Autodesk</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Reconhecido como Curso de Extensão Universitária pelo Ministério da Educação (MEC)</span>
   </div>
 </div>
 
@@ -1202,63 +2533,43 @@ footer p {
 <section class="sec-short bg-o" style="padding:40px 24px 100px" id="pdp-detalhe">
   <div class="si">
 
-    <!-- Stats faixa -->
-    <div class="gs" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0;background:var(--white);border:1px solid var(--g100);border-radius:8px;overflow:hidden;margin-bottom:80px">
-      <div style="padding:32px 20px;text-align:center;border-right:1px solid var(--g100);border-bottom:1px solid var(--g100)">
-        <p class="fm count-n" style="font-weight:800;font-size:clamp(28px,4vw,40px);color:var(--black);line-height:1" data-count-to="2000" data-prefix="+">+0</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:8px;letter-spacing:0.05em">ALUNOS FORMADOS</p>
-      </div>
-      <div style="padding:32px 20px;text-align:center;border-bottom:1px solid var(--g100)">
-        <p class="fm count-n" style="font-weight:800;font-size:clamp(28px,4vw,40px);color:var(--black);line-height:1" data-count-to="9">0</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:8px;letter-spacing:0.05em">PAÍSES</p>
-      </div>
-      <div style="padding:32px 20px;text-align:center;border-right:1px solid var(--g100)">
-        <p class="fm" style="font-weight:800;font-size:clamp(20px,3vw,28px);color:var(--black);line-height:1.1">Chancela<br>MEC</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:8px;letter-spacing:0.05em">EXTENSÃO UNIVERSITÁRIA</p>
-      </div>
-      <div style="padding:32px 20px;text-align:center">
-        <p class="fm count-n" style="font-weight:800;font-size:clamp(28px,4vw,40px);color:var(--black);line-height:1" data-count-to="80" data-prefix="+" data-suffix="h">+0h</p>
-        <p style="font-size:12px;color:var(--g500);margin-top:8px;letter-spacing:0.05em">CONTEÚDO DOCUMENTADO</p>
-      </div>
-    </div>
-
     <!-- 10 Módulos -->
     <p class="gs label tc" style="margin-bottom:12px">10 MÓDULOS DO PDP</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);margin-bottom:12px;line-height:1.2">Do briefing à entrega da obra.</p>
-    <p class="gs tc" style="font-size:15px;color:var(--g700);max-width:560px;margin:0 auto 56px">Cada etapa documentada, com workbooks e templates prontos. Você não consome em sequência — consulta o que precisa, quando precisa.</p>
+    <p class="gs tc" style="font-size:15px;color:var(--g700);max-width:560px;margin:0 auto 56px">Cada etapa documentada, com workbooks e templates prontos. Você não consome em sequência. Consulta o que precisa, quando precisa.</p>
 
     <p class="gs tc" style="font-size:12px;color:var(--g500);margin-top:-32px;margin-bottom:32px;letter-spacing:0.05em">PASSE O CURSOR · TOQUE PARA EXPANDIR</p>
 
     <div class="mat-acc gs" data-mat-acc>
-      <div class="mat-item active" data-mat-item>
+      <div class="mat-item mat-img active" data-mat-item style="--mat-img: url('img/modulos/01.png')">
         <div class="mat-item-inner">
           <span class="mat-num">01</span>
           <p class="mat-name">Metodologia & Pilares</p>
           <p class="mat-desc">Fundamento mental: pessoas, comunicação, técnica e processo.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/02.png')">
         <div class="mat-item-inner">
           <span class="mat-num">02</span>
           <p class="mat-name">Pré-Projeto</p>
           <p class="mat-desc">Contrato, briefing, levantamento e planejamento financeiro.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/03.png')">
         <div class="mat-item-inner">
           <span class="mat-num">03</span>
           <p class="mat-name">Layout</p>
           <p class="mat-desc">Técnicas e fundamentos com workbooks passo a passo.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/04.png')">
         <div class="mat-item-inner">
           <span class="mat-num">04</span>
           <p class="mat-name">Criação · Inspirar</p>
           <p class="mat-desc">Ferramentas criativas, canvas criativo, destravando bloqueio.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/05.png')">
         <div class="mat-item-inner">
           <span class="mat-num">05</span>
           <p class="mat-name">Criação · Expirar</p>
@@ -1272,28 +2583,28 @@ footer p {
           <p class="mat-desc">Comunicação, persuasão e aprovação sem alterações.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/07.png')">
         <div class="mat-item-inner">
           <span class="mat-num">07</span>
           <p class="mat-name">Fundamentos · Detalhamento</p>
           <p class="mat-desc">Organização dos executivos antes de partir pra obra.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/08.png')">
         <div class="mat-item-inner">
           <span class="mat-num">08</span>
           <p class="mat-name">Detalhamento Fase 1</p>
           <p class="mat-desc">Civil, instalações e acabamentos sem retrabalho.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/09.png')">
         <div class="mat-item-inner">
           <span class="mat-num">09</span>
           <p class="mat-name">Detalhamento Fase 2</p>
           <p class="mat-desc">Mobiliário, marmoraria e acessórios com precisão.</p>
         </div>
       </div>
-      <div class="mat-item" data-mat-item>
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/10.png')">
         <div class="mat-item-inner">
           <span class="mat-num">10</span>
           <p class="mat-name">Especificação</p>
@@ -1307,46 +2618,25 @@ footer p {
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);margin-bottom:48px;line-height:1.2">Mais que aulas. Comunidade, suporte e ferramentas.</p>
 
     <div class="junto-grid gs">
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-users"/></svg>
+      <div class="junto-card" data-num="01">
+        <span class="junto-icon"><svg><use href="#i-users"/></svg></span>
         <div>
-          <p class="junto-name">Suporte direto com Rodrigo</p>
-          <p class="junto-desc">Respostas diárias na plataforma — não é fórum genérico.</p>
+          <p class="junto-name">Tira-dúvidas na plataforma</p>
+          <p class="junto-desc">Deixe sua dúvida e a gente responde direto na plataforma.</p>
         </div>
       </div>
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-star"/></svg>
+      <div class="junto-card" data-num="02">
+        <span class="junto-icon"><svg><use href="#i-star"/></svg></span>
         <div>
-          <p class="junto-name">Comunidade exclusiva</p>
-          <p class="junto-desc">+2.000 arquitetos e designers em rede ativa.</p>
+          <p class="junto-name">Grupo no WhatsApp do Desafio</p>
+          <p class="junto-desc">Comunicação direta com o Rodrigo durante as 6 semanas.</p>
         </div>
       </div>
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-graduation"/></svg>
+      <div class="junto-card" data-num="03">
+        <span class="junto-icon"><svg><use href="#i-graduation"/></svg></span>
         <div>
           <p class="junto-name">Masterclasses com convidados</p>
           <p class="junto-desc">Especialistas convidados em sessões ao vivo.</p>
-        </div>
-      </div>
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-award"/></svg>
-        <div>
-          <p class="junto-name">Parceria Autodesk</p>
-          <p class="junto-desc">Acesso à licença estudantil oficial.</p>
-        </div>
-      </div>
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-book"/></svg>
-        <div>
-          <p class="junto-name">Notion para Interiores</p>
-          <p class="junto-desc">Template completo + minicurso de uso.</p>
-        </div>
-      </div>
-      <div class="junto-card">
-        <svg class="icon" style="width:22px;height:22px;color:var(--graphite)"><use href="#i-clock"/></svg>
-        <div>
-          <p class="junto-name">Encontros ao vivo via Zoom</p>
-          <p class="junto-desc">Tira-dúvidas síncronos com o mentor.</p>
         </div>
       </div>
     </div>
@@ -1359,22 +2649,20 @@ footer p {
 <!-- ============================== -->
 <section class="sec-short bg-d" style="padding:80px 24px" id="entregaveis">
   <div class="si" style="position:relative;z-index:1">
-    <p class="gs label tc" style="color:var(--g300);margin-bottom:12px">TUDO ISSO JÁ ESTÁ PRONTO PARA VOCÊ</p>
+    <p class="gs label tc" style="margin-bottom:12px">TUDO ISSO JÁ ESTÁ PRONTO PARA VOCÊ</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);color:#fff;margin-bottom:48px">Você não precisa criar nada do zero.</p>
 
     <!-- Grid de entregáveis -->
     <div style="display:grid;grid-template-columns:1fr;gap:24px;max-width:1000px;margin:0 auto">
 
-      <!-- Linha 1: Templates + Workbooks -->
+      <!-- Linha 1: Templates -->
       <div style="display:grid;grid-template-columns:1fr;gap:24px">
-
-        <!-- Templates de Projeto -->
-        <div class="gs" style="display:flex;flex-direction:column;gap:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;overflow:hidden">
+        <div class="gs" style="display:flex;flex-direction:column;gap:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;overflow:hidden">
           <div style="display:flex;flex-direction:column;gap:12px">
             <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Templates de Projeto</p>
             <p style="font-size:14px;color:var(--g300);line-height:1.5">Modelos prontos para o seu software, já adaptados ao método PDP. Compatíveis com Revit, AutoCAD, Archicad, SketchUp e Layout.</p>
           </div>
-          <div style="position:relative;border-radius:6px;overflow:hidden">
+          <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden">
             <span class="pill pill-on-img">Templates</span>
             <img src="img/bonus-templates.png" alt="Templates de projeto para Revit, AutoCAD, Archicad, SketchUp" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
@@ -1383,22 +2671,19 @@ footer p {
 
       <!-- Linha 2: 2 colunas -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-
-        <!-- Workbooks -->
-        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px">
           <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Workbooks de Projeto</p>
-          <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo e ilustrado com 213 páginas. Checklists de verificação para cada etapa — do briefing ao detalhamento executivo.</p>
-          <div style="position:relative;border-radius:6px;overflow:hidden;margin-top:auto">
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo e ilustrado com 213 páginas. Checklists de verificação para cada etapa, do briefing ao detalhamento executivo.</p>
+          <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">213 páginas</span>
-            <img src="img/bonus-workbooks.png" alt="Workbooks de Projeto PDP — 213 páginas" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/bonus-workbooks.png" alt="Workbooks de Projeto PDP, 213 páginas" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
 
-        <!-- Documentação Completa -->
-        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px">
           <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Kit Documentos de Primeira</p>
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Atas e contratos, checklist de briefing, planejador de orçamento de obras, checklists de executivos, canvas criativo e slides das aulas.</p>
-          <div style="position:relative;border-radius:6px;overflow:hidden;margin-top:auto">
+          <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Documentos</span>
             <img src="img/bonus-docs.png" alt="Documentação completa do PDP" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
@@ -1407,24 +2692,21 @@ footer p {
 
       <!-- Linha 3: 2 colunas -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-
-        <!-- Notion -->
-        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px">
           <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Notion para Interiores</p>
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Sua central de controle. Acompanhe cronograma, progresso e organize os processos de cada projeto com o mesmo template que o Rodrigo usa.</p>
-          <div style="position:relative;border-radius:6px;overflow:hidden;margin-top:auto">
+          <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Notion</span>
             <img src="img/bonus-notion.png" alt="Template Notion para Interiores" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
 
-        <!-- Parceria Autodesk -->
-        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:16px">
+        <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px">
           <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Parceria Autodesk</p>
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Licença estudantil em todos os softwares da Autodesk enquanto sua matrícula estiver ativa. Revit, AutoCAD e mais.</p>
-          <div style="position:relative;border-radius:6px;overflow:hidden;margin-top:auto">
+          <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Software</span>
-            <img src="img/bonus-autodesk.png" alt="Parceria Autodesk — licença estudantil" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/bonus-autodesk.png" alt="Parceria Autodesk, licença estudantil" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
       </div>
@@ -1439,11 +2721,11 @@ footer p {
 <section class="sec bg-w" id="ia">
   <div class="si">
     <div class="split split-reverse">
-      <div class="split-img gs"><img src="img/workspace_inspiration.png" alt="IA integrada ao fluxo" loading="lazy" class="clip-r"></div>
+      <div class="split-img gs" data-r="right" style="flex:1.5;overflow:visible"><img src="img/iadeprimeira.jpeg" alt="IA de Primeira — método PDP com agentes treinados" loading="lazy" class="clip-r" style="width:115%;max-width:none;margin-right:-12%;border-radius:14px"></div>
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">IA DE PRIMEIRA</p>
-        <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);line-height:1.2">Aprenda a usar IA no seu processo — e receba ferramentas prontas.</p>
-        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">Você vai aprender a usar inteligência artificial de verdade no seu fluxo de projeto. E vai receber agentes já treinados com o método PDP: briefing, memorial, cronograma e proposta — no seu padrão, em minutos.</p>
+        <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.5vw,30px);line-height:1.2">Aprenda a usar IA no seu processo e receba ferramentas prontas.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-top:16px">Você vai aprender a usar inteligência artificial de verdade no seu fluxo de projeto. E vai receber agentes já treinados com o método PDP: briefing, memorial, cronograma e proposta, no seu padrão, em minutos.</p>
         <div class="gs" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Prompts prontos por etapa</span></div>
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Assistentes configurados</span></div>
@@ -1461,16 +2743,98 @@ footer p {
 <section class="sec bg-o" id="extras">
   <div class="si">
     <div class="split split-reverse">
-      <div class="split-img gs"><img src="img/minimalist_interior_design.png" alt="Organização" loading="lazy" class="clip-r"></div>
+      <div class="split-img dash-wrap gs" data-r="right">
+        <div class="dash-frame">
+          <div class="dash-bar">
+            <span class="dash-dot"></span><span class="dash-dot"></span><span class="dash-dot"></span>
+            <span class="dash-url">Plataforma do Desafio</span>
+          </div>
+          <div class="dash-body">
+            <p class="dash-section-label">TUDO QUE VEM JUNTO</p>
+            <div class="tool-grid">
+              <!-- Plataforma Desafio -->
+              <div class="tool-card">
+                <div class="tool-art">
+                  <div class="tool-pl-row">
+                    <span class="tool-pl-dot done"></span>
+                    <span class="tool-pl-dot done"></span>
+                    <span class="tool-pl-dot done"></span>
+                    <span class="tool-pl-dot done"></span>
+                    <span class="tool-pl-dot active"></span>
+                    <span class="tool-pl-dot"></span>
+                  </div>
+                  <div class="tool-pl-bar"><div class="tool-pl-fill" style="width:70%"></div></div>
+                </div>
+                <p class="tool-name">Plataforma do Desafio</p>
+                <p class="tool-sub">6 sprints semanais</p>
+              </div>
+
+              <!-- WhatsApp -->
+              <div class="tool-card">
+                <div class="tool-art tool-wa">
+                  <div class="tool-bub left">Boa tarde, time!</div>
+                  <div class="tool-bub right me">Mando o backlog hoje</div>
+                  <div class="tool-bub left">Mandei a base no Notion 🔥</div>
+                  <span class="tool-online">● 4 online</span>
+                </div>
+                <p class="tool-name">Grupo no WhatsApp</p>
+                <p class="tool-sub">Direto com o Rodrigo</p>
+              </div>
+
+              <!-- Notion -->
+              <div class="tool-card">
+                <div class="tool-art tool-no">
+                  <div class="tool-no-head">
+                    <span class="tool-no-icon">N</span>
+                    <span class="tool-no-title">PDP · Implementação</span>
+                  </div>
+                  <div class="tool-no-row"><span class="tool-no-check on"></span> Briefing do cliente</div>
+                  <div class="tool-no-row"><span class="tool-no-check on"></span> Layout aprovado</div>
+                  <div class="tool-no-row"><span class="tool-no-check"></span> Detalhamento F1</div>
+                </div>
+                <p class="tool-name">Template Notion</p>
+                <p class="tool-sub">Tudo organizado</p>
+              </div>
+
+              <!-- Premiações -->
+              <div class="tool-card prize-card">
+                <div class="tool-art tool-pr">
+                  <svg viewBox="0 0 110 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <!-- AirPods -->
+                    <rect x="6" y="22" width="40" height="20" rx="9" fill="#fff" stroke="#c8c6be" stroke-width="0.7"/>
+                    <ellipse cx="16" cy="22" rx="5" ry="4" fill="#fff" stroke="#c8c6be" stroke-width="0.5"/>
+                    <ellipse cx="36" cy="22" rx="5" ry="4" fill="#fff" stroke="#c8c6be" stroke-width="0.5"/>
+                    <line x1="16" y1="17" x2="16" y2="11" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="36" y1="17" x2="36" y2="11" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="16" y1="17" x2="16" y2="11" stroke="#dad8d0" stroke-width="0.4" stroke-linecap="round"/>
+                    <line x1="36" y1="17" x2="36" y2="11" stroke="#dad8d0" stroke-width="0.4" stroke-linecap="round"/>
+                    <circle cx="26" cy="32" r="0.7" fill="#a8a69e"/>
+                    <!-- Livros -->
+                    <rect x="56" y="42" width="48" height="2.5" fill="#d3d1c7"/>
+                    <rect x="58" y="20" width="6" height="22" fill="#1e1e1e"/>
+                    <rect x="65" y="24" width="7" height="18" fill="#3d3d3a"/>
+                    <rect x="73" y="16" width="6" height="26" fill="#5f5e5a"/>
+                    <rect x="80" y="22" width="8" height="20" fill="#888780"/>
+                    <rect x="89" y="18" width="6" height="24" fill="#1e1e1e"/>
+                    <rect x="96" y="26" width="7" height="16" fill="#b4b2a9"/>
+                  </svg>
+                </div>
+                <p class="tool-name">Premiações ao concluir</p>
+                <p class="tool-sub">AirPods Pro · Livros · PIX</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">COMUNIDADE E SUPORTE</p>
         <p class="gs fm" style="font-weight:700;font-size:clamp(24px,3.5vw,32px);margin-bottom:28px">Você não implementa sozinho</p>
         <ul class="checklist">
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo do Desafio com o Rodrigo</strong> — acesso direto durante as 6 semanas</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo das Mães de Primeira</strong> — espaço exclusivo para mães que projetam</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo pós-desafio</strong> — rede permanente de quem já implementou</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Implementação Notion ao vivo</strong> — software nunca mais é desculpa</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Premiações do Desafio</strong> — AirPods Pro, PIX e livros para quem conclui</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo do Desafio com o Rodrigo</strong>: acesso direto durante as 6 semanas</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo das Mães de Primeira</strong>: espaço exclusivo para mães que projetam</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo pós-desafio</strong>: rede permanente de quem já implementou</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Implementação Notion ao vivo</strong>: software nunca mais é desculpa</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Premiações do Desafio</strong>: AirPods Pro, PIX e livros para quem conclui</span></li>
         </ul>
       </div>
     </div>
@@ -1480,23 +2844,64 @@ footer p {
 <!-- ============================== -->
 <!-- 12. CREDENCIAIS                 -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding-top:100px;padding-bottom:100px" id="credenciais">
+<section class="sec-short bg-w" style="padding-top:120px;padding-bottom:120px" id="credenciais">
   <div class="si">
-    <p class="gs label tc" style="color:var(--black);margin-bottom:48px">UM MÉTODO COM HISTÓRIA E RESULTADO</p>
-    <div class="stats gs" style="margin-bottom:56px">
-      <div class="tc"><p class="stat-n" data-count="26">0</p><p class="stat-l">turmas</p></div>
-      <div class="tc"><p class="stat-n" data-count="7000" data-suffix="+">0</p><p class="stat-l">alunos</p></div>
-      <div class="tc"><p class="stat-n" data-count="12">0</p><p class="stat-l">países</p></div>
-      <div class="tc"><p class="stat-n" data-count="97">0</p><p class="stat-l">dias de garantia</p></div>
+    <!-- Header editorial -->
+    <p class="gs label tc" style="margin-bottom:20px">CREDENCIAIS</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 16px">Validado em campo. Reconhecido onde importa.</p>
+    <p class="gs tc" style="font-size:clamp(15px,1.8vw,17px);color:var(--g500);max-width:540px;margin:0 auto 72px;line-height:1.6;font-style:italic;font-family:'DM Serif Display'">Sete anos refinando. Milhares aplicando. Uma chancela que poucos têm.</p>
+
+    <!-- TIER 1: Stats com divisores verticais -->
+    <div class="cr-stats gs">
+      <div class="cr-stat">
+        <p class="cr-num" data-count="26">0</p>
+        <p class="cr-lab">turmas</p>
+      </div>
+      <div class="cr-divider"></div>
+      <div class="cr-stat">
+        <p class="cr-num" data-count="7000" data-suffix="+">0</p>
+        <p class="cr-lab">alunos em 12 países</p>
+      </div>
+      <div class="cr-divider"></div>
+      <div class="cr-stat">
+        <p class="cr-num" data-count="80" data-prefix="+" data-suffix="h">0</p>
+        <p class="cr-lab">documentadas</p>
+      </div>
+      <div class="cr-divider"></div>
+      <div class="cr-stat">
+        <p class="cr-num" style="font-size:clamp(28px,4vw,40px);line-height:1.1;font-style:italic">MEC</p>
+        <p class="cr-lab">chancela oficial</p>
+      </div>
     </div>
-    <div class="sn">
-      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-graduation"/></svg></span>Extensão Universitária com chancela do MEC</div>
-      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-book"/></svg></span>Válido no seu Currículo Lattes</div>
-      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-scale"/></svg></span>Método Patenteado</div>
-      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-users"/></svg></span>24 turmas · +4.000 alunos pelo mundo</div>
-      <div class="cred gs"><span class="cred-i"><svg class="icon" style="width:18px;height:18px"><use href="#i-check-circle"/></svg></span>Milhares de Aprovações de Primeira</div>
+
+    <!-- TIER 2: Credenciais qualitativas com selo -->
+    <div class="cred-row" data-s style="margin-top:88px">
+      <div class="cred-card gs">
+        <div class="cred-seal"></div>
+        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-graduation"/></svg></span>
+        <p class="cred-name">Chancela MEC</p>
+        <p class="cred-desc">Curso de Extensão Universitária reconhecido pelo Ministério da Educação.</p>
+      </div>
+      <div class="cred-card gs">
+        <div class="cred-seal"></div>
+        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-scale"/></svg></span>
+        <p class="cred-name">Método Patenteado</p>
+        <p class="cred-desc">Processo proprietário registrado. Não é teoria solta. É metodologia rastreável.</p>
+      </div>
+      <div class="cred-card gs">
+        <div class="cred-seal"></div>
+        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-book"/></svg></span>
+        <p class="cred-name">Válido no Currículo</p>
+        <p class="cred-desc">Pontua em formação continuada. Vale para quem leciona ou está em pós-graduação.</p>
+      </div>
     </div>
-    <p class="gs fs tc" style="font-style:italic;font-size:clamp(16px,2vw,20px);color:var(--g500);margin-top:48px">&ldquo;Eu só ensino o que já validei.&rdquo;</p>
+
+    <!-- Quote editorial -->
+    <div class="gs cr-quote">
+      <span class="cr-qmark">"</span>
+      <p class="cr-quote-text">Eu só ensino o que já validei.</p>
+      <p class="cr-quote-by">Rodrigo Rosar</p>
+    </div>
   </div>
 </section>
 
@@ -1505,29 +2910,26 @@ footer p {
 <!-- ============================== -->
 <section class="sec bg-o" id="bonus">
   <div class="si">
-    <p class="gs label tc" style="margin-bottom:48px">BÔNUS EXCLUSIVOS</p>
+    <p class="gs label tc" style="margin-bottom:18px">BÔNUS EXCLUSIVOS</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 64px">Quem entra agora, leva mais.</p>
 
-    <!-- Bônus 1: Imersão de Vendas (quem entrar hoje) -->
-    <div class="split" style="margin-bottom:80px">
-      <div class="split-img gs" style="display:flex;align-items:center;justify-content:center;background:var(--offwhite);border-radius:12px">
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--graphite)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <div class="bonus-card gs">
+      <div class="bonus-img img-z">
+        <span class="bonus-stamp">BÔNUS</span>
+        <img src="img/commercial_proposal_display.png" alt="Modelo de proposta comercial" loading="lazy">
       </div>
-      <div class="split-text">
-        <div class="gs" style="display:inline-flex;align-items:center;gap:10px;margin-bottom:16px">
-          <span class="tag tag-strong">BÔNUS PRÉ-LANÇAMENTO</span>
-        </div>
-        <p class="gs fm" style="font-weight:700;font-size:clamp(24px,3.5vw,32px)">Imersão de Vendas</p>
-        <p class="gs" style="color:var(--g700);font-size:16px;margin-top:8px;line-height:1.6">Captação de clientes, networking estratégico, e o modelo de proposta que o Rodrigo usa no próprio escritório.</p>
-        <ul class="checklist" style="margin-top:24px">
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>Como atrair clientes que valorizam o seu trabalho</li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>Networking que gera indicações de verdade</li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span>A proposta de projetos real do Rodrigo — pronta para adaptar e usar</li>
+      <div class="bonus-text">
+        <span class="bonus-tag">Por tempo limitado</span>
+        <p class="bonus-name fm">Imersão de Vendas</p>
+        <p class="bonus-desc">Captação de clientes, networking estratégico, e o modelo de proposta que o Rodrigo usa no próprio escritório.</p>
+        <ul class="bonus-list">
+          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>Como atrair clientes que valorizam o seu trabalho</li>
+          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>Networking que gera indicações de verdade</li>
+          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>A proposta de projetos real do Rodrigo, pronta para adaptar e usar</li>
         </ul>
-        <p class="gs fm" style="font-weight:600;font-size:14px;color:var(--g500);margin-top:20px">Disponível apenas para a turma de pré-lançamento.</p>
+        <p class="bonus-foot">Disponível apenas nesta janela de inscrição.</p>
       </div>
     </div>
-
-    <!-- Bônus 2 movido para depois da garantia -->
   </div>
 </section>
 
@@ -1537,11 +2939,44 @@ footer p {
 <section class="sec-short bg-w" style="padding:100px 24px" id="depoimentos">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:48px">QUEM JÁ PASSOU PELA TRANSFORMAÇÃO</p>
-    <div class="tg">
-      <div class="tc-card gs"><span class="tag" style="align-self:flex-start">ALUNA PDP</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Juntei um pouquinho de um, do outro... virou o <strong>Frankenstein</strong>. Implementar o PDP foi a virada de chave.</p><p class="tc-nm">Amanda Colombo</p></div>
-      <div class="tc-card gs"><span class="tag tag-strong" style="align-self:flex-start">ALUNA DO DESAFIO</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Mais de <strong>20 anos</strong> sobrecarregada... Era falta de processos.</p><p class="tc-cta">20 ANOS → PRONTA PARA CONTRATAR</p><p class="tc-nm">Priscilla Chaccur</p></div>
-      <div class="tc-card gs"><span class="tag tag-strong" style="align-self:flex-start">ALUNO DO DESAFIO</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Voltar a colocar a minha filha para dormir, isso não tem preço. Antes eu ia dormir sempre às 2 da manhã.</p><p class="tc-nm">Armstrong Gomes</p></div>
-      <div class="tc-card gs"><span class="tag" style="align-self:flex-start">ALUNA PDP</span><p class="tc-qm">&ldquo;</p><p class="tc-qt">Hoje eu pagaria <strong>DUAS, TRÊS VEZES</strong> de olhos fechados.</p><p class="tc-nm">Amanda Cagliari</p></div>
+    <div class="tg" data-s>
+      <div class="tc-card gs">
+        <div class="tc-video" data-yt="E5EPIXj78bI" style="background-image:url('https://i.ytimg.com/vi/E5EPIXj78bI/hqdefault.jpg')">
+          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
+        <p class="tc-qm">&ldquo;</p>
+        <p class="tc-qt">Juntei um pouquinho de um, do outro... virou o <strong>Frankenstein</strong>. Implementar o PDP foi a virada de chave.</p>
+        <p class="tc-nm">Amanda Colombo</p>
+      </div>
+      <div class="tc-card gs">
+        <div class="tc-video" data-yt="KhV2II9aKBU" style="background-image:url('https://i.ytimg.com/vi/KhV2II9aKBU/maxresdefault.jpg')">
+          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
+        <p class="tc-qm">&ldquo;</p>
+        <p class="tc-qt">Mais de <strong>20 anos</strong> sobrecarregada... Era falta de processos.</p>
+        <p class="tc-cta">20 ANOS → PRONTA PARA CONTRATAR</p>
+        <p class="tc-nm">Priscilla Chaccur</p>
+      </div>
+      <div class="tc-card gs">
+        <div class="tc-video" data-yt="5RyxHhRKOJI" style="background-image:url('https://i.ytimg.com/vi/5RyxHhRKOJI/hqdefault.jpg')">
+          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="tag" style="align-self:flex-start">ALUNO DA IMPLEMENTAÇÃO</span>
+        <p class="tc-qm">&ldquo;</p>
+        <p class="tc-qt">Voltar a colocar a minha filha para dormir, isso não tem preço. Antes eu ia dormir sempre às 2 da manhã.</p>
+        <p class="tc-nm">Armstrong Gomes</p>
+      </div>
+      <div class="tc-card gs">
+        <div class="tc-video" data-yt="zoOUWrgjV7c" style="background-image:url('https://i.ytimg.com/vi/zoOUWrgjV7c/hqdefault.jpg')">
+          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
+        <p class="tc-qm">&ldquo;</p>
+        <p class="tc-qt">Hoje eu pagaria <strong>DUAS, TRÊS VEZES</strong> de olhos fechados.</p>
+        <p class="tc-nm">Amanda Cagliari</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1549,54 +2984,80 @@ footer p {
 <!-- ============================== -->
 <!-- 15. EXCLUSIVIDADE               -->
 <!-- ============================== -->
-<section class="sec bg-d" id="exclusividade">
-  <div class="sn" style="position:relative;z-index:1;margin:0 auto">
-    <div class="gs"><svg class="icon icon-lg icon-light"><use href="#i-star"/></svg></div>
-    <p class="gs fm" style="font-weight:700;font-size:clamp(24px,4vw,34px);color:#fff;margin-top:20px;line-height:1.2">Acesso ao pré-lançamento. Turma fundadora.</p>
-    <p class="gs" style="font-size:16px;color:var(--g300);margin-top:16px;line-height:1.6;max-width:520px">Quem entrar agora entra antes de todo mundo — e ajuda a construir o programa junto com o Rodrigo.</p>
-    <ul class="checklist" style="margin-top:36px">
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso antes da primeira turma oficial</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Pode opinar e sugerir conteúdos</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Participa da construção junto com ele</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Condição que não vai se repetir depois</li>
+<section class="fullbleed" id="exclusividade">
+  <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Inscrições abertas" loading="lazy" class="clip-r"></div>
+  <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.78) 0%,rgba(26,26,26,.92) 100%)"></div>
+  <div class="fullbleed-content">
+    <div class="gs"><svg class="icon icon-lg icon-light" style="margin:0 auto"><use href="#i-star"/></svg></div>
+    <p class="gs fm" style="font-weight:700;font-size:clamp(24px,4vw,34px);color:#fff;margin-top:20px;line-height:1.2">Inscrições abertas. Vagas limitadas.</p>
+    <p class="gs" style="font-size:16px;color:var(--g300);margin-top:16px;line-height:1.6;max-width:540px;margin-left:auto;margin-right:auto">Você começa a implementar com o Rodrigo na próxima turma do Desafio.</p>
+    <ul class="checklist" style="margin-top:36px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto">
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso direto ao Rodrigo no Desafio de 6 semanas</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Bônus exclusivos por tempo limitado</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso a 80+ horas de método PDP documentado</li>
+      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Garantia incondicional de 97 dias</li>
     </ul>
-    <p class="gs fs" style="font-style:italic;font-size:18px;color:var(--g300);margin-top:48px">&ldquo;Quero que você seja o meu melhor case.&rdquo;</p>
   </div>
 </section>
 
 <!-- ============================== -->
 <!-- 16. ANCORAGEM + PRODUTO         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:80px 24px" id="ancoragem">
-  <div class="sn" style="margin:0 auto">
-    <p class="gs label tc" style="margin-bottom:32px">VALOR REAL DA IMPLEMENTAÇÃO</p>
+<section class="sec-short bg-w" style="padding:120px 24px" id="ancoragem">
+  <div class="si">
+    <p class="gs label tc" style="margin-bottom:56px">VALOR REAL DA IMPLEMENTAÇÃO</p>
 
-    <div style="display:grid;grid-template-columns:1fr;gap:0;font-size:14px" class="gs">
-      <!-- Acompanhamento -->
-      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black)">Acompanhamento</p>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Desafio 6 semanas no WhatsApp com Rodrigo + Premiação</span><span class="pr-v" style="font-size:13px">R$ 2.000</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Repetir o desafio 4 vezes se quiser</span><span class="pr-v" style="font-size:13px">R$ 8.000</span></div>
+    <div class="anc-receipt gs">
+      <div class="anc-section">
+        <div class="anc-cat-head">
+          <span class="anc-cat-num">01</span>
+          <p class="anc-cat-name">Acompanhamento</p>
+          <span class="anc-cat-line"></span>
+        </div>
+        <div class="anc-row"><span class="anc-name">Desafio 6 semanas no WhatsApp com Rodrigo + Premiação</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
+        <div class="anc-row"><span class="anc-name">Repetir o desafio 4 vezes se quiser</span><span class="anc-dots"></span><span class="anc-val">R$ 8.000</span></div>
+      </div>
 
-      <!-- Método -->
-      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black);margin-top:8px">Método</p>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Método PDP completo + Chancela MEC</span><span class="pr-v" style="font-size:13px">R$ 3.497</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Kit Documentos de Primeira</span><span class="pr-v" style="font-size:13px">R$ 1.997</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Templates de Projeto (Revit, Archicad, SketchUp, AutoCAD)</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Workbooks de detalhamento — 213 páginas</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Template Notion + implementação ao vivo</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Licença estudantil e desconto em ferramentas</span><span class="pr-v" style="font-size:13px;text-decoration:none;color:var(--g500)">—</span></div>
+      <div class="anc-section">
+        <div class="anc-cat-head">
+          <span class="anc-cat-num">02</span>
+          <p class="anc-cat-name">Método</p>
+          <span class="anc-cat-line"></span>
+        </div>
+        <div class="anc-row"><span class="anc-name">Método PDP completo + Chancela MEC</span><span class="anc-dots"></span><span class="anc-val">R$ 3.497</span></div>
+        <div class="anc-row"><span class="anc-name">Kit Documentos de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.997</span></div>
+        <div class="anc-row"><span class="anc-name">Templates de Projeto (Revit, Archicad, SketchUp, AutoCAD)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Workbooks de detalhamento, 213 páginas</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Template Notion + implementação ao vivo</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Licença estudantil e desconto em ferramentas</span><span class="anc-dots"></span><span class="anc-val anc-na">incluso</span></div>
+      </div>
 
-      <!-- IA -->
-      <p class="fm" style="font-weight:700;font-size:11px;color:var(--black);padding:16px 0 6px;letter-spacing:0.1em;text-transform:uppercase;border-top:2px solid var(--black);margin-top:8px">Inteligência Artificial</p>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Novo Curso IA de Primeira</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Ferramentas e assistentes IA prontos</span><span class="pr-v" style="font-size:13px">R$ 1.500</span></div>
-      <div class="pr" style="padding:8px 0"><span class="pr-i" style="font-size:13px">Aprenda a criar suas próprias soluções</span><span class="pr-v" style="font-size:13px;text-decoration:none;color:var(--g500);font-style:italic">inestimável</span></div>
+      <div class="anc-section">
+        <div class="anc-cat-head">
+          <span class="anc-cat-num">03</span>
+          <p class="anc-cat-name">Inteligência Artificial</p>
+          <span class="anc-cat-line"></span>
+        </div>
+        <div class="anc-row"><span class="anc-name">Novo Curso IA de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Ferramentas e assistentes IA prontos</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Aprenda a criar suas próprias soluções</span><span class="anc-dots"></span><span class="anc-val anc-pri">inestimável</span></div>
+      </div>
 
-      <!-- Comunidade -->
-      <div class="pr" style="padding:8px 0;margin-top:8px;border-top:2px solid var(--black)"><span class="pr-i" style="font-size:13px">Comunidade + Suporte</span><span class="pr-v" style="font-size:13px">R$ 997</span></div>
+      <div class="anc-section">
+        <div class="anc-cat-head">
+          <span class="anc-cat-num">04</span>
+          <p class="anc-cat-name">Comunidade</p>
+          <span class="anc-cat-line"></span>
+        </div>
+        <div class="anc-row"><span class="anc-name">Comunidade + Suporte</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+      </div>
+
+      <!-- Total dentro do card -->
+      <div class="anc-total-row">
+        <p class="anc-total-label">Total em valor real</p>
+        <p class="anc-total-val fm">R$ 22.985</p>
+      </div>
     </div>
-
-    <div class="gs pr-total" style="margin-top:16px"><span style="color:var(--offwhite);font-size:14px">Total em valor real</span><span class="fm" style="font-weight:800;font-size:22px;color:#fff">R$ 22.985</span></div>
   </div>
 </section>
 
@@ -1604,48 +3065,83 @@ footer p {
 <!-- 17. PREÇO                       -->
 <!-- ============================== -->
 <section class="sec bg-o" id="preco">
-  <div class="sn tc" style="margin:0 auto">
-    <p class="gs" style="color:var(--g500);font-size:16px">Investimento para a turma fundadora:</p>
-    <p class="gs" style="margin-top:16px;color:var(--g500);font-size:18px"><s>R$ 5.997</s></p>
-    <p class="big-price gs" id="big-price" style="margin-top:8px;color:var(--black)">12x de R$ 390</p>
-    <p class="gs" style="color:var(--g700);font-size:15px;margin-top:8px">sem juros, no plano anual</p>
-    <p class="gs" style="color:var(--g500);font-size:17px;margin-top:16px">ou R$ 3.997 no PIX <span style="font-size:14px">(15% de desconto)</span></p>
-    <div class="gs" style="border-top:1px solid var(--g300);padding-top:32px;margin-top:40px">
-      <span class="tag tag-strong" style="font-size:12px;padding:8px 24px">CONDIÇÃO DE PRÉ-LANÇAMENTO</span>
-      <p style="color:var(--g700);font-size:14px;max-width:440px;margin:16px auto 0;line-height:1.6">Esse valor é exclusivo para quem entra agora, na turma fundadora. Depois do lançamento oficial, o preço muda.</p>
+  <div class="pr-card gs">
+    <div class="pr-ribbon">OFERTA POR TEMPO LIMITADO</div>
+
+    <p class="pr-intro">Investimento</p>
+    <p class="pr-old">De <s>R$ 5.997</s></p>
+
+    <p class="big-price pr-main fm" id="big-price">
+      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">390</span>
+    </p>
+    <p class="pr-meta">sem juros, no plano anual</p>
+
+    <div class="pr-or"><span>OU</span></div>
+
+    <div class="pr-pix-row">
+      <p class="pr-pix-val fm">R$ 3.997 <span class="pr-pix-tag">à vista no PIX</span></p>
+      <p class="pr-pix-save">Você economiza R$ 683 (15% off)</p>
     </div>
-    <div class="gs" style="margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:640px;margin-left:auto;margin-right:auto">
-      <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px;background:#2D6A4F;color:#fff">PIX COM 15% OFF</a>
-      <a href="https://pay.hotmart.com/U104887798W?bid=1774198329832" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px;background:#1E3A5F;color:#fff">CARTÃO 12X SEM JUROS</a>
-      <a href="https://pay.tmbeducacao.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="cta" style="flex:1;min-width:180px;text-align:center;font-size:14px;padding:18px 20px;background:#4A4453;color:#fff">BOLETO PARCELADO</a>
+
+    <div class="pr-actions">
+      <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" target="_blank" class="pr-btn primary">
+        <span>Pagar no PIX</span>
+        <span class="pr-btn-tag">15% OFF</span>
+      </a>
+      <div class="pr-btn-row">
+        <a href="https://pay.hotmart.com/U104887798W?bid=1774198329832" target="_blank" class="pr-btn ghost">
+          Cartão 12x sem juros
+        </a>
+        <a href="https://pay.tmbeducacao.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">
+          Boleto parcelado
+        </a>
+      </div>
     </div>
+
+    <div class="pr-trust">
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg> Garantia 97 dias</span>
+      <span class="pr-dot"></span>
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-check-circle"/></svg> Pagamento seguro</span>
+      <span class="pr-dot"></span>
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-graduation"/></svg> Certificado MEC</span>
+    </div>
+
+    <p class="pr-note">Esse valor é exclusivo para quem entra nesta janela de inscrição. Depois, o preço sobe.</p>
   </div>
 </section>
 
 <!-- ============================== -->
 <!-- 18. ROI                         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:100px 24px" id="roi">
+<section class="sec-short bg-w" style="padding:120px 24px" id="roi">
   <div class="si">
-    <p class="gs label" style="margin-bottom:32px">RETORNO DO INVESTIMENTO</p>
-    <div class="roi-g">
-      <div class="roi-c gs">
-        <div class="roi-icon"><svg><use href="#i-check-circle"/></svg></div>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Uma reunião a menos <strong>refazendo</strong> o que o cliente pediu errado</p>
-        <p class="fm" style="font-weight:700;font-size:15px">Já pagou o investimento.</p>
+    <p class="gs label tc" style="margin-bottom:18px">RETORNO DO INVESTIMENTO</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 16px">Vale o investimento. Já nos primeiros meses.</p>
+    <p class="gs tc" style="font-size:clamp(15px,1.8vw,17px);color:var(--g500);max-width:520px;margin:0 auto 72px;line-height:1.6">Faça as contas com a gente.</p>
+
+    <div class="roi-g" data-s>
+      <div class="roi-card gs">
+        <p class="roi-num">1<span class="roi-num-x">×</span></p>
+        <p class="roi-headline">Já pagou o investimento</p>
+        <p class="roi-desc">Uma reunião a menos <strong>refazendo</strong> o que o cliente pediu errado.</p>
       </div>
-      <div class="roi-c gs">
-        <div class="roi-icon"><svg><use href="#i-trending"/></svg></div>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Se evitar <strong>UM</strong> projeto no prejuízo</p>
-        <p class="fm" style="font-weight:700;font-size:15px">Pagou 3 vezes.</p>
+      <div class="roi-card gs">
+        <p class="roi-num">3<span class="roi-num-x">×</span></p>
+        <p class="roi-headline">Pagou três vezes</p>
+        <p class="roi-desc">Se evitar <strong>UM</strong> projeto no prejuízo neste ano.</p>
       </div>
-      <div class="roi-c gs">
-        <div class="roi-icon"><svg><use href="#i-clock"/></svg></div>
-        <p style="font-size:15px;color:var(--graphite);line-height:1.5;flex:1">Se parar de <strong>apagar incêndio</strong> 2 horas por semana</p>
-        <p class="fm" style="font-weight:700;font-size:15px">100 horas por ano de volta.</p>
+      <div class="roi-card gs roi-card-feature">
+        <p class="roi-num">100<span class="roi-num-unit">h</span></p>
+        <p class="roi-headline">Voltam pra você</p>
+        <p class="roi-desc">Se parar de <strong>apagar incêndio</strong> 2 horas por semana.</p>
+        <p class="roi-pill">por ano de vida</p>
       </div>
     </div>
-    <p class="gs fs tc" style="font-style:italic;font-size:18px;color:var(--graphite);margin-top:48px">Quanto vale 100 horas por ano da sua vida?</p>
+
+    <div class="gs roi-quote">
+      <span class="roi-qmark">"</span>
+      <p class="roi-quote-text">Quanto vale 100 horas por ano da sua vida?</p>
+    </div>
   </div>
 </section>
 
@@ -1653,11 +3149,11 @@ footer p {
 <!-- 19. GARANTIA + 18:00            -->
 <!-- ============================== -->
 <section class="fullbleed" id="garantia">
-  <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Escritório às 18h — paz" loading="lazy" class="clip-r"></div>
+  <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Escritório às 18h.paz" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.55) 0%,rgba(26,26,26,.85) 100%)"></div>
   <div class="fullbleed-content">
     <div class="gs"><svg class="icon icon-lg" style="stroke:#fff;margin:0 auto"><use href="#i-shield"/></svg></div>
-    <p class="gs label" style="color:var(--g300);margin:20px 0">GARANTIA DE PRIMEIRA</p>
+    <p class="gs label" style="margin:20px 0">GARANTIA DE PRIMEIRA</p>
     <p class="gs fm" style="font-size:clamp(20px,3vw,26px);font-weight:500;color:#fff">97 dias para aplicar o método.</p>
     <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:700;color:#fff;margin-top:16px;line-height:1.2">Se não funcionar, devolvo tudo + R$ 1.000 de volta.</p>
     <p class="gs fs" style="font-style:italic;font-size:18px;color:var(--g300);margin-top:28px">Na pior das hipóteses, você ganha dinheiro.</p>
@@ -1665,7 +3161,7 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 20. INSCRIÇÕES + BÔNUS (DESATIVADO — reativar durante pitch) -->
+<!-- 20. INSCRIÇÕES + BÔNUS (DESATIVADO.reativar durante pitch) -->
 <!-- ============================== -->
 <!--
 <section class="bg-d" style="padding:0;min-height:auto" id="inscricoes">
@@ -1676,11 +3172,11 @@ footer p {
     <p class="gs" style="font-size:16px;color:var(--g500);margin-top:24px">12x de R$ 390 sem juros · ou R$ 3.997 no PIX</p>
   </div>
   <div style="padding:32px 24px 80px;position:relative;z-index:1">
-    <div class="gs sn" style="margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:clamp(32px,5vw,56px);text-align:center">
+    <div class="gs sn" style="margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:clamp(32px,5vw,56px);text-align:center">
       <p class="fm" style="font-weight:700;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--g500)">BÔNUS EXTRA</p>
       <p class="fm" style="font-weight:800;font-size:clamp(24px,4.5vw,40px);color:#fff;margin-top:16px;line-height:1.15">Consultoria individual<br>com o Rodrigo</p>
       <p style="font-size:15px;color:var(--g300);margin-top:16px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.6">Uma sessão 1 a 1 durante o Desafio de Implementação. Exclusivo para quem se inscrever entre <strong style="color:#fff">15:00 e 15:20</strong>.</p>
-      <div style="margin-top:32px;padding:24px;background:rgba(255,255,255,0.04);border-radius:8px;display:inline-block">
+      <div style="margin-top:32px;padding:24px;background:rgba(255,255,255,0.04);border-radius:14px;display:inline-block">
         <p class="fm" style="font-weight:800;font-size:clamp(14px,2vw,18px);color:#fff;letter-spacing:0.08em">DAS 15:00 ÀS 15:20</p>
         <p style="font-size:13px;color:var(--g500);margin-top:8px">Apenas 20 minutos. Depois, esse bônus desaparece.</p>
       </div>
@@ -1695,8 +3191,8 @@ footer p {
 <section class="sec-short bg-w" style="padding:80px 24px" id="mentor">
   <div class="sn" style="margin:0 auto">
     <div style="display:flex;gap:clamp(24px,4vw,48px);align-items:stretch;flex-wrap:wrap">
-      <div style="flex:0 0 280px">
-        <img src="img/rodrigo-craft.jpg" alt="Rodrigo Rosar" class="gs" style="width:100%;height:100%;border-radius:12px;object-fit:cover;object-position:top">
+      <div class="img-z" style="flex:0 0 280px;border-radius:18px">
+        <img src="img/rodrigo-craft.jpg" alt="Rodrigo Rosar" class="gs" data-r="left" style="width:100%;height:100%;object-fit:cover;object-position:top">
       </div>
       <div style="flex:1;min-width:280px">
         <p class="gs label" style="color:var(--g500);margin-bottom:8px">QUEM VAI TE GUIAR</p>
@@ -1717,15 +3213,15 @@ footer p {
   <div class="sn" style="margin:0 auto">
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,32px);margin-bottom:48px">Perguntas frequentes</p>
     <div class="gs"><details><summary>Preciso saber usar IA?</summary><p>Não. Você vai aprender do zero o que for necessário e receber ferramentas e assistentes prontos para usar.</p></details></div>
-    <div class="gs"><details><summary>Quanto tempo por semana?</summary><p>Os encontros do Desafio duram de 60 a 90 minutos por semana. Para colocar em prática, depende do que você já tem pronto — mas como entregamos tudo pronto, em torno de 2 a 4 horas semanais.</p></details></div>
+    <div class="gs"><details><summary>Quanto tempo por semana?</summary><p>Os encontros do Desafio duram de 60 a 90 minutos por semana. Para colocar em prática, depende do que você já tem pronto. Mas como entregamos tudo pronto, em torno de 2 a 4 horas semanais.</p></details></div>
     <div class="gs"><details><summary>Já sou aluno PDP. Preciso pagar tudo de novo?</summary><p>Não. Quem já é aluno PDP pode fazer upgrade por R$ 1.997. Chame o suporte em <a href="https://rodrigorosar.com.br/suporte" target="_blank" style="color:var(--black);text-decoration:underline">rodrigorosar.com.br/suporte</a>.</p></details></div>
-    <div class="gs"><details><summary>Funciona para quem está começando agora?</summary><p>Sim. O método PDP cobre todo o processo de projeto, do contrato aos executivos. Se você está começando, vai construir o escritório já com a estrutura certa — e não precisar refazer tudo depois. Se já tem experiência, vai organizar o que já faz e ganhar velocidade.</p></details></div>
-    <div class="gs"><details><summary>Como funciona a garantia?</summary><p>Você tem 97 dias para aplicar o método. Para acionar a garantia, é preciso ter participado do Desafio e assistido as aulas do método PDP. Se ainda assim não tiver resultado, agendamos uma consultoria individual para entender o que aconteceu — e se não atendeu suas expectativas, devolvemos 100% do valor + R$ 1.000.</p></details></div>
+    <div class="gs"><details><summary>Funciona para quem está começando agora?</summary><p>Sim. O método PDP cobre todo o processo de projeto, do contrato aos executivos. Se você está começando, vai construir o escritório já com a estrutura certa, sem precisar refazer tudo depois. Se já tem experiência, vai organizar o que já faz e ganhar velocidade.</p></details></div>
+    <div class="gs"><details><summary>Como funciona a garantia?</summary><p>Você tem 97 dias para aplicar o método. Para acionar a garantia, é preciso ter participado do Desafio e assistido as aulas do método PDP. Se ainda assim não tiver resultado, agendamos uma consultoria individual para entender o que aconteceu. Se não atendeu suas expectativas, devolvemos 100% do valor + R$ 1.000.</p></details></div>
     <div class="gs"><details><summary>Tem suporte se eu travar?</summary><p>Grupo do desafio com Rodrigo + implementação Notion ao vivo + comunidade + suporte contínuo.</p></details></div>
   </div>
 </section>
 
-<!-- MOBILE CTA (desativado — modo apresentação) -->
+<!-- MOBILE CTA (desativado.modo apresentação) -->
 <!-- <div class="mob-cta" id="mobCta"><a href="#">GARANTIR MINHA VAGA</a></div> -->
 
 <!-- FOOTER -->
@@ -1740,6 +3236,14 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 
+// Refresh ScrollTrigger after lazy images load (positions shift → triggers miss)
+window.addEventListener('load', () => ScrollTrigger.refresh());
+document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+  if (img.complete) return;
+  img.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+  img.addEventListener('error', () => ScrollTrigger.refresh(), { once: true });
+});
+
 // PROGRESS BAR only
 const pb = document.getElementById('progressBar');
 ScrollTrigger.create({
@@ -1749,7 +3253,7 @@ ScrollTrigger.create({
   onUpdate: s => { pb.style.width = (s.progress * 100) + '%'; }
 });
 
-// Mobile CTA — desativado (modo apresentação)
+// Mobile CTA.desativado (modo apresentação)
 
 // HERO timeline
 const ht = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -1768,7 +3272,7 @@ gsap.fromTo('#reveal-clip',
   }
 );
 
-// PILARES + G4 — pinned: graph first, then cards rise
+// PILARES + G4.pinned: graph first, then cards rise
 const pilSec = document.getElementById('pilares');
 
 // Phase 1: draw the G4 graph as you scroll into view
@@ -1822,14 +3326,14 @@ if (!isMobile) {
 
 // COUNTER animation
 document.querySelectorAll('[data-count]').forEach(el => {
-  const t = parseInt(el.dataset.count), s = el.dataset.suffix || '';
+  const t = parseInt(el.dataset.count), s = el.dataset.suffix || '', p = el.dataset.prefix || '';
   ScrollTrigger.create({
     trigger: el, start: 'top 80%', once: true,
     onEnter: () => {
       gsap.to({ v: 0 }, {
         v: t, duration: 1.5, ease: 'power2.out',
         onUpdate: function () {
-          el.textContent = Math.round(this.targets()[0].v).toLocaleString('pt-BR') + s;
+          el.textContent = p + Math.round(this.targets()[0].v).toLocaleString('pt-BR') + s;
         }
       });
     }
@@ -1844,7 +3348,7 @@ ScrollTrigger.create({
 // Fallback: garantir visibilidade após 3s
 setTimeout(() => { const el = document.getElementById('big-price'); if (el) el.style.opacity = '1'; }, 3000);
 
-// BONUS COUNTDOWN — 20 minutes
+// BONUS COUNTDOWN.20 minutes
 const countdownEl = document.getElementById('bonus-countdown');
 if (countdownEl) {
   let totalSec = 20 * 60;
@@ -1868,16 +3372,37 @@ if (countdownEl) {
   });
 }
 
-// GENERAL REVEAL — all .gs elements
-document.querySelectorAll('.gs').forEach(el => {
-  if (el.closest('#hero') || el.id === 'reveal-clip' || el.id === 'reveal-desc' || el.closest('#pilares .pilares-grid')) return;
-  gsap.from(el, {
-    autoAlpha: 0, y: 32, duration: 0.7, ease: 'power2.out',
-    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+// STAGGER REVEAL.containers with [data-s] reveal direct .gs children sequentially
+gsap.utils.toArray('[data-s]').forEach(container => {
+  const kids = container.querySelectorAll(':scope > .gs');
+  if (!kids.length) return;
+  kids.forEach(k => k.setAttribute('data-staggered', '1'));
+  gsap.from(kids, {
+    autoAlpha: 0, y: 18, duration: 0.55, ease: 'power2.out',
+    stagger: 0.07,
+    scrollTrigger: { trigger: container, start: 'top 85%', toggleActions: 'play none none none' }
   });
 });
 
-// MATERIALS ACCORDION (módulos PDP) — hover desktop, click mobile
+// GENERAL REVEAL.all .gs elements (with data-r variants)
+document.querySelectorAll('.gs').forEach(el => {
+  if (el.closest('#hero') || el.id === 'reveal-clip' || el.closest('#pilares .pilares-grid')) return;
+  if (el.getAttribute('data-staggered') === '1') return;
+  const variant = el.getAttribute('data-r') || 'up';
+  const opts = { autoAlpha: 0, duration: 0.8, ease: 'power2.out' };
+  switch (variant) {
+    case 'left':  opts.x = -40; break;
+    case 'right': opts.x = 40; break;
+    case 'scale': opts.scale = 0.94; break;
+    case 'zoom':  opts.scale = 1.06; break;
+    case 'fade':  break;
+    default:      opts.y = 32; break;
+  }
+  opts.scrollTrigger = { trigger: el, start: 'top 88%', toggleActions: 'play none none none' };
+  gsap.from(el, opts);
+});
+
+// MATERIALS ACCORDION (módulos PDP).hover desktop, click mobile
 (function(){
   const acc = document.querySelector('[data-mat-acc]');
   if (!acc) return;
@@ -1892,6 +3417,27 @@ document.querySelectorAll('.gs').forEach(el => {
     item.addEventListener('click', () => setActive(item));
     item.addEventListener('focus', () => setActive(item));
     item.setAttribute('tabindex', '0');
+  });
+})();
+
+// YOUTUBE LITE EMBED — depoimentos (carrega iframe só no clique)
+(function(){
+  document.querySelectorAll('.tc-video[data-yt]').forEach(el => {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', 'Reproduzir depoimento em vídeo');
+    const play = () => {
+      if (el.classList.contains('playing')) return;
+      const id = el.dataset.yt;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      el.appendChild(iframe);
+      el.classList.add('playing');
+    };
+    el.addEventListener('click', play);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } });
   });
 })();
 
@@ -1913,7 +3459,7 @@ document.querySelectorAll('.gs').forEach(el => {
   clips.forEach(el => io.observe(el));
 })();
 
-// COUNT-UP — números sobem ao entrar na viewport
+// COUNT-UP.números sobem ao entrar na viewport
 (function(){
   const nums = document.querySelectorAll('[data-count-to]');
   if (!nums.length) return;
