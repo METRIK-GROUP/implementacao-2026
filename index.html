@@ -3233,6 +3233,8 @@ footer p {
       <p class="pr-pix-save">Você economiza R$ 683 (15% off)</p>
     </div>
 
+    <noscript><style>#pr-countdown{display:none!important}#pr-actions{display:flex!important}</style></noscript>
+
     <div class="pr-countdown" id="pr-countdown">
       <p class="pr-cd-msg">As inscrições pra Implementação abrem às 15h</p>
       <div class="pr-cd-grid" aria-live="polite">
@@ -3650,36 +3652,51 @@ document.querySelectorAll('.gs').forEach(el => {
   nums.forEach(el => io.observe(el));
 })();
 
-// COUNTDOWN inscrições.troca CTAs por timer até 2026-05-17 15:00 BRT
+// COUNTDOWN inscrições.countdown até 15h00 BRT.botões liberam às 14h45 BRT (folga 15min)
 (function(){
-  var TARGET = Date.UTC(2026, 4, 17, 18, 0, 0); // 15:00 BRT = 18:00 UTC
-  var countdown = document.getElementById('pr-countdown');
-  var actions = document.getElementById('pr-actions');
-  var hEl = document.getElementById('cd-h');
-  var mEl = document.getElementById('cd-m');
-  var sEl = document.getElementById('cd-s');
-  if (!countdown || !actions || !hEl || !mEl || !sEl) return;
-  var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
-  var tick = function(){
-    var diff = TARGET - Date.now();
-    if (diff <= 0) {
-      countdown.hidden = true;
-      actions.hidden = false;
-      return true;
-    }
-    countdown.hidden = false;
-    actions.hidden = true;
-    var s = Math.floor(diff / 1000);
-    var h = Math.floor(s / 3600);
-    var m = Math.floor((s % 3600) / 60);
-    var sec = s % 60;
-    hEl.textContent = pad(h);
-    mEl.textContent = pad(m);
-    sEl.textContent = pad(sec);
-    return false;
-  };
-  if (tick()) return;
-  var iv = setInterval(function(){ if (tick()) clearInterval(iv); }, 1000);
+  try {
+    var TARGET = Date.UTC(2026, 4, 17, 18, 0, 0); // 15:00 BRT = 18:00 UTC
+    var REVEAL = Date.UTC(2026, 4, 17, 17, 45, 0); // 14:45 BRT = 17:45 UTC
+    var countdown = document.getElementById('pr-countdown');
+    var actions = document.getElementById('pr-actions');
+    var hEl = document.getElementById('cd-h');
+    var mEl = document.getElementById('cd-m');
+    var sEl = document.getElementById('cd-s');
+    if (!countdown || !actions || !hEl || !mEl || !sEl) return;
+    var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
+    var showActions = function(){ try { actions.hidden = false; } catch(e){} };
+    var hideCountdown = function(){ try { countdown.hidden = true; } catch(e){} };
+    var tick = function(){
+      try {
+        var now = Date.now();
+        if (now >= REVEAL) showActions();
+        var diff = TARGET - now;
+        if (diff <= 0) {
+          hideCountdown();
+          showActions();
+          return true;
+        }
+        countdown.hidden = false;
+        var s = Math.floor(diff / 1000);
+        var h = Math.floor(s / 3600);
+        var m = Math.floor((s % 3600) / 60);
+        var sec = s % 60;
+        hEl.textContent = pad(h);
+        mEl.textContent = pad(m);
+        sEl.textContent = pad(sec);
+      } catch(e) { showActions(); return true; }
+      return false;
+    };
+    if (tick()) return;
+    var iv = setInterval(function(){ try { if (tick()) clearInterval(iv); } catch(e){ showActions(); clearInterval(iv); } }, 1000);
+    // Backup setTimeout (caso interval falhe): garante swap nos marcos
+    var nowInit = Date.now();
+    if (nowInit < REVEAL) setTimeout(showActions, Math.min(2147483647, REVEAL - nowInit + 500));
+    if (nowInit < TARGET) setTimeout(function(){ hideCountdown(); showActions(); }, Math.min(2147483647, TARGET - nowInit + 500));
+  } catch(e) {
+    // Fallback total: mostra botões
+    var a = document.getElementById('pr-actions'); if (a) a.hidden = false;
+  }
 })();
 </script>
 </body>
