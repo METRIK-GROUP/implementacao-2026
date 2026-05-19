@@ -248,10 +248,10 @@ section {
    ================================ */
 .label {
   display: inline-block;
-  padding: 5px 12px;
-  background: rgba(0,0,0,0.05);
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.06);
   border-radius: 8px;
-  font-family: 'Maven Pro'; font-size: 11px; font-weight: 600;
+  font-family: 'Maven Pro'; font-size: 12px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--graphite);
 }
@@ -340,6 +340,34 @@ section {
   max-width: 560px; margin-left: auto; margin-right: auto;
 }
 .hero-text .h-pillars { margin-top: 20px; }
+.hero-cta-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 28px;
+  padding: 14px 26px;
+  min-height: 48px;
+  background: #fff;
+  color: var(--black);
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700; font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 10px 32px rgba(255,255,255,0.1);
+  transition: transform 0.25s cubic-bezier(.16,1,.3,1), background 0.2s ease, box-shadow 0.3s ease;
+  align-self: flex-start;
+}
+.hero-cta-link svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+.hero-cta-link:hover {
+  transform: translateY(-2px);
+  background: #fff;
+  box-shadow: 0 16px 44px rgba(255,255,255,0.18);
+}
+.hero-cta-link:hover svg { transform: translateX(4px); }
+@media (max-width: 919px) {
+  .hero-cta-link { align-self: center; }
+}
 .hero-video { grid-area: video; }
 .hero-video {
   width: 100%; max-width: 100%;
@@ -442,6 +470,11 @@ section {
   font-size: clamp(26px, 5vw, 50px);
   line-height: 1.12; color: #fff;
   letter-spacing: -0.01em;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+@media (min-width: 920px) {
+  .hero-promise { max-width: 18ch; }
 }
 .hero-sub {
   margin-top: 28px;
@@ -2965,7 +2998,7 @@ footer p {
 <!-- ============================== -->
 <!-- 1. HERO                        -->
 <!-- ============================== -->
-<section class="hero" id="hero">
+<section class="hero" id="hero" aria-label="Apresentação principal">
   <div class="grain"></div>
   <div class="hero-content">
     <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo" fetchpriority="high" decoding="async">
@@ -2991,6 +3024,10 @@ footer p {
           <span>IA de ponta a ponta</span>
         </span>
       </div>
+      <a href="#preco" class="gs hero-cta-link" id="h-cta">
+        <span>Quero me inscrever</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
     <button class="hero-video gs hero-video-facade" id="h-video" data-yt="ZYmfHtTaEdA" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
       <img src="img/hero-video-thumb.png" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
@@ -3006,7 +3043,7 @@ footer p {
 <!-- ============================== -->
 <!-- 2. PROBLEMA                    -->
 <!-- ============================== -->
-<section class="fullbleed" id="antes-depois">
+<section class="fullbleed" id="antes-depois" aria-label="Para quem é o programa">
   <div class="fullbleed-bg"><img src="img/chaos_vs._order.png" alt="Do caos à ordem" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,0.75) 0%,rgba(26,26,26,0.95) 100%)"></div>
   <div class="fullbleed-content">
@@ -3024,7 +3061,7 @@ footer p {
 <!-- ============================== -->
 <!-- 3. ESPELHO DA DOR              -->
 <!-- ============================== -->
-<section class="sec bg-w" id="espelho-dor">
+<section class="sec bg-w" id="espelho-dor" aria-label="Dores reais dos arquitetos">
   <div class="si">
     <div class="split">
       <div class="split-img gs" data-r="left"><img src="img/noite_no_escritorio.png" alt="A rotina que consome a noite do profissional" loading="lazy" class="clip-r"></div>
@@ -3055,7 +3092,7 @@ footer p {
 <!-- ============================== -->
 <!-- 3c. PROCESSO + IA              -->
 <!-- ============================== -->
-<section class="sec bg-w" id="processo-ia">
+<section class="sec bg-w" id="processo-ia" aria-label="Como processo e IA se conectam">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:16px">A PERGUNTA QUE TODO MUNDO FAZ HOJE</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,38px);line-height:1.2;max-width:680px;margin:0 auto 24px;text-wrap:balance">E onde a inteligência artificial entra nisso tudo?</p>
@@ -3106,7 +3143,7 @@ footer p {
 <!-- ============================== -->
 <!-- 3b. PARA QUEM É                -->
 <!-- ============================== -->
-<section class="sec-short bg-o" style="padding:96px 24px" id="para-quem">
+<section class="sec-short bg-o" style="padding:96px 24px" id="para-quem" aria-label="Três momentos do escritório">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:16px">PARA QUEM É</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.2;max-width:720px;margin:0 auto 16px">Pensada para três momentos do escritório.</p>
@@ -3139,7 +3176,7 @@ footer p {
 <!-- ============================== -->
 <!-- 6. POSICIONAMENTO              -->
 <!-- ============================== -->
-<section class="sec bg-w" id="posicionamento">
+<section class="sec bg-w" id="posicionamento" aria-label="O que é a Implementação">
   <div class="sn tc" style="margin:0 auto">
     <p class="gs fm" style="font-size:clamp(22px,4vw,32px);font-weight:600;line-height:1.3">Não é mais um curso para assistir <span style="text-decoration:line-through;color:var(--g300)">quando sobrar tempo</span> <span style="color:var(--g500);font-weight:400;font-size:clamp(16px,2.5vw,22px)">(que nunca sobra).</span></p>
     <p class="gs fm" style="font-size:clamp(22px,4vw,32px);font-weight:600;line-height:1.3;margin-top:20px">É uma implementação que vai te guiar: <span style="font-weight:800">clareza, direção e velocidade.</span></p>
@@ -3150,7 +3187,7 @@ footer p {
 <!-- ============================== -->
 <!-- 7. PILARES + G4                -->
 <!-- ============================== -->
-<section class="bg-d" id="pilares" style="padding:0;position:relative;overflow:hidden">
+<section class="bg-d" id="pilares" aria-label="Os 3 passos da Implementação" style="padding:0;position:relative;overflow:hidden">
   <div class="si" style="padding:120px 24px 100px;position:relative">
     <p class="gs pilares-title">DO CAOS À ESCALA EM 3 PASSOS</p>
     <div class="pilares-grid">
@@ -3194,7 +3231,7 @@ footer p {
 <!-- ============================== -->
 <!-- 8. AS 6 SEMANAS                -->
 <!-- ============================== -->
-<section class="sec bg-w" id="sprints">
+<section class="sec bg-w" id="sprints" aria-label="Sua jornada em 6 semanas">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:12px">SUA JORNADA EM 6 SEMANAS</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,34px);margin-bottom:16px">Como será a sua transformação.</p>
@@ -3273,7 +3310,7 @@ footer p {
 <!-- ============================== -->
 <!-- 9-bis. PDP DESTRINCHADO        -->
 <!-- ============================== -->
-<section class="sec-short bg-o" style="padding:40px 24px 100px" id="pdp-detalhe">
+<section class="sec-short bg-o" style="padding:40px 24px 100px" id="pdp-detalhe" aria-label="Método Projeto de Primeira detalhado">
   <div class="si">
 
     <!-- 10 Módulos -->
@@ -3412,7 +3449,7 @@ footer p {
 <!-- ============================== -->
 <!-- 9b. TUDO QUE ESTÁ PRONTO       -->
 <!-- ============================== -->
-<section class="sec-short bg-d" style="padding:80px 24px" id="entregaveis">
+<section class="sec-short bg-d" style="padding:80px 24px" id="entregaveis" aria-label="Bônus da Implementação">
   <div class="si" style="position:relative;z-index:1">
     <p class="gs label tc" style="margin-bottom:12px">BÔNUS DA IMPLEMENTAÇÃO</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);color:#fff;margin-bottom:16px;line-height:1.2;text-wrap:balance;max-width:780px;margin-left:auto;margin-right:auto">Veja os documentos que você vai receber para implementar e customizar do seu jeito.</p>
@@ -3504,7 +3541,7 @@ footer p {
 <!-- ============================== -->
 <!-- 10. COMUNIDADE + SUPORTE        -->
 <!-- ============================== -->
-<section class="sec bg-w" id="extras">
+<section class="sec bg-w" id="extras" aria-label="Comunidade e suporte">
   <div class="si">
     <div class="split split-reverse">
       <div class="split-img dash-wrap gs" data-r="right">
@@ -3609,7 +3646,7 @@ footer p {
 <!-- ============================== -->
 <!-- 11a. TRANSIÇÃO PDP -> IA        -->
 <!-- ============================== -->
-<section class="sec bg-d ia-bg-section" id="transicao-ia" style="padding:120px 24px;position:relative;overflow:hidden">
+<section class="sec bg-d ia-bg-section" id="transicao-ia" aria-label="Hora de acelerar" style="padding:120px 24px;position:relative;overflow:hidden">
   <div class="grain"></div>
   <div class="si tc" style="position:relative;z-index:1;max-width:780px">
     <p class="gs label tc" style="margin-bottom:20px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">HORA DE ACELERAR</p>
@@ -3622,7 +3659,7 @@ footer p {
 <!-- ============================== -->
 <!-- 11. IA DE PRIMEIRA - EXPANDIDA  -->
 <!-- ============================== -->
-<section class="sec bg-d ia-bg-section" id="ia" style="padding-top:60px;padding-bottom:120px;position:relative;overflow:hidden">
+<section class="sec bg-d ia-bg-section" id="ia" aria-label="Curso IA de Primeira" style="padding-top:60px;padding-bottom:120px;position:relative;overflow:hidden">
   <div class="grain"></div>
   <div class="si" style="position:relative;z-index:1">
     <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">CURSO IA DE PRIMEIRA</p>
@@ -3672,7 +3709,7 @@ footer p {
 <!-- ============================== -->
 <!-- 11b. AS FERRAMENTAS QUE VOCÊ APRENDE -->
 <!-- ============================== -->
-<section class="sec bg-d ia-bg-section" id="ferramentas-ia" style="padding:100px 24px 120px;position:relative;overflow:hidden">
+<section class="sec bg-d ia-bg-section" id="ferramentas-ia" aria-label="As ferramentas que você vai aprender" style="padding:100px 24px 120px;position:relative;overflow:hidden">
   <div class="grain"></div>
   <div class="si" style="position:relative;z-index:1">
     <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">AS FERRAMENTAS QUE VOCÊ VAI APRENDER</p>
@@ -3763,7 +3800,7 @@ footer p {
 <!-- ============================== -->
 <!-- 13. BÔNUS HOJE                  -->
 <!-- ============================== -->
-<section class="sec bg-o" id="bonus">
+<section class="sec bg-o" id="bonus" aria-label="Bônus exclusivos">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:18px">BÔNUS EXCLUSIVOS</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 64px">Quem entra agora, leva mais.</p>
@@ -3796,7 +3833,7 @@ footer p {
 <!-- ============================== -->
 <!-- 18. ROI                         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:120px 24px" id="roi">
+<section class="sec-short bg-w" style="padding:120px 24px" id="roi" aria-label="Retorno do investimento">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:18px">RETORNO DO INVESTIMENTO</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,40px);line-height:1.1;color:var(--black);max-width:680px;margin:0 auto 12px;text-wrap:balance">Quanto vale o seu tempo?</p>
@@ -3830,7 +3867,7 @@ footer p {
 <!-- ============================== -->
 <!-- 16. ANCORAGEM + PRODUTO         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:120px 24px" id="ancoragem">
+<section class="sec-short bg-w" style="padding:120px 24px" id="ancoragem" aria-label="Valor real da implementação">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:16px">VALOR REAL DA IMPLEMENTAÇÃO</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:720px;margin:0 auto 56px;text-wrap:balance">Quanto vale todo esse conhecimento?</p>
@@ -3891,7 +3928,7 @@ footer p {
 <!-- ============================== -->
 <!-- 17. PREÇO                       -->
 <!-- ============================== -->
-<section class="sec bg-o" id="preco">
+<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">
   <div class="pr-card gs">
     <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>
 
@@ -3953,7 +3990,7 @@ footer p {
 <!-- ============================== -->
 <!-- 19. GARANTIA + 18:00            -->
 <!-- ============================== -->
-<section class="fullbleed" id="garantia">
+<section class="fullbleed" id="garantia" aria-label="Dupla garantia condicional">
   <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Escritório às 18h.paz" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.55) 0%,rgba(26,26,26,.85) 100%)"></div>
   <div class="fullbleed-content">
@@ -3968,7 +4005,7 @@ footer p {
 <!-- ============================== -->
 <!-- 14. DEPOIMENTOS                 -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:100px 24px" id="depoimentos">
+<section class="sec-short bg-w" style="padding:100px 24px" id="depoimentos" aria-label="Depoimentos de alunos">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:20px">QUEM JÁ PASSOU PELA TRANSFORMAÇÃO</p>
     <p class="gs tc" style="font-size:clamp(16px,1.9vw,19px);color:var(--g500);max-width:620px;margin:0 auto 56px;line-height:1.6">Profissionais com anos de carreira que destravaram uma nova fase depois da Implementação.</p>
@@ -4105,7 +4142,7 @@ footer p {
 <!-- ============================== -->
 <!-- 20.5 MENTOR                     -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:80px 24px" id="mentor">
+<section class="sec-short bg-w" style="padding:80px 24px" id="mentor" aria-label="Sobre o Rodrigo">
   <div class="sn" style="margin:0 auto">
     <div style="display:flex;gap:clamp(24px,4vw,48px);align-items:stretch;flex-wrap:wrap">
       <div class="img-z" style="flex:0 0 280px;border-radius:18px">
@@ -4126,7 +4163,7 @@ footer p {
 <!-- ============================== -->
 <!-- 21. FAQ                         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:100px 24px" id="faq">
+<section class="sec-short bg-w" style="padding:100px 24px" id="faq" aria-label="Perguntas frequentes">
   <div class="sn" style="margin:0 auto">
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,32px);margin-bottom:48px">Perguntas frequentes</p>
     <div class="gs"><details><summary>Preciso saber usar IA?</summary><p>Não. Você vai aprender do zero o que for necessário e receber ferramentas e assistentes prontos para usar.</p></details></div>
@@ -4224,7 +4261,8 @@ ht.from('#h-logo', { autoAlpha: 0, y: 20, duration: 0.7 })
   .from('#h-promise', { autoAlpha: 0, y: 30, duration: 0.8 }, '-=0.3')
   .from('#h-sub', { autoAlpha: 0, y: 20, duration: 0.6 }, '-=0.4')
   .from('#h-pillars', { autoAlpha: 0, y: 20, duration: 0.5 }, '-=0.3')
-  .from('#h-video', { autoAlpha: 0, scale: 0.96, duration: 0.8 }, '-=1.0')
+  .from('#h-cta', { autoAlpha: 0, y: 18, duration: 0.5 }, '-=0.2')
+  .from('#h-video', { autoAlpha: 0, scale: 0.96, duration: 0.8 }, '-=1.3')
 ;
 document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visible');
 
