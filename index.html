@@ -2488,58 +2488,6 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 4. PONTE                       -->
-<!-- ============================== -->
-<section class="sec bg-o" id="ponte">
-  <div class="si">
-    <div class="split">
-      <div class="split-img gs" data-r="left"><img src="img/mockuprodrigo.jpg" alt="Sistema de implementação PDP — Rodrigo guiando" loading="lazy" class="clip-r" style="aspect-ratio:16/9;min-height:0"></div>
-      <div class="split-text">
-        <p class="gs fm" style="font-size:clamp(24px,4vw,34px);font-weight:700;color:var(--black);line-height:1.2">Existe um jeito de sair desse ciclo.</p>
-        <p class="gs" style="font-size:clamp(15px,2vw,17px);color:var(--g500);margin-top:20px;line-height:1.6">Não é mais conteúdo. É um sistema de implementação que se instala em 6 semanas, com alguém do lado te guiando.</p>
-        <div style="display:flex;flex-direction:column;gap:24px;margin-top:36px" id="bridge-items" data-s>
-          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
-            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-users"/></svg></span>
-            <div>
-              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">Acompanhamento semanal</p>
-              <p style="font-size:14px;color:var(--g500);margin-top:4px">Encontros em grupo com o Rodrigo, toda semana</p>
-            </div>
-          </div>
-          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
-            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-award"/></svg></span>
-            <div>
-              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">Processo de projeto profissional</p>
-              <p style="font-size:14px;color:var(--g500);margin-top:4px">Método patenteado, do contrato aos executivos</p>
-            </div>
-          </div>
-          <div class="gs" style="display:flex;gap:14px;align-items:flex-start">
-            <span style="flex-shrink:0;width:32px;height:32px;border-radius:999px;background:var(--white);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-cpu"/></svg></span>
-            <div>
-              <p class="fm" style="font-weight:700;font-size:clamp(15px,2vw,17px)">IA para acelerar com qualidade</p>
-              <p style="font-size:14px;color:var(--g500);margin-top:4px">Aprenda a usar e receba ferramentas prontas</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== -->
-<!-- 5. REVELAÇÃO                   -->
-<!-- ============================== -->
-<section class="bg-d" style="min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative" id="reveal-pin">
-  <div class="grain"></div>
-  <div style="position:relative;z-index:1;text-align:center;padding:24px">
-    <div id="reveal-clip" style="clip-path:inset(50% 0);will-change:clip-path">
-      <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" style="max-width:clamp(240px,45vw,480px);margin:0 auto 32px;opacity:0.95">
-    </div>
-    <p class="gs fm" id="reveal-h1" style="font-weight:600;font-size:clamp(18px,3vw,26px);color:var(--g100);line-height:1.35;max-width:520px;margin:32px auto 0">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</p>
-    <p class="gs" id="reveal-desc" style="color:var(--g500);font-size:clamp(14px,1.8vw,17px);max-width:520px;margin:24px auto 0;line-height:1.6">Acompanhamento semanal · Processo de projeto profissional · IA para acelerar com qualidade</p>
-  </div>
-</section>
-
-<!-- ============================== -->
 <!-- 6. POSICIONAMENTO              -->
 <!-- ============================== -->
 <section class="sec bg-w" id="posicionamento">
@@ -3540,14 +3488,6 @@ ht.from('#h-logo', { autoAlpha: 0, y: 20, duration: 0.7 })
 ;
 document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visible');
 
-// REVEAL clip-path
-gsap.fromTo('#reveal-clip',
-  { clipPath: 'inset(50% 0 50% 0)' },
-  { clipPath: 'inset(0% 0 0% 0)', duration: 1.2, ease: 'power3.inOut',
-    scrollTrigger: { trigger: '#reveal-pin', start: 'top 60%', end: 'top 20%', scrub: 1 }
-  }
-);
-
 // PILARES + G4.pinned: graph first, then cards rise
 const pilSec = document.getElementById('pilares');
 
@@ -3662,7 +3602,7 @@ gsap.utils.toArray('[data-s]').forEach(container => {
 
 // GENERAL REVEAL.all .gs elements (with data-r variants)
 document.querySelectorAll('.gs').forEach(el => {
-  if (el.closest('#hero') || el.id === 'reveal-clip' || el.closest('#pilares .pilares-grid')) return;
+  if (el.closest('#hero') || el.closest('#pilares .pilares-grid')) return;
   if (el.getAttribute('data-staggered') === '1') return;
   const variant = el.getAttribute('data-r') || 'up';
   const opts = { autoAlpha: 0, duration: 0.8, ease: 'power2.out' };
