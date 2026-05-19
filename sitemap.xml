@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://implementacao.rodrigorosar.com.br/</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp</image:loc>
+      <image:title>Implementação Projeto de Primeira — Replay do pitch</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://implementacao.rodrigorosar.com.br/img/certificado-pdp.webp</image:loc>
+      <image:title>Certificado de Extensão Universitária PDP</image:title>
+    </image:image>
+  </url>
+</urlset>

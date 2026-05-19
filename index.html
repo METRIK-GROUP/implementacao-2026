@@ -3,14 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1E1E1E">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+
+<!-- SEO Core -->
 <title>Implementação Projeto de Primeira | METRIK Instituto</title>
+<meta name="description" content="Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas. Método PDP com chancela MEC + IA aplicada à documentação, desenvolvimento, representação e gestão.">
+<meta name="keywords" content="implementação projeto de primeira, PDP, curso arquitetura, IA arquitetura, escritório de arquitetura, projeto de interiores, MEC, Rodrigo Rosar, METRIK">
+<meta name="author" content="Rodrigo Rosar — METRIK Instituto">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+<link rel="canonical" href="https://implementacao.rodrigorosar.com.br/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="METRIK Instituto">
+<meta property="og:title" content="Implementação Projeto de Primeira | Do caos à ordem em 6 semanas">
+<meta property="og:description" content="Método PDP + IA aplicada ao escritório de arquitetura e interiores. Acompanhamento semanal com o Rodrigo, chancela MEC, 7.000+ alunos em 12 países.">
+<meta property="og:url" content="https://implementacao.rodrigorosar.com.br/">
+<meta property="og:image" content="https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="Implementação Projeto de Primeira — Rodrigo Rosar">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Implementação Projeto de Primeira | Do caos à ordem em 6 semanas">
+<meta name="twitter:description" content="Método PDP + IA aplicada ao escritório de arquitetura e interiores. 7.000+ alunos em 12 países.">
+<meta name="twitter:image" content="https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E1E1E'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Maven Pro,Arial,sans-serif' font-weight='800' font-size='16' fill='%23fff'%3EIP%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%231E1E1E'/%3E%3Ctext x='90' y='118' text-anchor='middle' font-family='Maven Pro,Arial,sans-serif' font-weight='800' font-size='84' fill='%23fff'%3EIP%3C/text%3E%3C/svg%3E">
+
+<!-- Preconnect crítico -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="dns-prefetch" href="https://i.ytimg.com">
+
+<!-- Preload hero LCP -->
+<link rel="preload" as="image" href="img/logo-implementacao-white.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-video-thumb.webp" fetchpriority="high">
+
+<!-- Fonts otimizadas (apenas pesos usados) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"></noscript>
+
+<!-- Scripts movidos pro fim do body pra não bloquear render -->
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://institutometrik.com.br/#organization",
+      "name": "METRIK Instituto",
+      "url": "https://institutometrik.com.br",
+      "logo": "https://implementacao.rodrigorosar.com.br/img/logo-implementacao-white.webp",
+      "founder": {
+        "@type": "Person",
+        "name": "Rodrigo Rosar",
+        "url": "https://rodrigorosar.com.br"
+      }
+    },
+    {
+      "@type": "Course",
+      "name": "Implementação Projeto de Primeira",
+      "description": "Programa de implementação do método Projeto de Primeira (PDP) com chancela MEC, somado à aplicação de IA no escritório de arquitetura e interiores. Acompanhamento semanal por 6 semanas com o Rodrigo Rosar.",
+      "provider": {
+        "@id": "https://institutometrik.com.br/#organization"
+      },
+      "url": "https://implementacao.rodrigorosar.com.br/",
+      "image": "https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp",
+      "inLanguage": "pt-BR",
+      "educationalCredentialAwarded": "Certificado de Extensão Universitária reconhecido pelo MEC (Faculdade Brasília)",
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "Blended",
+        "courseWorkload": "PT80H",
+        "instructor": {
+          "@type": "Person",
+          "name": "Rodrigo Rosar"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "category": "Educational Course",
+        "price": "3997.00",
+        "priceCurrency": "BRL",
+        "availability": "https://schema.org/InStock",
+        "url": "https://implementacao.rodrigorosar.com.br/#preco"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "7000",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "url": "https://implementacao.rodrigorosar.com.br/",
+      "name": "Implementação Projeto de Primeira",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://institutometrik.com.br/#organization"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é a Implementação Projeto de Primeira?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Um programa de 6 semanas com acompanhamento semanal do Rodrigo Rosar que implementa, no seu escritório, o método PDP (Projeto de Primeira, com chancela MEC) somado à aplicação prática de IA em documentação, desenvolvimento, representação e gestão."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Para quem é a Implementação?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para arquitetos e designers de interiores que querem estruturar processos, aplicar IA com método e voltar a ter prazer em projetar. 54% dos alunos têm mais de 10 anos de mercado, mas iniciantes também encontram conteúdo de alto nível."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual a garantia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dupla garantia condicional de 97 dias: se você aplicar todo o método e não tiver resultado, devolvemos seu dinheiro mais R$ 1.000 pelo seu tempo. Condições completas no contrato."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 /* ============================================
    LANDING v3.DESIGN REVIEW APPLIED
@@ -783,7 +919,7 @@ section {
 .ia-bg-section {
   background-image:
     linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.55) 40%, rgba(10,10,10,0.65) 70%, rgba(10,10,10,0.9) 100%),
-    url('img/ia-background.png');
+    url('img/ia-background.webp');
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   background-size: cover, cover;
@@ -1229,7 +1365,7 @@ section {
     align-items: center;
     background-image:
       linear-gradient(180deg, rgba(14,14,14,0.7) 0%, rgba(14,14,14,0.15) 45%, rgba(14,14,14,0.55) 75%, rgba(14,14,14,0.9) 100%),
-      url('img/grafico-caos-escala.png');
+      url('img/grafico-caos-escala.webp');
     background-repeat: no-repeat, no-repeat;
     background-position: center center, center center;
     background-size: cover, cover;
@@ -3286,7 +3422,7 @@ footer p {
 <section class="hero" id="hero" aria-label="Apresentação principal">
   <div class="grain"></div>
   <div class="hero-content">
-    <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo" fetchpriority="high" decoding="async">
+    <img src="img/logo-implementacao-white.webp" width="3908" height="755" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo" fetchpriority="high" decoding="async">
     <div class="hero-text">
       <div class="gs hero-trust" id="h-trust">
         <span class="hero-trust-item"><strong>26</strong> turmas</span>
@@ -3311,7 +3447,7 @@ footer p {
       </div>
     </div>
     <button class="hero-video gs hero-video-facade" id="h-video" data-yt="ZYmfHtTaEdA" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
-      <img src="img/hero-video-thumb.png" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
+      <img src="img/hero-video-thumb.webp" width="1376" height="768" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
       <span class="hero-video-play" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none">
           <polygon points="8 5 19 12 8 19 8 5" fill="currentColor"/>
@@ -3325,7 +3461,7 @@ footer p {
 <!-- 2. PROBLEMA                    -->
 <!-- ============================== -->
 <section class="fullbleed" id="antes-depois" aria-label="Para quem é o programa">
-  <div class="fullbleed-bg"><img src="img/chaos_vs._order.png" alt="Do caos à ordem" loading="lazy" class="clip-r"></div>
+  <div class="fullbleed-bg"><img src="img/chaos_vs._order.webp" width="1376" height="768" alt="Do caos à ordem" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,0.75) 0%,rgba(26,26,26,0.95) 100%)"></div>
   <div class="fullbleed-content">
     <div class="gs" style="display:flex;justify-content:center;margin-bottom:20px">
@@ -3345,7 +3481,7 @@ footer p {
 <section class="sec bg-w" id="espelho-dor" aria-label="Dores reais dos arquitetos">
   <div class="si">
     <div class="split">
-      <div class="split-img gs" data-r="left"><img src="img/noite_no_escritorio.png" alt="A rotina que consome a noite do profissional" loading="lazy" class="clip-r"></div>
+      <div class="split-img gs" data-r="left"><img src="img/noite_no_escritorio.webp" width="1376" height="768" alt="A rotina que consome a noite do profissional" loading="lazy" class="clip-r"></div>
       <div class="split-text">
         <p class="gs fm" style="font-size:clamp(24px,3.2vw,32px);font-weight:800;color:var(--black);line-height:1.2;text-wrap:balance;margin-bottom:28px">Estagnação não é falta de talento. É falta de processo.</p>
 
@@ -3500,7 +3636,7 @@ footer p {
           <p class="pilar-label">PASSO 2 · MÉTODO</p>
           <p class="pilar-name">Projeto de Primeira</p>
           <p class="pilar-desc">Você não precisa criar nada do zero. Toda a documentação do Método PDP pronta para usar e customizar como quiser.</p>
-          <p class="pilar-hl pilar-hl-mec"><img src="img/badge-mec.png" alt="Selo MEC" class="badge-mec-inline" loading="lazy"> Reconhecido pelo MEC</p>
+          <p class="pilar-hl pilar-hl-mec"><img src="img/badge-mec.webp" width="350" height="357" alt="Selo MEC" class="badge-mec-inline" loading="lazy"> Reconhecido pelo MEC</p>
         </div>
       </div>
       <div class="gs" id="pilar-col-3">
@@ -3515,7 +3651,7 @@ footer p {
       </div>
     </div>
     <div class="g4-wrap gs">
-      <img src="img/grafico-caos-escala.png" alt="Gráfico narrativo: do caos à escala" loading="lazy" class="g4-img">
+      <img src="img/grafico-caos-escala.webp" width="1584" height="672" alt="Gráfico narrativo: do caos à escala" loading="lazy" class="g4-img">
     </div>
   </div>
 </section>
@@ -3562,13 +3698,13 @@ footer p {
 <section class="sec bg-o" id="metodo-pdp">
   <div class="si">
     <div class="split">
-      <div class="split-img gs" data-r="left" style="background:transparent;border-radius:0;overflow:visible"><img src="img/mockups-pdp.png" alt="Mockups do método PDP — devices apresentando o conteúdo" loading="lazy" class="clip-r" style="object-fit:contain;aspect-ratio:auto;height:auto;width:100%;min-height:0;filter:none"></div>
+      <div class="split-img gs" data-r="left" style="background:transparent;border-radius:0;overflow:visible"><img src="img/mockups-pdp.webp" width="962" height="868" alt="Mockups do método PDP — devices apresentando o conteúdo" loading="lazy" class="clip-r" style="object-fit:contain;aspect-ratio:auto;height:auto;width:100%;min-height:0;filter:none"></div>
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">O QUE VOCÊ RECEBE</p>
         <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.15;text-wrap:balance">A documentação profissional do seu escritório, pronta para usar.</p>
         <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.65;margin-top:18px">Toda a documentação e os processos da metodologia <strong>Projeto de Primeira</strong>. O mesmo método que permite ao aluno <strong>aprovar projetos sem alterações em apenas duas reuniões</strong>, do briefing aos executivos.</p>
         <div class="gs badge-mec-row">
-          <img src="img/badge-mec.png" alt="Selo MEC — Certificação de Extensão através da FBI" class="badge-mec-img" loading="lazy">
+          <img src="img/badge-mec.webp" width="350" height="357" alt="Selo MEC — Certificação de Extensão através da FBI" class="badge-mec-img" loading="lazy">
           <div>
             <p class="badge-mec-title">Reconhecido pelo MEC</p>
             <p class="badge-mec-sub">Certificação de Extensão Universitária através da FBI</p>
@@ -3613,7 +3749,7 @@ footer p {
     <p class="gs tc" style="font-size:12px;color:var(--g500);margin-bottom:32px;letter-spacing:0.05em">PASSE O CURSOR · TOQUE PARA EXPANDIR</p>
 
     <div class="mat-acc gs" data-mat-acc>
-      <div class="mat-item mat-img active" data-mat-item style="--mat-img: url('img/modulos/01.png')">
+      <div class="mat-item mat-img active" data-mat-item style="--mat-img: url('img/modulos/01.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">01</span>
             <div class="mat-content">
@@ -3625,7 +3761,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/02.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/02.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">02</span>
             <div class="mat-content">
@@ -3637,7 +3773,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/03.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/03.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">03</span>
             <div class="mat-content">
@@ -3649,7 +3785,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/04.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/04.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">04</span>
             <div class="mat-content">
@@ -3661,7 +3797,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/05.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/05.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">05</span>
             <div class="mat-content">
@@ -3673,7 +3809,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/06.jpg')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/06.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">06</span>
             <div class="mat-content">
@@ -3685,7 +3821,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/07.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/07.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">07</span>
             <div class="mat-content">
@@ -3697,7 +3833,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/08.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/08.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">08</span>
             <div class="mat-content">
@@ -3709,7 +3845,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/09.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/09.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">09</span>
             <div class="mat-content">
@@ -3721,7 +3857,7 @@ footer p {
 
         </div>
       </div>
-      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/10.png')">
+      <div class="mat-item mat-img" data-mat-item style="--mat-img: url('img/modulos/10.webp')">
         <div class="mat-item-inner">
           <span class="mat-num">10</span>
             <div class="mat-content">
@@ -3758,7 +3894,7 @@ footer p {
           </div>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden">
             <span class="pill pill-on-img">Templates</span>
-            <img src="img/bonus-templates.png" alt="Templates de projeto para Revit, AutoCAD, Archicad, SketchUp" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/bonus-templates.webp" width="846" height="503" alt="Templates de projeto para Revit, AutoCAD, Archicad, SketchUp" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
       </div>
@@ -3770,7 +3906,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo ilustrado com 213 páginas em PDF e checklists editáveis para você ou seu time entregar projetos executivos sem erros, com tudo que é necessário.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">213 páginas</span>
-            <img src="img/workbook.jpg" alt="Workbooks de Detalhamento PDP, 213 páginas" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/workbook.webp" width="1280" height="720" alt="Workbooks de Detalhamento PDP, 213 páginas" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
 
@@ -3779,7 +3915,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Atas e contratos, checklist de briefing, planejador de orçamento de obras, checklists de executivos, canvas criativo e slides das aulas.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Documentos</span>
-            <img src="img/capturas-tela.jpg" alt="Kit Documentos de Primeira" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/capturas-tela.webp" width="1280" height="720" alt="Kit Documentos de Primeira" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
       </div>
@@ -3791,7 +3927,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Aqui você acompanha todos os passos do processo de projeto e faz a gestão de vários projetos de forma simultânea.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Notion</span>
-            <img src="img/notion.png" alt="Template Notion para Interiores" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/notion.webp" width="1280" height="720" alt="Template Notion para Interiores" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
 
@@ -3800,7 +3936,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Licença estudantil em todos os softwares da Autodesk enquanto sua matrícula estiver ativa. Revit, AutoCAD e mais.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Software</span>
-            <img src="img/autocad.png" alt="Parceria Autodesk, licença estudantil" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/autocad.webp" width="1280" height="720" alt="Parceria Autodesk, licença estudantil" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
       </div>
@@ -3812,7 +3948,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Caso você queira, ao concluir a implementação, você faz a prova e recebe um certificado reconhecido pelo MEC pela Faculdade Brasília, com 80 horas e registro no seu currículo Lattes.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Certificado</span>
-            <img src="img/certificado-pdp.jpg" alt="Certificado de Extensão Universitária do Projeto de Primeira, emitido pela Faculdade Brasília" loading="lazy" style="width:100%;display:block" class="clip-r">
+            <img src="img/certificado-pdp.webp" width="2000" height="1414" alt="Certificado de Extensão Universitária do Projeto de Primeira, emitido pela Faculdade Brasília" loading="lazy" style="width:100%;display:block" class="clip-r">
           </div>
         </div>
 
@@ -3821,7 +3957,7 @@ footer p {
           <p style="font-size:14px;color:var(--g300);line-height:1.5">Condições especiais em plataformas de IA, softwares de projeto, ferramentas de gestão e outros serviços usados no dia a dia do escritório.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">Parceiros</span>
-            <img src="img/desconto-parceiros.png" alt="Descontos em plataformas de IA e softwares" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
+            <img src="img/desconto-parceiros.webp" width="1376" height="768" alt="Descontos em plataformas de IA e softwares" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
           </div>
         </div>
       </div>
@@ -3990,7 +4126,7 @@ footer p {
       <div class="ft-card gs">
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-claude" aria-hidden="true">
-            <img src="img/logo-claude.svg" alt="" loading="lazy">
+            <img src="img/logo-claude.svg" width="689.980" height="148.180" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">MOTOR OPERACIONAL</p>
@@ -4004,7 +4140,7 @@ footer p {
           <li>Automação de tarefas operacionais</li>
         </ul>
         <div class="ft-img-slot ft-img-filled">
-          <img src="img/ferramenta-claude.png" alt="Claude conectado a múltiplas áreas do escritório" loading="lazy">
+          <img src="img/ferramenta-claude.webp" width="1376" height="768" alt="Claude conectado a múltiplas áreas do escritório" loading="lazy">
         </div>
       </div>
 
@@ -4013,7 +4149,7 @@ footer p {
         <span class="ft-card-bonus">BÔNUS · 6 MESES LIBERADOS</span>
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-1cr" aria-hidden="true">
-            <img src="img/logo-1cr.png" alt="" loading="lazy">
+            <img src="img/logo-1cr.webp" width="1522" height="582" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">PLUGIN COM IA</p>
@@ -4027,7 +4163,7 @@ footer p {
           <li>6 meses de acesso liberado como bônus</li>
         </ul>
         <div class="ft-img-slot ft-img-filled">
-          <img src="img/ferramenta-1cr.png" alt="1 Click Render — render direto do software de projeto" loading="lazy">
+          <img src="img/ferramenta-1cr.webp" width="1385" height="892" alt="1 Click Render — render direto do software de projeto" loading="lazy">
         </div>
       </div>
 
@@ -4035,7 +4171,7 @@ footer p {
       <div class="ft-card gs">
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-flora" aria-hidden="true">
-            <img src="img/logo-flora.svg" alt="" loading="lazy">
+            <img src="img/logo-flora.svg" width="64.000" height="64.000" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">CONSTRUTOR DE FLUXO</p>
@@ -4049,7 +4185,7 @@ footer p {
           <li>Pipelines de apresentação automatizados</li>
         </ul>
         <div class="ft-img-slot ft-img-filled">
-          <img src="img/ferramenta-flora.avif" alt="Flora — construtor de fluxo visual de IA" loading="lazy">
+          <img src="img/ferramenta-flora.avif" width="1280" height="568" alt="Flora — construtor de fluxo visual de IA" loading="lazy">
         </div>
       </div>
     </div>
@@ -4067,7 +4203,7 @@ footer p {
     <div class="bonus-card gs">
       <div class="bonus-img img-z">
         <span class="bonus-stamp">BÔNUS</span>
-        <img src="img/imersao-vendas.jpg" alt="Imersão de Vendas — captação, networking e proposta" loading="lazy">
+        <img src="img/imersao-vendas.webp" width="1280" height="720" alt="Imersão de Vendas — captação, networking e proposta" loading="lazy">
       </div>
       <div class="bonus-text">
         <span class="bonus-tag">Por tempo limitado</span>
@@ -4250,7 +4386,7 @@ footer p {
 <!-- 19. GARANTIA + 18:00            -->
 <!-- ============================== -->
 <section class="fullbleed" id="garantia" aria-label="Dupla garantia condicional">
-  <div class="fullbleed-bg"><img src="img/office_evening_scene.png" alt="Escritório às 18h.paz" loading="lazy" class="clip-r"></div>
+  <div class="fullbleed-bg"><img src="img/office_evening_scene.webp" width="1376" height="768" alt="Escritório às 18h.paz" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.55) 0%,rgba(26,26,26,.85) 100%)"></div>
   <div class="fullbleed-content">
     <div class="gs"><svg class="icon icon-lg" style="stroke:#fff;margin:0 auto"><use href="#i-shield"/></svg></div>
@@ -4403,7 +4539,7 @@ footer p {
   <div class="sn" style="margin:0 auto">
     <div style="display:flex;gap:clamp(24px,4vw,48px);align-items:stretch;flex-wrap:wrap">
       <div class="img-z" style="flex:0 0 280px;border-radius:18px">
-        <img src="img/rodrigo-craft.jpg" alt="Rodrigo Rosar" loading="lazy" decoding="async" class="gs" data-r="left" style="width:100%;height:100%;object-fit:cover;object-position:top">
+        <img src="img/rodrigo-craft.webp" width="3014" height="4515" alt="Rodrigo Rosar" loading="lazy" decoding="async" class="gs" data-r="left" style="width:100%;height:100%;object-fit:cover;object-position:top">
       </div>
       <div style="flex:1;min-width:280px">
         <p class="gs label" style="color:var(--g500);margin-bottom:8px">QUEM VAI TE GUIAR</p>
@@ -4438,6 +4574,9 @@ footer p {
 <!-- FOOTER -->
 <footer><p>METRIK Instituto · Todos os direitos reservados</p></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
