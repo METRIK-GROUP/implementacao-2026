@@ -905,15 +905,32 @@ section {
   display: flex; align-items: center; gap: 14px;
 }
 .ft-logo {
-  width: 52px; height: 52px;
+  width: 56px; height: 56px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
   display: flex; align-items: center; justify-content: center;
-  padding: 8px;
+  padding: 10px;
+  overflow: hidden;
 }
-.ft-logo svg { width: 100%; height: 100%; }
+.ft-logo svg, .ft-logo img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* Logo Claude: laranja oficial, fica bem em qualquer fundo */
+.ft-logo-claude { background: rgba(217,119,87,0.12); border-color: rgba(217,119,87,0.3); }
+/* Logo Flora: preto/branco oficial, dar respiro */
+.ft-logo-flora { background: #fff; border-color: rgba(255,255,255,0.18); padding: 8px; }
+/* Logo 1CR: logo wide (retangular), aspect mais wide */
+.ft-logo-1cr {
+  width: auto; min-width: 96px; height: 56px;
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.12);
+  padding: 8px 14px;
+}
+.ft-logo-1cr img { width: 100%; height: 100%; object-fit: contain; }
 .ft-card-tag {
   font-family: 'Maven Pro', sans-serif;
   font-size: 10px; font-weight: 700;
@@ -3720,9 +3737,7 @@ footer p {
       <div class="ft-card gs">
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-claude" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <path d="M24 4 L26.5 18 L40.5 19.5 L29 28 L33 42 L24 33.5 L15 42 L19 28 L7.5 19.5 L21.5 18 Z" fill="#D97757" stroke="none"/>
-            </svg>
+            <img src="img/logo-claude.svg" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">MOTOR OPERACIONAL</p>
@@ -3744,13 +3759,7 @@ footer p {
       <div class="ft-card gs">
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-flora" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <circle cx="24" cy="14" r="6" fill="#7AAFD4"/>
-              <circle cx="34" cy="24" r="6" fill="#7AAFD4"/>
-              <circle cx="24" cy="34" r="6" fill="#7AAFD4"/>
-              <circle cx="14" cy="24" r="6" fill="#7AAFD4"/>
-              <circle cx="24" cy="24" r="5" fill="#fff"/>
-            </svg>
+            <img src="img/logo-flora.svg" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">CONSTRUTOR DE FLUXO</p>
@@ -3773,10 +3782,7 @@ footer p {
         <span class="ft-card-bonus">BÔNUS · 6 MESES LIBERADOS</span>
         <div class="ft-card-head">
           <div class="ft-logo ft-logo-1cr" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none">
-              <rect x="6" y="6" width="36" height="36" rx="10" fill="none" stroke="#BFDDF0" stroke-width="2"/>
-              <text x="24" y="32" text-anchor="middle" font-family="Maven Pro,Arial,sans-serif" font-weight="900" font-size="20" fill="#BFDDF0">1</text>
-            </svg>
+            <img src="img/logo-1cr.png" alt="" loading="lazy">
           </div>
           <div class="ft-card-meta">
             <p class="ft-card-tag">RENDER DENTRO DO SOFTWARE</p>
