@@ -3214,8 +3214,8 @@ footer p {
       <div style="display:grid;grid-template-columns:1fr;gap:24px">
         <div class="gs" style="display:flex;flex-direction:column;gap:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;overflow:hidden">
           <div style="display:flex;flex-direction:column;gap:12px">
-            <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Templates de Projeto</p>
-            <p style="font-size:14px;color:var(--g300);line-height:1.5">Modelos prontos para o seu software, já adaptados ao método PDP. Compatíveis com Revit, AutoCAD, Archicad, SketchUp e Layout.</p>
+            <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Templates SketchUp, Revit, Archicad e AutoCAD</p>
+            <p style="font-size:14px;color:var(--g300);line-height:1.5">Modelos completos de projeto prontos para os softwares que você já usa, adaptados ao método PDP. Você abre, customiza e começa a projetar com a base montada.</p>
           </div>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden">
             <span class="pill pill-on-img">Templates</span>
@@ -3885,18 +3885,28 @@ footer p {
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// Lenis smooth scroll
-const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(t => lenis.raf(t * 1000));
-gsap.ticker.lagSmoothing(0);
+const IS_MOBILE = window.matchMedia('(max-width: 919px)').matches;
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Refresh ScrollTrigger after lazy images load (positions shift → triggers miss)
-window.addEventListener('load', () => ScrollTrigger.refresh());
+// Lenis smooth scroll.SOMENTE desktop (touch nativo é mais fluido no mobile)
+if (!IS_MOBILE && !PREFERS_REDUCED) {
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+// Refresh ScrollTrigger after lazy images load.debounced (evita N refreshes seguidos no scroll)
+let _refreshTimer;
+const debouncedRefresh = () => {
+  clearTimeout(_refreshTimer);
+  _refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 180);
+};
+window.addEventListener('load', debouncedRefresh);
 document.querySelectorAll('img[loading="lazy"]').forEach(img => {
   if (img.complete) return;
-  img.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
-  img.addEventListener('error', () => ScrollTrigger.refresh(), { once: true });
+  img.addEventListener('load', debouncedRefresh, { once: true });
+  img.addEventListener('error', debouncedRefresh, { once: true });
 });
 
 // PROGRESS BAR only
@@ -3961,7 +3971,7 @@ document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visibl
 const pilSec = document.getElementById('pilares');
 
 // Phase 2: pin on desktop with robust visibility, simple fade on mobile
-const isMobile = window.innerWidth < 768;
+const isMobile = IS_MOBILE;
 
 // Always make pillar cols visible (override .gs hidden)
 ['#pilar-col-1','#pilar-col-2','#pilar-col-3'].forEach(sel => {
@@ -4060,22 +4070,36 @@ gsap.utils.toArray('[data-s]').forEach(container => {
 });
 
 // GENERAL REVEAL.all .gs elements (with data-r variants)
-document.querySelectorAll('.gs').forEach(el => {
-  if (el.closest('#hero') || el.closest('#pilares .pilares-grid')) return;
-  if (el.getAttribute('data-staggered') === '1') return;
-  const variant = el.getAttribute('data-r') || 'up';
-  const opts = { autoAlpha: 0, duration: 0.8, ease: 'power2.out' };
-  switch (variant) {
-    case 'left':  opts.x = -40; break;
-    case 'right': opts.x = 40; break;
-    case 'scale': opts.scale = 0.94; break;
-    case 'zoom':  opts.scale = 1.06; break;
-    case 'fade':  break;
-    default:      opts.y = 32; break;
-  }
-  opts.scrollTrigger = { trigger: el, start: 'top 88%', toggleActions: 'play none none none' };
-  gsap.from(el, opts);
-});
+// Mobile: animação MUITO mais sutil (menos jank/layout shift)
+if (PREFERS_REDUCED) {
+  document.querySelectorAll('.gs').forEach(el => { el.style.visibility = 'visible'; });
+} else {
+  const REVEAL_Y = IS_MOBILE ? 14 : 32;
+  const REVEAL_X = IS_MOBILE ? 18 : 40;
+  const REVEAL_DUR = IS_MOBILE ? 0.45 : 0.8;
+  document.querySelectorAll('.gs').forEach(el => {
+    if (el.closest('#hero') || el.closest('#pilares .pilares-grid')) return;
+    if (el.getAttribute('data-staggered') === '1') return;
+    const variant = el.getAttribute('data-r') || 'up';
+    const opts = { autoAlpha: 0, duration: REVEAL_DUR, ease: 'power2.out' };
+    switch (variant) {
+      case 'left':  opts.x = -REVEAL_X; break;
+      case 'right': opts.x = REVEAL_X; break;
+      case 'scale': opts.scale = IS_MOBILE ? 0.97 : 0.94; break;
+      case 'zoom':  opts.scale = IS_MOBILE ? 1.03 : 1.06; break;
+      case 'fade':  break;
+      default:      opts.y = REVEAL_Y; break;
+    }
+    opts.scrollTrigger = { trigger: el, start: 'top 92%', toggleActions: 'play none none none' };
+    gsap.from(el, opts);
+  });
+  // Failsafe: garante visibilidade de QUALQUER .gs após 4s (caso algum trigger falhe)
+  setTimeout(() => {
+    document.querySelectorAll('.gs').forEach(el => {
+      if (getComputedStyle(el).visibility === 'hidden') el.style.visibility = 'visible';
+    });
+  }, 4000);
+}
 
 // MATERIALS ACCORDION (módulos PDP).hover desktop, click mobile
 (function(){
