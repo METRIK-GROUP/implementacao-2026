@@ -701,26 +701,31 @@ section {
 .bg-d .pilar-hl { color: rgba(255,255,255,0.92); font-style: normal; }
 
 .g4-wrap {
-  margin-top: 48px; position: relative; z-index: 1;
+  margin-top: 56px; position: relative; z-index: 1;
   padding: 0 4px;
+  max-width: 1180px; margin-left: auto; margin-right: auto;
 }
-@media(min-width:768px) { .g4-wrap { margin-top: 64px; max-width: 1080px; margin-left: auto; margin-right: auto; } }
+@media(min-width:768px) { .g4-wrap { margin-top: 72px; padding: 0 12px; } }
+.g4-img {
+  width: 100%; height: auto; display: block;
+  border-radius: 12px;
+}
 .g4-wrap::before {
   content: "Antes da implementação";
-  position: absolute; left: 6%; bottom: -22px;
+  position: absolute; left: 8%; bottom: -22px;
   font-family: 'Maven Pro', sans-serif; font-size: 10px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: rgba(255,255,255,0.35);
 }
 .g4-wrap::after {
   content: "Depois da implementação";
-  position: absolute; right: 6%; bottom: -22px;
+  position: absolute; right: 8%; bottom: -22px;
   font-family: 'Maven Pro', sans-serif; font-size: 10px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: rgba(255,255,255,0.85);
 }
-@media(max-width:767px) {
-  .g4-wrap::before, .g4-wrap::after { font-size: 9px; bottom: -18px; }
+@media(max-width:640px) {
+  .g4-wrap::before, .g4-wrap::after { font-size: 8.5px; bottom: -16px; }
 }
 
 /* ================================
@@ -2795,30 +2800,8 @@ footer p {
         </div>
       </div>
     </div>
-    <div class="g4-wrap">
-      <svg id="g4" viewBox="0 0 1100 200" fill="none" width="100%" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id="grad-p1" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#D97557"/>
-            <stop offset="1" stop-color="rgba(255,255,255,0.85)"/>
-          </linearGradient>
-          <linearGradient id="grad-p2" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="rgba(255,255,255,0.85)"/>
-            <stop offset="1" stop-color="#ffffff"/>
-          </linearGradient>
-          <linearGradient id="grad-p3" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ffffff"/>
-            <stop offset="1" stop-color="#7AAFD4"/>
-          </linearGradient>
-        </defs>
-        <!-- Caos: oscilação grande -->
-        <path id="g4-p1" d="M20 145 C55 65 95 185 135 100 C175 40 210 180 250 85 C290 35 330 175 366 120" stroke="url(#grad-p1)" stroke-width="2.8" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" stroke-linecap="round"/>
-        <!-- Processo: subida sutil -->
-        <path id="g4-p2" d="M366 120 C440 105 520 88 600 76 C660 70 700 67 733 64" stroke="url(#grad-p2)" stroke-width="2.8" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" stroke-linecap="round"/>
-        <!-- IA: subida acentuada -->
-        <path id="g4-p3" d="M733 64 C800 46 855 26 905 14 C955 7 1015 5 1080 4" stroke="url(#grad-p3)" stroke-width="3.2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" stroke-linecap="round"/>
-        <circle id="g4-dot" cx="1080" cy="4" r="5.5" fill="#7AAFD4" opacity="0"/>
-      </svg>
+    <div class="g4-wrap gs">
+      <img src="img/grafico-caos-escala.png" alt="Gráfico narrativo: do caos à escala" loading="lazy" class="g4-img">
     </div>
   </div>
 </section>
@@ -3776,18 +3759,8 @@ ht.from('#h-logo', { autoAlpha: 0, y: 20, duration: 0.7 })
 ;
 document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visible');
 
-// PILARES + G4.pinned: graph first, then cards rise
+// PILARES.pinned cards (graph is now a static image with .gs reveal)
 const pilSec = document.getElementById('pilares');
-
-// Phase 1: draw the G4 graph as you scroll into view
-const g4Tl = gsap.timeline({
-  scrollTrigger: { trigger: pilSec, start: 'top 60%', end: 'top 20%', scrub: 1 }
-});
-g4Tl
-  .to('#g4-p1', { strokeDashoffset: 0, duration: 0.3 })
-  .to('#g4-dot', { opacity: 1, duration: 0.1 }, 0.15)
-  .to('#g4-p2', { strokeDashoffset: 0, duration: 0.3 }, 0.3)
-  .to('#g4-p3', { strokeDashoffset: 0, duration: 0.3 }, 0.6);
 
 // Phase 2: pin on desktop with robust visibility, simple fade on mobile
 const isMobile = window.innerWidth < 768;
