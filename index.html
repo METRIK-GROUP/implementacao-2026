@@ -111,7 +111,9 @@ p, li { text-wrap: pretty; }
 .sticky-bar {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 101;
-  background: var(--black);
+  background: rgba(14,14,14,0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   color: #fff;
   transform: translateY(-110%);
   transition: transform 0.45s cubic-bezier(.16,1,.3,1);
@@ -153,22 +155,22 @@ p, li { text-wrap: pretty; }
 .sticky-bar-cta {
   color: #fff;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 12px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.22);
-  padding: 9px 18px;
-  min-height: 38px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.45);
+  padding: 8px 18px;
+  min-height: 36px;
   display: inline-flex; align-items: center;
   border-radius: 999px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.25s ease, color 0.25s ease;
   white-space: nowrap;
   flex-shrink: 0;
   letter-spacing: 0.04em;
 }
 .sticky-bar-cta:hover {
-  background: rgba(255,255,255,0.22);
-  border-color: rgba(255,255,255,0.4);
+  border-color: #fff;
+  color: #fff;
 }
 @media (max-width: 720px) {
   .sticky-bar-inner { padding: 7px 14px; gap: 10px; align-items: center; }
@@ -3926,48 +3928,44 @@ footer p {
           <p class="anc-cat-name">Acompanhamento</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">Desafio 6 semanas no WhatsApp com Rodrigo + Premiação</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
-        <div class="anc-row"><span class="anc-name">Repetir o desafio 4 vezes se quiser</span><span class="anc-dots"></span><span class="anc-val">R$ 8.000</span></div>
+        <div class="anc-row"><span class="anc-name">Desafio de 6 semanas no WhatsApp com o Rodrigo</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
+        <div class="anc-row"><span class="anc-name">Tira-dúvidas ao vivo com o Rodrigo</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Grupo das Mães de Primeira + Grupo pós-desafio</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Premiações do Desafio para quem conclui</span><span class="anc-dots"></span><span class="anc-val">R$ 1.000</span></div>
       </div>
 
       <div class="anc-section">
         <div class="anc-cat-head">
           <span class="anc-cat-num">02</span>
-          <p class="anc-cat-name">Método</p>
+          <p class="anc-cat-name">Método Projeto de Primeira</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">Método PDP completo + Chancela MEC</span><span class="anc-dots"></span><span class="anc-val">R$ 3.497</span></div>
-        <div class="anc-row"><span class="anc-name">Kit Documentos de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.997</span></div>
-        <div class="anc-row"><span class="anc-name">Templates de Projeto (Revit, Archicad, SketchUp, AutoCAD)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Workbooks de detalhamento, 213 páginas</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
-        <div class="anc-row"><span class="anc-name">Template Notion + implementação ao vivo</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
-        <div class="anc-row"><span class="anc-name">Licença estudantil e desconto em ferramentas</span><span class="anc-dots"></span><span class="anc-val anc-na">incluso</span></div>
+        <div class="anc-row"><span class="anc-name">10 módulos do PDP com chancela MEC (80h)</span><span class="anc-dots"></span><span class="anc-val">R$ 3.997</span></div>
+        <div class="anc-row"><span class="anc-name">Workbooks de Detalhamento, 213 páginas em PDF</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Templates SketchUp, Revit, Archicad e AutoCAD</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Kit Documentos de Primeira (contratos, briefing, executivos)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.997</span></div>
+        <div class="anc-row"><span class="anc-name">Central de gestão de projetos no Notion</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Certificado de Extensão Universitária no Lattes</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Parceria Autodesk e descontos em parceiros</span><span class="anc-dots"></span><span class="anc-val anc-na">incluso</span></div>
       </div>
 
       <div class="anc-section">
         <div class="anc-cat-head">
           <span class="anc-cat-num">03</span>
-          <p class="anc-cat-name">Inteligência Artificial</p>
+          <p class="anc-cat-name">Implementação IA</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">Novo Curso IA de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Ferramentas e assistentes IA prontos</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Aprenda a criar suas próprias soluções</span><span class="anc-dots"></span><span class="anc-val anc-pri">inestimável</span></div>
-      </div>
-
-      <div class="anc-section">
-        <div class="anc-cat-head">
-          <span class="anc-cat-num">04</span>
-          <p class="anc-cat-name">Comunidade</p>
-          <span class="anc-cat-line"></span>
-        </div>
-        <div class="anc-row"><span class="anc-name">Comunidade + Suporte</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">IA aplicada em Documentação, Desenvolvimento, Representação e Gestão</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Claude configurado pro seu padrão (chat, cowork, programação)</span><span class="anc-dots"></span><span class="anc-val">R$ 497</span></div>
+        <div class="anc-row"><span class="anc-name">Flora — construtor de fluxos de IA para imagens e vídeos</span><span class="anc-dots"></span><span class="anc-val">R$ 497</span></div>
+        <div class="anc-row"><span class="anc-name">1 Click Render — plugin com IA liberado por 6 meses</span><span class="anc-dots"></span><span class="anc-val">R$ 1.497</span></div>
+        <div class="anc-row"><span class="anc-name">Criação das suas próprias ferramentas de IA</span><span class="anc-dots"></span><span class="anc-val anc-pri">inestimável</span></div>
       </div>
 
       <!-- Total dentro do card -->
       <div class="anc-total-row">
         <p class="anc-total-label">Total em valor real</p>
-        <p class="anc-total-val fm">R$ 22.985</p>
+        <p class="anc-total-val fm">R$ 19.476</p>
       </div>
     </div>
   </div>
