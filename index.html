@@ -699,6 +699,47 @@ section {
 .bg-d .pilar-name { color: #fff; }
 .bg-d .pilar-desc { color: rgba(255,255,255,0.72); }
 .bg-d .pilar-hl { color: rgba(255,255,255,0.92); font-style: normal; }
+.pilar-hl-mec {
+  display: inline-flex !important; align-items: center; gap: 8px;
+}
+.badge-mec-inline {
+  width: 26px; height: 26px;
+  flex-shrink: 0; object-fit: contain;
+}
+
+/* Badge MEC row (na dobra de entregaveis) */
+.badge-mec-row {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 22px;
+  padding: 12px 16px 12px 12px;
+  background: var(--offwhite);
+  border: 1px solid var(--g100);
+  border-radius: 12px;
+  max-width: 420px;
+}
+.badge-mec-img {
+  width: 56px; height: 56px;
+  flex-shrink: 0; object-fit: contain;
+}
+.badge-mec-title {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 13px; font-weight: 800;
+  color: var(--black);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.badge-mec-sub {
+  font-size: 11.5px; color: var(--g500);
+  line-height: 1.4; margin: 2px 0 0;
+}
+
+.marquee-badge {
+  width: 22px; height: 22px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 12px;
+  display: inline-block;
+}
 
 .g4-wrap {
   margin-top: 56px; position: relative; z-index: 1;
@@ -932,8 +973,17 @@ section {
   padding: 20px 24px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 18px;
   min-height: 72px;
+}
+.mat-item-inner .mat-desc {
+  flex-basis: 100%;
+  margin-left: 0;
+  margin-top: 4px;
+}
+.mat-item.active .mat-item-inner {
+  align-items: flex-start;
 }
 .mat-num {
   font-family: 'Maven Pro';
@@ -2786,7 +2836,7 @@ footer p {
           <p class="pilar-label">PASSO 2 · MÉTODO</p>
           <p class="pilar-name">Projeto de Primeira</p>
           <p class="pilar-desc">Você não precisa criar nada do zero. Toda a documentação do Método PDP pronta para usar e customizar como quiser.</p>
-          <p class="pilar-hl">Método patenteado com chancela MEC.</p>
+          <p class="pilar-hl pilar-hl-mec"><img src="img/badge-mec.png" alt="Selo MEC" class="badge-mec-inline" loading="lazy"> Reconhecido pelo MEC</p>
         </div>
       </div>
       <div class="gs" id="pilar-col-3">
@@ -2852,7 +2902,14 @@ footer p {
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">O QUE VOCÊ RECEBE</p>
         <p class="gs fm" style="font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.15;text-wrap:balance">A documentação profissional do seu escritório, pronta para usar.</p>
-        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.65;margin-top:18px">Toda a documentação e os processos da metodologia <strong>Projeto de Primeira</strong>, com chancela do MEC. O mesmo método que permite ao aluno <strong>aprovar projetos sem alterações em apenas duas reuniões</strong>, do briefing aos executivos.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.65;margin-top:18px">Toda a documentação e os processos da metodologia <strong>Projeto de Primeira</strong>. O mesmo método que permite ao aluno <strong>aprovar projetos sem alterações em apenas duas reuniões</strong>, do briefing aos executivos.</p>
+        <div class="gs badge-mec-row">
+          <img src="img/badge-mec.png" alt="Selo MEC — Certificação de Extensão através da FBI" class="badge-mec-img" loading="lazy">
+          <div>
+            <p class="badge-mec-title">Reconhecido pelo MEC</p>
+            <p class="badge-mec-sub">Certificação de Extensão Universitária através da FBI</p>
+          </div>
+        </div>
         <div class="gs" style="margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Contratos prontos</span></div>
           <div style="display:flex;align-items:center;gap:10px"><svg class="icon" style="width:18px;height:18px;flex-shrink:0"><use href="#i-check"/></svg><span style="font-size:14px;color:var(--graphite)">Briefing &amp; checklists</span></div>
@@ -2883,7 +2940,7 @@ footer p {
 <!-- ============================== -->
 <div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item">Reconhecido como Curso de Extensão Universitária pelo Ministério da Educação (MEC)</span>
+    <span class="marquee-item"><img src="img/badge-mec.png" alt="Selo MEC" class="marquee-badge" loading="lazy">Reconhecido como Curso de Extensão Universitária pelo Ministério da Educação (MEC)</span>
   </div>
 </div>
 
