@@ -1517,7 +1517,7 @@ section {
   opacity: 1;
   margin-top: 8px;
 }
-/* MOBILE: card ativo expande pra mostrar imagem de fundo + texto na base */
+/* MOBILE: card ativo expande para mostrar imagem de fundo + texto na base */
 @media (max-width: 1023px) {
   .mat-item.active.mat-img {
     min-height: 360px;
@@ -2947,6 +2947,46 @@ section {
   margin-left: auto;
   margin-right: auto;
 }
+.pr-upgrade {
+  margin-top: 14px;
+  text-align: center;
+}
+.pr-upgrade a {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--graphite);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--g300);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.pr-upgrade a:hover {
+  color: var(--black);
+  border-color: var(--black);
+}
+
+/* WhatsApp floating button */
+.wa-float {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  z-index: 95;
+  width: 56px; height: 56px;
+  border-radius: 999px;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.35), 0 4px 12px rgba(0,0,0,0.18);
+  transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.3s ease;
+  text-decoration: none;
+}
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(37,211,102,0.45), 0 6px 16px rgba(0,0,0,0.22);
+}
+.wa-float svg { width: 28px; height: 28px; fill: #fff; }
+@media (max-width: 720px) {
+  .wa-float { width: 52px; height: 52px; bottom: 16px; right: 16px; }
+  .wa-float svg { width: 26px; height: 26px; }
+}
 @media (max-width: 540px) {
   .pr-card { padding: 48px 24px 28px; border-radius: 18px; }
   .pr-btn-row { grid-template-columns: 1fr; }
@@ -3293,7 +3333,7 @@ footer p {
         <svg class="icon" style="width:24px;height:24px;stroke:#fff"><use href="#i-clock"/></svg>
       </span>
     </div>
-    <p class="gs label" style="margin-bottom:20px">PARA QUEM NÃO TEM TEMPO PRA PERDER</p>
+    <p class="gs label" style="margin-bottom:20px">PARA QUEM NÃO TEM TEMPO PARA PERDER</p>
     <p class="gs fm" style="font-size:clamp(24px,4.5vw,40px);font-weight:700;color:#fff;line-height:1.2;text-wrap:balance;max-width:22ch;margin-left:auto;margin-right:auto">Sem tempo para organizar processos e implementar IA no dia a dia?</p>
     <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g100);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;text-wrap:pretty">Você não precisa de mais um curso de 80 horas que vai comprar e nunca abrir. A Implementação PDP coloca a casa em ordem em 6 semanas, mesmo que sua agenda esteja cheia.</p>
   </div>
@@ -3321,7 +3361,7 @@ footer p {
             <p style="font-size:11px;color:var(--g500);margin-top:8px;padding-left:18px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600">Mariana &middot; 12 anos de carreira</p>
           </div>
           <div class="gs">
-            <p style="font-size:15px;color:var(--graphite);line-height:1.5;padding-left:18px;border-left:3px solid var(--g100);font-style:italic">"Tenho 18 anos de carreira e ainda me pego apagando incêndio igual no começo. Olho pra trás e sei que poderia ter chegado muito mais longe. O problema nunca foi o projeto."</p>
+            <p style="font-size:15px;color:var(--graphite);line-height:1.5;padding-left:18px;border-left:3px solid var(--g100);font-style:italic">"Tenho 18 anos de carreira e ainda me pego apagando incêndio igual no começo. Olho para trás e sei que poderia ter chegado muito mais longe. O problema nunca foi o projeto."</p>
             <p style="font-size:11px;color:var(--g500);margin-top:8px;padding-left:18px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600">Beatriz &middot; 18 anos de carreira</p>
           </div>
         </div>
@@ -3377,7 +3417,7 @@ footer p {
       </div>
     </div>
 
-    <p class="gs fm tc" style="font-weight:800;font-size:clamp(22px,3.2vw,32px);line-height:1.25;max-width:760px;margin:80px auto 0;text-wrap:balance;color:var(--black)">Você quer usar IA pra gerar videozinhos ou para trabalhar por você?</p>
+    <p class="gs fm tc" style="font-weight:800;font-size:clamp(22px,3.2vw,32px);line-height:1.25;max-width:760px;margin:80px auto 0;text-wrap:balance;color:var(--black)">Você quer usar IA para gerar videozinhos ou para trabalhar por você?</p>
   </div>
 </section>
 
@@ -3400,13 +3440,13 @@ footer p {
       <div class="pq-card gs">
         <span class="pq-num">02</span>
         <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-award"/></svg></span>
-        <p class="fm pq-title">Pra quem já tem equipe</p>
-        <p class="pq-desc">Tem time, mas refaz o trabalho dos outros. Quer estrutura pra parar de ser o gargalo do próprio escritório.</p>
+        <p class="fm pq-title">Para quem já tem equipe</p>
+        <p class="pq-desc">Tem time, mas refaz o trabalho dos outros. Quer estrutura para parar de ser o gargalo do próprio escritório.</p>
       </div>
       <div class="pq-card gs">
         <span class="pq-num">03</span>
         <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-book"/></svg></span>
-        <p class="fm pq-title">Pra quem está começando</p>
+        <p class="fm pq-title">Para quem está começando</p>
         <p class="pq-desc">Quer construir o escritório já com a base certa, sem passar pelo caos que a maioria enfrenta.</p>
       </div>
     </div>
@@ -3421,7 +3461,7 @@ footer p {
   <div class="si pos-manifest">
     <p class="gs pos-mani-line pos-mani-neg">
       <span class="pos-mani-tag">não é</span>
-      mais um curso pra assistir <span class="pos-mani-strike">quando sobrar tempo</span> <span class="pos-mani-faded">(que nunca sobra)</span>.
+      mais um curso para assistir <span class="pos-mani-strike">quando sobrar tempo</span> <span class="pos-mani-faded">(que nunca sobra)</span>.
     </p>
 
     <div class="pos-mani-divider gs" aria-hidden="true"></div>
@@ -3502,7 +3542,7 @@ footer p {
         <div class="sp-num"><span>02</span></div>
         <div class="sp-card">
           <p class="fm sp-title">Estruturar processos</p>
-          <p class="sp-desc">Todo o método PDP implementado no seu escritório. Contratos, briefing, etapas e templates prontos pra você ajustar à sua forma de projetar.</p>
+          <p class="sp-desc">Todo o método PDP implementado no seu escritório. Contratos, briefing, etapas e templates prontos para você ajustar à sua forma de projetar.</p>
         </div>
       </div>
       <div class="sp-step gs">
@@ -3603,7 +3643,7 @@ footer p {
             <div class="mat-content">
               <span class="mat-icon" aria-hidden="true"><svg class="icon" style="width:20px;height:20px"><use href="#i-scale"/></svg></span>
               <p class="mat-name">Layout</p>
-              <p class="mat-desc">Técnicas, fundamentos e workbooks de proporção, circulação e composição. Passo a passo pra destravar soluções funcionais.</p>
+              <p class="mat-desc">Técnicas, fundamentos e workbooks de proporção, circulação e composição. Passo a passo para destravar soluções funcionais.</p>
             </div>
           <span class="mat-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
 
@@ -3651,7 +3691,7 @@ footer p {
             <div class="mat-content">
               <span class="mat-icon" aria-hidden="true"><svg class="icon" style="width:20px;height:20px"><use href="#i-shield"/></svg></span>
               <p class="mat-name">Fundamentos · Detalhamento</p>
-              <p class="mat-desc">Princípios e organização dos projetos executivos antes de partir pra obra. A base que evita retrabalho no canteiro.</p>
+              <p class="mat-desc">Princípios e organização dos projetos executivos antes de partir para obra. A base que evita retrabalho no canteiro.</p>
             </div>
           <span class="mat-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
 
@@ -3675,7 +3715,7 @@ footer p {
             <div class="mat-content">
               <span class="mat-icon" aria-hidden="true"><svg class="icon" style="width:20px;height:20px"><use href="#i-check-circle"/></svg></span>
               <p class="mat-name">Detalhamento Fase 2</p>
-              <p class="mat-desc">Mobiliário sob medida, marmoraria, esquadrias e acessórios. O detalhamento que entrega o projeto pronto pra obra.</p>
+              <p class="mat-desc">Mobiliário sob medida, marmoraria, esquadrias e acessórios. O detalhamento que entrega o projeto pronto para obra.</p>
             </div>
           <span class="mat-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
 
@@ -3687,7 +3727,7 @@ footer p {
             <div class="mat-content">
               <span class="mat-icon" aria-hidden="true"><svg class="icon" style="width:20px;height:20px"><use href="#i-book"/></svg></span>
               <p class="mat-name">Especificação</p>
-              <p class="mat-desc">Mais de 40 aulas sobre sistemas construtivos, materiais e acabamentos do mercado. Pra você especificar com segurança técnica.</p>
+              <p class="mat-desc">Mais de 40 aulas sobre sistemas construtivos, materiais e acabamentos do mercado. Para você especificar com segurança técnica.</p>
             </div>
           <span class="mat-toggle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
 
@@ -3727,7 +3767,7 @@ footer p {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
         <div class="gs" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px">
           <p class="fm" style="font-weight:700;font-size:18px;color:#fff">Workbooks de Detalhamento</p>
-          <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo ilustrado com 213 páginas em PDF e checklists editáveis pra você ou seu time entregar projetos executivos sem erros, com tudo que é necessário.</p>
+          <p style="font-size:14px;color:var(--g300);line-height:1.5">Guia completo ilustrado com 213 páginas em PDF e checklists editáveis para você ou seu time entregar projetos executivos sem erros, com tudo que é necessário.</p>
           <div class="img-z" style="position:relative;border-radius:8px;overflow:hidden;margin-top:auto">
             <span class="pill pill-on-img">213 páginas</span>
             <img src="img/workbook.jpg" alt="Workbooks de Detalhamento PDP, 213 páginas" loading="lazy" style="width:100%;display:block;filter:saturate(0.8)" class="clip-r">
@@ -3882,13 +3922,13 @@ footer p {
       <div class="split-text">
         <p class="gs label" style="margin-bottom:16px">VOCÊ NÃO VAI ESTAR SOZINHO</p>
         <p class="gs fm" style="font-weight:700;font-size:clamp(24px,3.5vw,32px);line-height:1.2;margin-bottom:16px">Você não implementa sozinho.</p>
-        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-bottom:28px">A maioria dos arquitetos de interiores trabalha sozinho ou com um time pequeno. Aqui você tem o Rodrigo do seu lado, a sua turma e uma rede que vai te puxar pra concluir o que começou.</p>
+        <p class="gs" style="font-size:15px;color:var(--g700);line-height:1.6;margin-bottom:28px">A maioria dos arquitetos de interiores trabalha sozinho ou com um time pequeno. Aqui você tem o Rodrigo do seu lado, a sua turma e uma rede que vai te puxar para concluir o que começou.</p>
         <ul class="checklist">
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Tira-dúvidas ao vivo com o Rodrigo</strong>: encontros pra destravar o que travou</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Tira-dúvidas ao vivo com o Rodrigo</strong>: encontros para destravar o que travou</span></li>
           <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo do Desafio no WhatsApp</strong>: acesso direto durante as 6 semanas</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo das Mães de Primeira</strong>: espaço exclusivo pra mães que projetam</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo das Mães de Primeira</strong>: espaço exclusivo para mães que projetam</span></li>
           <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Grupo pós-desafio</strong>: rede permanente de quem já implementou</span></li>
-          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Premiações do Desafio</strong> pra quem conclui a implementação</span></li>
+          <li class="gs"><span class="chk"><svg><use href="#i-check"/></svg></span><span><strong>Premiações do Desafio</strong> para quem conclui a implementação</span></li>
         </ul>
       </div>
     </div>
@@ -3933,7 +3973,7 @@ footer p {
       <div class="ia-area-card gs">
         <div class="ia-area-icon"><svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><polyline points="21 16 16 11 5 21"/></svg></div>
         <p class="ia-area-name">Representação</p>
-        <p class="ia-area-desc">Gere imagens e vídeos profissionais pra apresentar e aprovar seus projetos sem alterações.</p>
+        <p class="ia-area-desc">Gere imagens e vídeos profissionais para apresentar e aprovar seus projetos sem alterações.</p>
       </div>
       <div class="ia-area-card gs">
         <div class="ia-area-icon"><svg class="icon icon-lg"><use href="#i-trending"/></svg></div>
@@ -3980,7 +4020,7 @@ footer p {
             <p class="ft-card-name">1 Click Render</p>
           </div>
         </div>
-        <p class="ft-card-desc">Plugin exclusivo, feito por nós, que renderiza imagens e tours 360 dos seus projetos direto de dentro do SketchUp, Revit e Archicad. Imagens com preço de custo e plugin <strong>liberado por 6 meses</strong> pra todos os alunos da implementação.</p>
+        <p class="ft-card-desc">Plugin exclusivo, feito por nós, que renderiza imagens e tours 360 dos seus projetos direto de dentro do SketchUp, Revit e Archicad. Imagens com preço de custo e plugin <strong>liberado por 6 meses</strong> para todos os alunos da implementação.</p>
         <ul class="ft-list">
           <li>SketchUp, Revit e Archicad</li>
           <li>Render fotorrealista em segundos</li>
@@ -4002,7 +4042,7 @@ footer p {
             <p class="ft-card-name">Flora</p>
           </div>
         </div>
-        <p class="ft-card-desc">Plataforma visual onde você conecta IAs de texto, imagens e vídeos num único fluxo de trabalho. Ideal pra quem quer ir além das imagens e alcançar <strong>representação em vídeos surpreendentes</strong>.</p>
+        <p class="ft-card-desc">Plataforma visual onde você conecta IAs de texto, imagens e vídeos num único fluxo de trabalho. Ideal para quem quer ir além das imagens e alcançar <strong>representação em vídeos surpreendentes</strong>.</p>
         <ul class="ft-list">
           <li>Fluxos visuais que rodam sozinhos</li>
           <li>Geração de imagens e vídeos integrada</li>
@@ -4130,7 +4170,7 @@ footer p {
     <noscript><style>#pr-countdown{display:none!important}#pr-actions{display:flex!important}</style></noscript>
 
     <div class="pr-countdown" id="pr-countdown">
-      <p class="pr-cd-msg">As inscrições pra Implementação abrem às 15h</p>
+      <p class="pr-cd-msg">As inscrições para Implementação abrem às 15h</p>
       <div class="pr-cd-grid" aria-live="polite">
         <div class="pr-cd-cell"><span class="pr-cd-num" id="cd-h">00</span><span class="pr-cd-lbl">Horas</span></div>
         <span class="pr-cd-sep">:</span>
@@ -4165,6 +4205,7 @@ footer p {
     </div>
 
     <p class="pr-note">Esse valor é exclusivo para quem entra nesta janela de inscrição. Depois, o preço sobe.</p>
+    <p class="pr-upgrade"><a href="https://api.whatsapp.com/send?phone=5547989163007&text=Preciso%20de%20ajuda%20com%20a%20minha%20matr%C3%ADcula%20na%20Implementa%C3%A7%C3%A3o" target="_blank" rel="noopener">Já é PDP? Aperte e faça upgrade para Implementação.</a></p>
   </div>
 </section>
 <!-- ============================== -->
@@ -4174,7 +4215,7 @@ footer p {
   <div class="si">
     <p class="gs label tc" style="margin-bottom:18px">RETORNO DO INVESTIMENTO</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,40px);line-height:1.1;color:var(--black);max-width:680px;margin:0 auto 12px;text-wrap:balance">Quanto vale o seu tempo?</p>
-    <p class="gs fm tc" style="font-weight:600;font-size:clamp(18px,2.4vw,24px);line-height:1.3;color:var(--graphite);max-width:680px;margin:0 auto 72px;text-wrap:balance">Seu investimento retorna multiplicado, pra sempre.</p>
+    <p class="gs fm tc" style="font-weight:600;font-size:clamp(18px,2.4vw,24px);line-height:1.3;color:var(--graphite);max-width:680px;margin:0 auto 72px;text-wrap:balance">Seu investimento retorna multiplicado, para sempre.</p>
 
     <div class="roi-g" data-s>
       <div class="roi-card gs">
@@ -4184,8 +4225,8 @@ footer p {
       </div>
       <div class="roi-card gs roi-card-feature">
         <p class="roi-num roi-num-symbol">∞</p>
-        <p class="roi-headline">Tempo pra viver</p>
-        <p class="roi-desc">Tempo pra <strong>família, pra você, pra fazer o que quiser</strong>. Cada hora fora do apagar incêndio é uma hora de vida de volta.</p>
+        <p class="roi-headline">Tempo para viver</p>
+        <p class="roi-desc">Tempo para <strong>família, para você, para fazer o que quiser</strong>. Cada hora fora do apagar incêndio é uma hora de vida de volta.</p>
         <p class="roi-pill">isso não tem preço</p>
       </div>
       <div class="roi-card gs">
@@ -4281,7 +4322,7 @@ footer p {
         <div class="tc-video" data-yt="w4iDw7XpqAg" style="background-image:url('https://i.ytimg.com/vi/w4iDw7XpqAg/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>        <p class="tc-qm">&ldquo;</p>
-        <p class="tc-qt">Mesmo com toda a experiência, o PDP me deu <strong>liberdade pra focar nas decisões estratégicas</strong>.</p>
+        <p class="tc-qt">Mesmo com toda a experiência, o PDP me deu <strong>liberdade para focar nas decisões estratégicas</strong>.</p>
         <p class="tc-nm">Arq. Débora Tumelero · 28 anos de carreira</p>
       </div>
       <div class="tc-card gs">
@@ -4749,5 +4790,11 @@ if (PREFERS_REDUCED) {
   }
 })();
 </script>
+
+<!-- WhatsApp floating button -->
+<a class="wa-float" href="https://api.whatsapp.com/send?phone=5547989163007&amp;text=Preciso%20de%20ajuda%20com%20a%20minha%20matr%C3%ADcula%20na%20Implementa%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Falar com o suporte no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
 </body>
 </html>
