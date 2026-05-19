@@ -480,6 +480,23 @@ section {
   margin-top: auto;
 }
 
+/* PILARES dark mode */
+.bg-d .pilares-title { color: #fff; }
+.bg-d .pilar-col-title { color: rgba(255,255,255,0.5); }
+.bg-d .pilar-card {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+}
+.bg-d .pilar-card-icon {
+  background: rgba(255,255,255,0.06);
+}
+.bg-d .pilar-card-icon svg { stroke: rgba(255,255,255,0.92); }
+.bg-d .pilar-label { color: rgba(255,255,255,0.4); }
+.bg-d .pilar-name { color: #fff; }
+.bg-d .pilar-desc { color: rgba(255,255,255,0.72); }
+.bg-d .pilar-hl { color: rgba(255,255,255,0.92); font-style: normal; }
+
 .g4-wrap {
   margin-top: -12px; position: relative; z-index: 1;
   padding: 0 4px;
@@ -2462,28 +2479,31 @@ footer p {
 <section class="sec-short bg-o" style="padding:96px 24px" id="para-quem">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:16px">PARA QUEM É</p>
-    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.2;max-width:640px;margin:0 auto 56px">Pensada para três momentos do escritório.</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.2;max-width:720px;margin:0 auto 16px">Pensada para três momentos do escritório.</p>
+    <p class="gs tc" style="font-size:clamp(14px,1.7vw,16px);color:var(--g500);max-width:600px;margin:0 auto 56px;line-height:1.6">A maioria dos alunos já tem cliente, projeto e faturamento. Vem pra colocar a casa em ordem.</p>
 
     <div class="pq-grid">
       <div class="pq-card gs">
         <span class="pq-num">01</span>
         <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-users"/></svg></span>
-        <p class="fm pq-title">Quem projeta sozinho</p>
-        <p class="pq-desc">Quer parar de centralizar tudo. Montar processos que permitam delegar sem perder qualidade.</p>
+        <p class="fm pq-title">Pra quem quer construir um time</p>
+        <p class="pq-desc">Faz tudo sozinho hoje e sabe que isso não escala. Quer processos que permitam delegar sem perder qualidade.</p>
       </div>
       <div class="pq-card gs">
         <span class="pq-num">02</span>
         <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-award"/></svg></span>
-        <p class="fm pq-title">Quem já tem experiência</p>
-        <p class="pq-desc">Mas sente que os bastidores do escritório não acompanham a qualidade dos projetos que entrega.</p>
+        <p class="fm pq-title">Pra quem já tem equipe</p>
+        <p class="pq-desc">Tem time, mas refaz o trabalho dos outros. Quer estrutura pra parar de ser o gargalo do próprio escritório.</p>
       </div>
       <div class="pq-card gs">
         <span class="pq-num">03</span>
         <span class="pq-icon"><svg class="icon" style="width:22px;height:22px"><use href="#i-book"/></svg></span>
-        <p class="fm pq-title">Quem está começando</p>
-        <p class="pq-desc">Quer construir o escritório já com a estrutura certa. Pra não precisar passar pelo caos que a maioria enfrenta.</p>
+        <p class="fm pq-title">Pra quem está começando</p>
+        <p class="pq-desc">Quer construir o escritório já com a base certa, sem passar pelo caos que a maioria enfrenta.</p>
       </div>
     </div>
+
+    <p class="gs tc" style="margin-top:48px;font-size:clamp(13px,1.6vw,15px);color:var(--g500);letter-spacing:0.04em">67,8% dos alunos têm mais de 5 anos de mercado.</p>
   </div>
 </section>
 
@@ -2501,7 +2521,7 @@ footer p {
 <!-- ============================== -->
 <!-- 7. PILARES + G4                -->
 <!-- ============================== -->
-<section class="bg-o" id="pilares" style="padding:0;min-height:auto">
+<section class="bg-d" id="pilares" style="padding:0;min-height:auto;position:relative;overflow:hidden">
   <div class="si" style="padding:120px 24px 100px;position:relative">
     <p class="gs pilares-title">OS 3 PILARES DA IMPLEMENTAÇÃO PROJETO DE PRIMEIRA</p>
     <div class="pilares-grid">
@@ -2538,15 +2558,15 @@ footer p {
     </div>
     <div class="g4-wrap">
       <svg id="g4" viewBox="0 0 1100 180" fill="none" width="100%" preserveAspectRatio="xMidYMid meet">
-        <text x="183" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PESSOAS</text>
-        <text x="550" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PROCESSOS</text>
-        <text x="917" y="170" text-anchor="middle" fill="#B4B2A9" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">TECNOLOGIA</text>
-        <line x1="366" y1="150" x2="366" y2="15" stroke="#D3D1C7" stroke-width=".5" stroke-dasharray="4,4"/>
-        <line x1="733" y1="150" x2="733" y2="15" stroke="#D3D1C7" stroke-width=".5" stroke-dasharray="4,4"/>
-        <path id="g4-p1" d="M20 110 C60 85 80 130 120 100 C160 70 180 120 220 95 C260 65 300 110 366 80" stroke="#B4B2A9" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <path id="g4-p2" d="M366 80 L733 76" stroke="#3D3D3A" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <path id="g4-p3" d="M733 76 C790 62 840 45 890 30 C940 18 980 12 1080 8" stroke="#1E1E1E" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <circle id="g4-dot" cx="120" cy="100" r="4" fill="var(--black)" opacity="0"/>
+        <text x="183" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PESSOAS</text>
+        <text x="550" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PROCESSOS</text>
+        <text x="917" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">TECNOLOGIA</text>
+        <line x1="366" y1="150" x2="366" y2="15" stroke="rgba(255,255,255,0.15)" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="733" y1="150" x2="733" y2="15" stroke="rgba(255,255,255,0.15)" stroke-width=".5" stroke-dasharray="4,4"/>
+        <path id="g4-p1" d="M20 110 C60 85 80 130 120 100 C160 70 180 120 220 95 C260 65 300 110 366 80" stroke="rgba(255,255,255,0.35)" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="g4-p2" d="M366 80 L733 76" stroke="rgba(255,255,255,0.65)" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="g4-p3" d="M733 76 C790 62 840 45 890 30 C940 18 980 12 1080 8" stroke="#ffffff" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <circle id="g4-dot" cx="120" cy="100" r="4" fill="#ffffff" opacity="0"/>
       </svg>
     </div>
   </div>
@@ -2557,52 +2577,31 @@ footer p {
 <!-- ============================== -->
 <section class="sec bg-w" id="sprints">
   <div class="si">
-    <p class="gs label tc" style="margin-bottom:12px">COMO FUNCIONA</p>
-    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,34px);margin-bottom:16px">Semana a semana, o processo toma forma.</p>
-    <p class="gs tc" style="font-size:15px;color:var(--g500);max-width:540px;margin:0 auto 56px;line-height:1.6">O desafio de 6 semanas acontece toda segunda às 9h, ao vivo com o Rodrigo. Cada semana tem uma missão clara. Você executa no seu ritmo, com dupla de implementação e grupo de apoio.</p>
+    <p class="gs label tc" style="margin-bottom:12px">SUA JORNADA EM 6 SEMANAS</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,4vw,34px);margin-bottom:16px">Como será a sua transformação.</p>
+    <p class="gs tc" style="font-size:15px;color:var(--g500);max-width:580px;margin:0 auto 56px;line-height:1.6">Três etapas em ordem cronológica, com acompanhamento semanal ao vivo. Cada uma desbloqueia a próxima.</p>
 
     <div class="sp-timeline">
       <div class="sp-line"></div>
       <div class="sp-step gs">
         <div class="sp-num"><span>01</span></div>
         <div class="sp-card">
-          <p class="fm sp-title">No controle do seu tempo</p>
-          <p class="sp-desc">Agenda blindada, faxina operacional e clareza de prioridades. O foco é esvaziar o copo, não adicionar tarefas.</p>
+          <p class="fm sp-title">Você no controle do seu tempo</p>
+          <p class="sp-desc">Agenda blindada, prioridades claras e fim do dia atropelado. Antes de empilhar processo, a gente esvazia o copo.</p>
         </div>
       </div>
       <div class="sp-step gs">
         <div class="sp-num"><span>02</span></div>
         <div class="sp-card">
-          <p class="fm sp-title">Pré-projeto no lugar</p>
-          <p class="sp-desc">Contratos, briefing, checklist e planejamento. Tudo padronizado com modelos prontos que você só adequa ao seu escritório.</p>
+          <p class="fm sp-title">Processo de projeto no lugar</p>
+          <p class="sp-desc">Todo o método PDP implementado no seu escritório. Contratos, briefing, etapas, templates. Tudo pronto pra você ajustar à sua forma de projetar.</p>
         </div>
       </div>
       <div class="sp-step gs">
         <div class="sp-num"><span>03</span></div>
         <div class="sp-card">
-          <p class="fm sp-title">Do caos à ordem</p>
-          <p class="sp-desc">O backlog do PDP implementado no seu gestor de tarefas. Todos os projetos em andamento organizados num sistema só.</p>
-        </div>
-      </div>
-      <div class="sp-step gs">
-        <div class="sp-num"><span>04</span></div>
-        <div class="sp-card">
-          <p class="fm sp-title">Processos que se adaptam</p>
-          <p class="sp-desc">Variações de templates para cada tipo de serviço que você entrega. Constância vale mais que velocidade.</p>
-        </div>
-      </div>
-      <div class="sp-step gs">
-        <div class="sp-num"><span>05</span></div>
-        <div class="sp-card">
-          <p class="fm sp-title">Templates alinhados com processos</p>
-          <p class="sp-desc">Seus arquivos de projeto conversando com o gestor de tarefas. Estrutura, nomenclatura e ordem das pranchas no lugar.</p>
-        </div>
-      </div>
-      <div class="sp-step gs">
-        <div class="sp-num"><span>06</span></div>
-        <div class="sp-card">
-          <p class="fm sp-title">Criação e executivos documentados</p>
-          <p class="sp-desc">Processo criativo e detalhamento implementados. Premiação para quem conclui. Acesso ao grupo de profissionais graduados.</p>
+          <p class="fm sp-title">IA acelerando seu trabalho</p>
+          <p class="sp-desc">Com o processo mapeado, a IA passa a trabalhar no seu padrão. O que levava horas começa a levar minutos, com a qualidade que você assina.</p>
         </div>
       </div>
     </div>
