@@ -3030,6 +3030,18 @@ section {
   font-style: italic;
   font-size: clamp(56px, 9vw, 88px);
 }
+.roi-num-svg {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+.roi-num-svg svg {
+  width: clamp(56px, 9vw, 80px);
+  height: clamp(56px, 9vw, 80px);
+  stroke: currentColor;
+}
 .roi-headline {
   font-family: 'Maven Pro';
   font-weight: 700;
@@ -4178,9 +4190,13 @@ footer p {
         <p class="roi-pill">isso não tem preço</p>
       </div>
       <div class="roi-card gs">
-        <p class="roi-num roi-num-money">R$</p>
-        <p class="roi-headline">Pago em poucos meses</p>
-        <p class="roi-desc">Basta <strong>um projeto fechado no preço justo</strong> pra Implementação se pagar. O resto vira lucro líquido.</p>
+        <span class="roi-num roi-num-svg" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 56 C32 56 8 42 8 24 C8 16 14 10 22 10 C26 10 30 12 32 16 C34 12 38 10 42 10 C50 10 56 16 56 24 C56 42 32 56 32 56 Z"/>
+          </svg>
+        </span>
+        <p class="roi-headline">Voltar a amar a profissão</p>
+        <p class="roi-desc">Tem arquiteta que <strong>perdeu a vontade de projetar porque o operacional engoliu tudo</strong>. Quando o escritório roda sozinho, você volta a fazer o que escolheu fazer.</p>
       </div>
     </div>
 
