@@ -809,6 +809,118 @@ section {
   line-height: 1.55;
 }
 
+/* FERRAMENTAS (Claude / Flora / 1CR) - cards grandes verticais */
+.ft-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (min-width: 900px) {
+  .ft-stack { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+.ft-card {
+  position: relative;
+  padding: 32px 28px;
+  border: 1px solid rgba(122,175,212,0.2);
+  border-radius: 20px;
+  background: linear-gradient(165deg, rgba(122,175,212,0.08) 0%, rgba(18,26,38,0.6) 65%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex; flex-direction: column;
+  gap: 18px;
+  transition: border-color 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+.ft-card:hover {
+  border-color: rgba(122,175,212,0.4);
+  transform: translateY(-4px);
+}
+.ft-card-feature {
+  background: linear-gradient(165deg, rgba(122,175,212,0.2) 0%, rgba(122,175,212,0.04) 70%);
+  border-color: rgba(122,175,212,0.45);
+  box-shadow: 0 12px 48px rgba(122,175,212,0.16);
+}
+.ft-card-bonus {
+  position: absolute; top: 18px; right: 18px;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(122,175,212,0.3);
+  color: #DCEDF8;
+}
+.ft-card-head {
+  display: flex; align-items: center; gap: 14px;
+}
+.ft-logo {
+  width: 52px; height: 52px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+}
+.ft-logo svg { width: 100%; height: 100%; }
+.ft-card-tag {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(122,175,212,0.85);
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+.ft-card-name {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px,2.4vw,28px);
+  color: #fff;
+  line-height: 1.1;
+  margin: 0;
+}
+.ft-card-desc {
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+.ft-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ft-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+}
+.ft-list li::before {
+  content: ""; position: absolute;
+  left: 0; top: 8px;
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: rgba(122,175,212,0.7);
+}
+.ft-img-slot {
+  margin-top: auto;
+  aspect-ratio: 16/10;
+  border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+.ft-img-slot span { padding: 12px 18px; text-align: center; }
+
 .pilar-hl-mec {
   display: inline-flex !important; align-items: center; gap: 8px;
 }
@@ -3495,22 +3607,9 @@ footer p {
 
     <div class="ia-grid">
       <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-cpu"/></svg></div>
-        <p class="ia-card-name">Claude em modo chat</p>
-        <p class="ia-card-desc">Acesso configurado ao modelo mais avançado de IA conversacional, com instruções prontas pra trabalhar no seu padrão.</p>
-      </div>
-
-      <div class="ia-card gs">
         <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-award"/></svg></div>
         <p class="ia-card-name">Construa suas próprias ferramentas</p>
         <p class="ia-card-desc">Aprenda a criar agentes e automações específicas pro seu jeito de projetar. Sem precisar virar desenvolvedor.</p>
-      </div>
-
-      <div class="ia-card gs ia-card-feature">
-        <span class="ia-card-bonus">BÔNUS · 6 MESES</span>
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-star"/></svg></div>
-        <p class="ia-card-name">1 Click Render</p>
-        <p class="ia-card-desc">Renderize seus projetos com um clique direto do SketchUp. Plugin exclusivo liberado por 6 meses pra você.</p>
       </div>
 
       <div class="ia-card gs">
@@ -3541,6 +3640,97 @@ footer p {
         <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-book"/></svg></div>
         <p class="ia-card-name">Renderização com IA</p>
         <p class="ia-card-desc">Pipeline completo pra gerar imagens fotorrealistas dos seus projetos usando IA generativa de ponta a ponta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 11b. AS FERRAMENTAS QUE VOCÊ APRENDE -->
+<!-- ============================== -->
+<section class="sec bg-d ia-bg-section" id="ferramentas-ia" style="padding:100px 24px 120px;position:relative;overflow:hidden">
+  <div class="grain"></div>
+  <div class="si" style="position:relative;z-index:1">
+    <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">AS FERRAMENTAS QUE VOCÊ VAI APRENDER</p>
+    <p class="gs fm tc" style="font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;color:#fff;max-width:760px;margin:0 auto 56px;text-wrap:balance">Três ferramentas, um único método de trabalho.</p>
+
+    <div class="ft-stack">
+      <!-- CLAUDE -->
+      <div class="ft-card gs">
+        <div class="ft-card-head">
+          <div class="ft-logo ft-logo-claude" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M24 4 L26.5 18 L40.5 19.5 L29 28 L33 42 L24 33.5 L15 42 L19 28 L7.5 19.5 L21.5 18 Z" fill="#D97757" stroke="none"/>
+            </svg>
+          </div>
+          <div class="ft-card-meta">
+            <p class="ft-card-tag">MOTOR OPERACIONAL</p>
+            <p class="ft-card-name">Claude</p>
+          </div>
+        </div>
+        <p class="ft-card-desc">O Claude é o cérebro de tudo. A partir dele você vai construir, automatizar e operar. Aprende a usar em modo chat para o dia a dia e a construir suas próprias ferramentas personalizadas para projeto e gestão.</p>
+        <ul class="ft-list">
+          <li>Claude em modo chat configurado pro seu padrão</li>
+          <li>Construção de agentes próprios sem código</li>
+          <li>Automação de tarefas operacionais</li>
+        </ul>
+        <div class="ft-img-slot" data-tip="trocar img/ferramenta-claude.jpg">
+          <span>Imagem · Claude em ação</span>
+        </div>
+      </div>
+
+      <!-- FLORA -->
+      <div class="ft-card gs">
+        <div class="ft-card-head">
+          <div class="ft-logo ft-logo-flora" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="14" r="6" fill="#7AAFD4"/>
+              <circle cx="34" cy="24" r="6" fill="#7AAFD4"/>
+              <circle cx="24" cy="34" r="6" fill="#7AAFD4"/>
+              <circle cx="14" cy="24" r="6" fill="#7AAFD4"/>
+              <circle cx="24" cy="24" r="5" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="ft-card-meta">
+            <p class="ft-card-tag">CONSTRUTOR DE FLUXO</p>
+            <p class="ft-card-name">Flora</p>
+          </div>
+        </div>
+        <p class="ft-card-desc">Plataforma visual onde você conecta IAs num único fluxo de trabalho. Aprende a montar pipelines que geram imagens, vídeos e materiais de apresentação sem precisar abrir vinte ferramentas diferentes.</p>
+        <ul class="ft-list">
+          <li>Fluxos visuais que rodam sozinhos</li>
+          <li>Geração de imagens e vídeos integrada</li>
+          <li>Pipelines de apresentação automatizados</li>
+        </ul>
+        <div class="ft-img-slot" data-tip="trocar img/ferramenta-flora.jpg">
+          <span>Imagem · Flora em ação</span>
+        </div>
+      </div>
+
+      <!-- 1 CLICK RENDER -->
+      <div class="ft-card ft-card-feature gs">
+        <span class="ft-card-bonus">BÔNUS · 6 MESES LIBERADOS</span>
+        <div class="ft-card-head">
+          <div class="ft-logo ft-logo-1cr" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="6" width="36" height="36" rx="10" fill="none" stroke="#BFDDF0" stroke-width="2"/>
+              <text x="24" y="32" text-anchor="middle" font-family="Maven Pro,Arial,sans-serif" font-weight="900" font-size="20" fill="#BFDDF0">1</text>
+            </svg>
+          </div>
+          <div class="ft-card-meta">
+            <p class="ft-card-tag">RENDER DENTRO DO SOFTWARE</p>
+            <p class="ft-card-name">1 Click Render</p>
+          </div>
+        </div>
+        <p class="ft-card-desc">Plugin exclusivo que renderiza seus projetos com um clique direto do software de projeto, sem migrar arquivos. Funciona em SketchUp, Revit e Archicad. Liberado por 6 meses para todos os alunos da implementação.</p>
+        <ul class="ft-list">
+          <li>SketchUp, Revit e Archicad</li>
+          <li>Render fotorrealista em segundos</li>
+          <li>6 meses de acesso liberado como bônus</li>
+        </ul>
+        <div class="ft-img-slot" data-tip="trocar img/ferramenta-1cr.jpg">
+          <span>Imagem · 1 Click Render em ação</span>
+        </div>
       </div>
     </div>
   </div>
