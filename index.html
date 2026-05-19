@@ -922,9 +922,14 @@ section {
   object-fit: contain;
   display: block;
 }
-/* Logo Claude: versão branca */
-.ft-logo-claude { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
-.ft-logo-claude img { filter: brightness(0) invert(1); }
+/* Logo Claude: laranja oficial + texto branco (logo completo wide) */
+.ft-logo-claude {
+  width: auto; min-width: 130px; height: 56px;
+  background: rgba(217,119,87,0.12);
+  border-color: rgba(217,119,87,0.32);
+  padding: 8px 14px;
+}
+.ft-logo-claude img { width: 100%; height: 100%; object-fit: contain; }
 /* Logo Flora: preto/branco oficial, dar respiro */
 .ft-logo-flora { background: #fff; border-color: rgba(255,255,255,0.18); padding: 8px; }
 /* Logo 1CR: logo wide (retangular), aspect mais wide */
@@ -946,10 +951,11 @@ section {
 .ft-card-name {
   font-family: 'Maven Pro', sans-serif;
   font-weight: 800;
-  font-size: clamp(22px,2.4vw,28px);
+  font-size: clamp(19px,2vw,24px);
   color: #fff;
   line-height: 1.1;
   margin: 0;
+  white-space: nowrap;
 }
 .ft-card-desc {
   font-size: 14.5px;
@@ -3742,7 +3748,7 @@ footer p {
   <div class="grain"></div>
   <div class="si" style="position:relative;z-index:1">
     <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">AS FERRAMENTAS QUE VOCÊ VAI APRENDER</p>
-    <p class="gs fm tc" style="font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;color:#fff;max-width:760px;margin:0 auto 56px;text-wrap:balance">As únicas. E as que você precisa.</p>
+    <p class="gs fm tc" style="font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;color:#fff;max-width:760px;margin:0 auto 56px;text-wrap:balance">Você vai aprender somente as IAs que você precisa.</p>
 
     <div class="ft-stack">
       <!-- CLAUDE -->
