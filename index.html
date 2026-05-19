@@ -1665,16 +1665,19 @@ section {
   display: flex; flex-direction: column;
   gap: 14px;
   padding: 32px 28px 28px;
-  background: var(--white);
+  background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(0,0,0,0.025) 100%);
   border-radius: 18px;
-  border: 2px solid var(--g100);
+  border: 1px solid rgba(0,0,0,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   align-self: stretch;
   height: 100%;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
 }
 .pq-card:hover {
-  border-color: var(--black);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  transform: translateY(-3px);
 }
 .pq-num {
   position: absolute;
@@ -2058,15 +2061,17 @@ section {
 .sp-card {
   flex: 1;
   padding: 22px 26px;
-  background: var(--white);
+  background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(0,0,0,0.025) 100%);
   border-radius: 16px;
-  border: 1px solid var(--g100);
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  border: 1px solid rgba(0,0,0,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
 }
 .sp-card:hover {
-  border-color: var(--black);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-  transform: translateX(4px);
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  transform: translateX(4px) translateY(-2px);
 }
 .sp-step:hover .sp-num {
   border-color: var(--black);
@@ -2245,9 +2250,20 @@ section {
 @media(min-width:640px) { .tg { grid-template-columns: repeat(2,1fr); } }
 @media(min-width:1080px) { .tg { grid-template-columns: repeat(4,1fr); gap: 16px; } }
 .tc-card {
-  background: var(--white); border-radius: 14px;
-  padding: 32px; display: flex; flex-direction: column;
-  gap: 14px; border: 1px solid var(--g100);
+  background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(0,0,0,0.025) 100%);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  border: 1px solid rgba(0,0,0,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+.tc-card:hover {
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  transform: translateY(-3px);
 }
 .tc-qm {
   font-family: 'DM Serif Display'; font-size: 48px;
@@ -2848,13 +2864,15 @@ section {
   display: flex; flex-direction: column;
   gap: 12px;
   padding: 36px 32px 32px;
-  background: var(--white);
-  border: 1.5px solid var(--g100);
+  background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(0,0,0,0.025) 100%);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 18px;
   height: 100%;
   align-self: stretch;
   overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
 }
 .roi-card::before {
   content: '';
@@ -2867,7 +2885,9 @@ section {
   transition: transform 0.5s cubic-bezier(.16,1,.3,1);
 }
 .roi-card:hover {
-  border-color: var(--black);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.2);
   box-shadow: 0 12px 32px rgba(0,0,0,0.06);
 }
 .roi-card:hover::before { transform: scaleX(1); }
@@ -3906,44 +3926,48 @@ footer p {
           <p class="anc-cat-name">Acompanhamento</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">Desafio de 6 semanas no WhatsApp com o Rodrigo</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
-        <div class="anc-row"><span class="anc-name">Tira-dúvidas ao vivo com o Rodrigo</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Grupo das Mães de Primeira + Grupo pós-desafio</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
-        <div class="anc-row"><span class="anc-name">Premiações do Desafio para quem conclui</span><span class="anc-dots"></span><span class="anc-val">R$ 1.000</span></div>
+        <div class="anc-row"><span class="anc-name">Desafio 6 semanas no WhatsApp com Rodrigo + Premiação</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
+        <div class="anc-row"><span class="anc-name">Repetir o desafio 4 vezes se quiser</span><span class="anc-dots"></span><span class="anc-val">R$ 8.000</span></div>
       </div>
 
       <div class="anc-section">
         <div class="anc-cat-head">
           <span class="anc-cat-num">02</span>
-          <p class="anc-cat-name">Método Projeto de Primeira</p>
+          <p class="anc-cat-name">Método</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">10 módulos do PDP com chancela MEC (80h)</span><span class="anc-dots"></span><span class="anc-val">R$ 3.997</span></div>
-        <div class="anc-row"><span class="anc-name">Workbooks de Detalhamento, 213 páginas em PDF</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
-        <div class="anc-row"><span class="anc-name">Templates SketchUp, Revit, Archicad e AutoCAD</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Kit Documentos de Primeira (contratos, briefing, executivos)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.997</span></div>
-        <div class="anc-row"><span class="anc-name">Central de gestão de projetos no Notion</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
-        <div class="anc-row"><span class="anc-name">Certificado de Extensão Universitária no Lattes</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Parceria Autodesk e descontos em parceiros</span><span class="anc-dots"></span><span class="anc-val anc-na">incluso</span></div>
+        <div class="anc-row"><span class="anc-name">Método PDP completo + Chancela MEC</span><span class="anc-dots"></span><span class="anc-val">R$ 3.497</span></div>
+        <div class="anc-row"><span class="anc-name">Kit Documentos de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.997</span></div>
+        <div class="anc-row"><span class="anc-name">Templates de Projeto (Revit, Archicad, SketchUp, AutoCAD)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Workbooks de detalhamento, 213 páginas</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Template Notion + implementação ao vivo</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
+        <div class="anc-row"><span class="anc-name">Licença estudantil e desconto em ferramentas</span><span class="anc-dots"></span><span class="anc-val anc-na">incluso</span></div>
       </div>
 
       <div class="anc-section">
         <div class="anc-cat-head">
           <span class="anc-cat-num">03</span>
-          <p class="anc-cat-name">Implementação IA</p>
+          <p class="anc-cat-name">Inteligência Artificial</p>
           <span class="anc-cat-line"></span>
         </div>
-        <div class="anc-row"><span class="anc-name">IA aplicada em Documentação, Desenvolvimento, Representação e Gestão</span><span class="anc-dots"></span><span class="anc-val">R$ 2.500</span></div>
-        <div class="anc-row"><span class="anc-name">Claude configurado pro seu padrão (chat, cowork, programação)</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">Flora — construtor de fluxos de IA para imagens e vídeos</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
-        <div class="anc-row"><span class="anc-name">1 Click Render — plugin com IA liberado por 6 meses</span><span class="anc-dots"></span><span class="anc-val">R$ 2.000</span></div>
-        <div class="anc-row"><span class="anc-name">Criação das suas próprias ferramentas de IA</span><span class="anc-dots"></span><span class="anc-val anc-pri">inestimável</span></div>
+        <div class="anc-row"><span class="anc-name">Novo Curso IA de Primeira</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Ferramentas e assistentes IA prontos</span><span class="anc-dots"></span><span class="anc-val">R$ 1.500</span></div>
+        <div class="anc-row"><span class="anc-name">Aprenda a criar suas próprias soluções</span><span class="anc-dots"></span><span class="anc-val anc-pri">inestimável</span></div>
+      </div>
+
+      <div class="anc-section">
+        <div class="anc-cat-head">
+          <span class="anc-cat-num">04</span>
+          <p class="anc-cat-name">Comunidade</p>
+          <span class="anc-cat-line"></span>
+        </div>
+        <div class="anc-row"><span class="anc-name">Comunidade + Suporte</span><span class="anc-dots"></span><span class="anc-val">R$ 997</span></div>
       </div>
 
       <!-- Total dentro do card -->
       <div class="anc-total-row">
         <p class="anc-total-label">Total em valor real</p>
-        <p class="anc-total-val fm">R$ 23.985</p>
+        <p class="anc-total-val fm">R$ 22.985</p>
       </div>
     </div>
   </div>
