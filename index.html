@@ -987,6 +987,14 @@ section {
   overflow: hidden;
 }
 .ft-img-slot span { padding: 12px 18px; text-align: center; }
+.ft-img-filled {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #000;
+}
+.ft-img-filled img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
 
 .pilar-hl-mec {
   display: inline-flex !important; align-items: center; gap: 8px;
@@ -3750,8 +3758,8 @@ footer p {
           <li>Construção de agentes próprios sem código</li>
           <li>Automação de tarefas operacionais</li>
         </ul>
-        <div class="ft-img-slot" data-tip="trocar img/ferramenta-claude.jpg">
-          <span>Imagem · Claude em ação</span>
+        <div class="ft-img-slot ft-img-filled">
+          <img src="img/ferramenta-claude.png" alt="Claude conectado a múltiplas áreas do escritório" loading="lazy">
         </div>
       </div>
 
@@ -3772,8 +3780,8 @@ footer p {
           <li>Geração de imagens e vídeos integrada</li>
           <li>Pipelines de apresentação automatizados</li>
         </ul>
-        <div class="ft-img-slot" data-tip="trocar img/ferramenta-flora.jpg">
-          <span>Imagem · Flora em ação</span>
+        <div class="ft-img-slot ft-img-filled">
+          <img src="img/ferramenta-flora.avif" alt="Flora — construtor de fluxo visual de IA" loading="lazy">
         </div>
       </div>
 
