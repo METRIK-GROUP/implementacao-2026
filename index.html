@@ -300,6 +300,7 @@ section {
   display: flex; flex-direction: column;
   align-items: center;
   text-align: center;
+  min-width: 0;
 }
 .hero-trust {
   display: flex; flex-wrap: wrap;
@@ -327,7 +328,8 @@ section {
 .hero-text .h-pillars { margin-top: 20px; }
 .hero-video { grid-area: video; }
 .hero-video {
-  width: 100%;
+  width: 100%; max-width: 100%;
+  min-width: 0;
   aspect-ratio: 16/9;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
@@ -2815,6 +2817,11 @@ footer p {
   <div class="fullbleed-bg"><img src="img/chaos_vs._order.png" alt="Do caos à ordem" loading="lazy" class="clip-r"></div>
   <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,0.75) 0%,rgba(26,26,26,0.95) 100%)"></div>
   <div class="fullbleed-content">
+    <div class="gs" style="display:flex;justify-content:center;margin-bottom:20px">
+      <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18)">
+        <svg class="icon" style="width:24px;height:24px;stroke:#fff"><use href="#i-clock"/></svg>
+      </span>
+    </div>
     <p class="gs label" style="margin-bottom:20px">PARA QUEM NÃO TEM TEMPO PRA PERDER</p>
     <p class="gs fm" style="font-size:clamp(24px,4.5vw,40px);font-weight:700;color:#fff;line-height:1.2;text-wrap:balance;max-width:22ch;margin-left:auto;margin-right:auto">Sem tempo para organizar processos e implementar IA no dia a dia?</p>
     <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g100);line-height:1.6;margin-top:24px;max-width:620px;margin-left:auto;margin-right:auto;text-wrap:pretty">Você não precisa de mais um curso de 80 horas que vai comprar e nunca abrir. A Implementação PDP coloca a casa em ordem em 6 semanas, mesmo que sua agenda esteja cheia.</p>
