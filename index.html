@@ -892,14 +892,17 @@ section {
   box-shadow: 0 12px 48px rgba(122,175,212,0.16);
 }
 .ft-card-bonus {
-  position: absolute; top: 18px; right: 18px;
+  position: absolute; top: -12px; left: 50%;
+  transform: translateX(-50%);
   font-family: 'Maven Pro', sans-serif;
-  font-size: 9px; font-weight: 800;
-  letter-spacing: 0.12em;
-  padding: 5px 10px;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(122,175,212,0.3);
-  color: #DCEDF8;
+  background: #7AAFD4;
+  color: #0a0a0a;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(122,175,212,0.35);
 }
 .ft-card-head {
   display: flex; align-items: center; gap: 14px;
@@ -919,8 +922,9 @@ section {
   object-fit: contain;
   display: block;
 }
-/* Logo Claude: laranja oficial, fica bem em qualquer fundo */
-.ft-logo-claude { background: rgba(217,119,87,0.12); border-color: rgba(217,119,87,0.3); }
+/* Logo Claude: versão branca */
+.ft-logo-claude { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+.ft-logo-claude img { filter: brightness(0) invert(1); }
 /* Logo Flora: preto/branco oficial, dar respiro */
 .ft-logo-flora { background: #fff; border-color: rgba(255,255,255,0.18); padding: 8px; }
 /* Logo 1CR: logo wide (retangular), aspect mais wide */
@@ -3763,28 +3767,6 @@ footer p {
         </div>
       </div>
 
-      <!-- FLORA -->
-      <div class="ft-card gs">
-        <div class="ft-card-head">
-          <div class="ft-logo ft-logo-flora" aria-hidden="true">
-            <img src="img/logo-flora.svg" alt="" loading="lazy">
-          </div>
-          <div class="ft-card-meta">
-            <p class="ft-card-tag">CONSTRUTOR DE FLUXO</p>
-            <p class="ft-card-name">Flora</p>
-          </div>
-        </div>
-        <p class="ft-card-desc">Plataforma visual onde você conecta IAs num único fluxo de trabalho. Aprende a montar pipelines que geram imagens, vídeos e materiais de apresentação sem precisar abrir vinte ferramentas diferentes.</p>
-        <ul class="ft-list">
-          <li>Fluxos visuais que rodam sozinhos</li>
-          <li>Geração de imagens e vídeos integrada</li>
-          <li>Pipelines de apresentação automatizados</li>
-        </ul>
-        <div class="ft-img-slot ft-img-filled">
-          <img src="img/ferramenta-flora.avif" alt="Flora — construtor de fluxo visual de IA" loading="lazy">
-        </div>
-      </div>
-
       <!-- 1 CLICK RENDER -->
       <div class="ft-card ft-card-feature gs">
         <span class="ft-card-bonus">BÔNUS · 6 MESES LIBERADOS</span>
@@ -3797,7 +3779,29 @@ footer p {
             <p class="ft-card-name">1 Click Render</p>
           </div>
         </div>
-        <p class="ft-card-desc">Plugin exclusivo que renderiza seus projetos com um clique direto do software de projeto, sem migrar arquivos. Funciona em SketchUp, Revit e Archicad. Liberado por 6 meses para todos os alunos da implementação.</p>
+        <p class="ft-card-desc">Plataforma visual onde você conecta IAs de texto, imagens e vídeos num único fluxo de trabalho. Ideal pra quem quer ir além das imagens e alcançar <strong>representação em vídeos surpreendentes</strong>.</p>
+        <ul class="ft-list">
+          <li>Fluxos visuais que rodam sozinhos</li>
+          <li>Geração de imagens e vídeos integrada</li>
+          <li>Pipelines de apresentação automatizados</li>
+        </ul>
+        <div class="ft-img-slot ft-img-filled">
+          <img src="img/ferramenta-flora.avif" alt="Flora — construtor de fluxo visual de IA" loading="lazy">
+        </div>
+      </div>
+
+      <!-- FLORA -->
+      <div class="ft-card gs">
+        <div class="ft-card-head">
+          <div class="ft-logo ft-logo-flora" aria-hidden="true">
+            <img src="img/logo-flora.svg" alt="" loading="lazy">
+          </div>
+          <div class="ft-card-meta">
+            <p class="ft-card-tag">CONSTRUTOR DE FLUXO</p>
+            <p class="ft-card-name">Flora</p>
+          </div>
+        </div>
+        <p class="ft-card-desc">Plugin exclusivo, feito por nós, que renderiza imagens e tours 360 dos seus projetos direto de dentro do SketchUp, Revit e Archicad. Imagens com preço de custo e plugin <strong>liberado por 6 meses</strong> pra todos os alunos da implementação.</p>
         <ul class="ft-list">
           <li>SketchUp, Revit e Archicad</li>
           <li>Render fotorrealista em segundos</li>
