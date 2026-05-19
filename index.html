@@ -746,10 +746,21 @@ section {
   padding: 0 4px;
   max-width: 1180px; margin-left: auto; margin-right: auto;
 }
-@media(min-width:768px) { .g4-wrap { margin-top: 72px; padding: 0 12px; } }
 .g4-img {
   width: 100%; height: auto; display: block;
   border-radius: 12px;
+}
+/* Desktop: gráfico vira BG da section + esconde a imagem abaixo dos cards */
+@media (min-width: 920px) {
+  #pilares {
+    background-image:
+      linear-gradient(180deg, rgba(14,14,14,0.55) 0%, rgba(14,14,14,0.2) 35%, rgba(14,14,14,0.55) 70%, rgba(14,14,14,0.85) 100%),
+      url('img/grafico-caos-escala.png');
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, center 62%;
+    background-size: cover, 92% auto;
+  }
+  .g4-wrap { display: none; }
 }
 .g4-wrap::before {
   content: "Antes da implementação";
