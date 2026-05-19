@@ -498,10 +498,27 @@ section {
 .bg-d .pilar-hl { color: rgba(255,255,255,0.92); font-style: normal; }
 
 .g4-wrap {
-  margin-top: -12px; position: relative; z-index: 1;
+  margin-top: 48px; position: relative; z-index: 1;
   padding: 0 4px;
 }
-@media(min-width:768px) { .g4-wrap { margin-top: -28px; } }
+@media(min-width:768px) { .g4-wrap { margin-top: 64px; max-width: 1080px; margin-left: auto; margin-right: auto; } }
+.g4-wrap::before {
+  content: "Antes da implementação";
+  position: absolute; left: 6%; bottom: -22px;
+  font-family: 'Maven Pro', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.g4-wrap::after {
+  content: "Depois da implementação";
+  position: absolute; right: 6%; bottom: -22px;
+  font-family: 'Maven Pro', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+@media(max-width:767px) {
+  .g4-wrap::before, .g4-wrap::after { font-size: 9px; bottom: -18px; }
+}
 
 /* ================================
    CHECKLIST (SVG checks, not emoji)
@@ -2523,33 +2540,33 @@ footer p {
 <!-- ============================== -->
 <section class="bg-d" id="pilares" style="padding:0;min-height:auto;position:relative;overflow:hidden">
   <div class="si" style="padding:120px 24px 100px;position:relative">
-    <p class="gs pilares-title">OS 3 PILARES DA IMPLEMENTAÇÃO PROJETO DE PRIMEIRA</p>
+    <p class="gs pilares-title">DO CAOS À ESCALA EM 3 PASSOS</p>
     <div class="pilares-grid">
       <div class="gs" id="pilar-col-1">
-        <p class="pilar-col-title">Conquiste seu tempo de volta</p>
+        <p class="pilar-col-title">Sair do caos</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-users"/></svg></div>
-          <p class="pilar-label">PILAR 1 · ACOMPANHAMENTO</p>
+          <p class="pilar-label">PASSO 1 · ACOMPANHAMENTO</p>
           <p class="pilar-name">Desafio de Implementação</p>
           <p class="pilar-desc">6 semanas de acompanhamento no WhatsApp enquanto você implementa os processos do PDP. Encontros semanais em grupo com o Rodrigo.</p>
           <p class="pilar-hl">Clareza, direção e ritmo desde a semana 1.</p>
         </div>
       </div>
       <div class="gs" id="pilar-col-2">
-        <p class="pilar-col-title">Processo profissional pronto</p>
+        <p class="pilar-col-title">Estruturar processos</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-award"/></svg></div>
-          <p class="pilar-label">PILAR 2 · MÉTODO</p>
+          <p class="pilar-label">PASSO 2 · MÉTODO</p>
           <p class="pilar-name">Projeto de Primeira</p>
           <p class="pilar-desc">Você não precisa criar nada do zero. Toda a documentação do Método PDP pronta para usar e customizar como quiser.</p>
           <p class="pilar-hl">Método patenteado com chancela MEC.</p>
         </div>
       </div>
       <div class="gs" id="pilar-col-3">
-        <p class="pilar-col-title">Acelere com inteligência</p>
+        <p class="pilar-col-title">Escalar com IA</p>
         <div class="pilar-card">
           <div class="pilar-card-icon"><svg class="icon icon-lg"><use href="#i-cpu"/></svg></div>
-          <p class="pilar-label">PILAR 3 · TECNOLOGIA</p>
+          <p class="pilar-label">PASSO 3 · TECNOLOGIA</p>
           <p class="pilar-name">IA de Primeira</p>
           <p class="pilar-desc">Seu processo de projeto otimizado com inteligência artificial de ponta a ponta. Ferramentas e assistentes exclusivos prontos para usar.</p>
           <p class="pilar-hl">O que levava horas, leva minutos.</p>
@@ -2557,16 +2574,14 @@ footer p {
       </div>
     </div>
     <div class="g4-wrap">
-      <svg id="g4" viewBox="0 0 1100 180" fill="none" width="100%" preserveAspectRatio="xMidYMid meet">
-        <text x="183" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PESSOAS</text>
-        <text x="550" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">PROCESSOS</text>
-        <text x="917" y="170" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Maven Pro" font-size="10" font-weight="600" letter-spacing=".1em">TECNOLOGIA</text>
-        <line x1="366" y1="150" x2="366" y2="15" stroke="rgba(255,255,255,0.15)" stroke-width=".5" stroke-dasharray="4,4"/>
-        <line x1="733" y1="150" x2="733" y2="15" stroke="rgba(255,255,255,0.15)" stroke-width=".5" stroke-dasharray="4,4"/>
-        <path id="g4-p1" d="M20 110 C60 85 80 130 120 100 C160 70 180 120 220 95 C260 65 300 110 366 80" stroke="rgba(255,255,255,0.35)" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <path id="g4-p2" d="M366 80 L733 76" stroke="rgba(255,255,255,0.65)" stroke-width="2" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <path id="g4-p3" d="M733 76 C790 62 840 45 890 30 C940 18 980 12 1080 8" stroke="#ffffff" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-        <circle id="g4-dot" cx="120" cy="100" r="4" fill="#ffffff" opacity="0"/>
+      <svg id="g4" viewBox="0 0 1100 200" fill="none" width="100%" preserveAspectRatio="xMidYMid meet">
+        <!-- Caos: oscilação grande -->
+        <path id="g4-p1" d="M20 130 C50 60 90 170 130 90 C170 40 200 165 240 80 C280 35 320 160 366 100" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <!-- Processo: estabilização (subida leve) -->
+        <path id="g4-p2" d="M366 100 C440 96 520 92 600 88 C670 86 710 84 733 82" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <!-- IA: subida acentuada -->
+        <path id="g4-p3" d="M733 82 C800 70 850 50 900 28 C950 14 1010 8 1080 4" stroke="#ffffff" stroke-width="3" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <circle id="g4-dot" cx="1080" cy="4" r="5" fill="#ffffff" opacity="0"/>
       </svg>
     </div>
   </div>
