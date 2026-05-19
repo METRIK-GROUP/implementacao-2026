@@ -588,9 +588,12 @@ section {
    ================================ */
 .fullbleed {
   position: relative;
-  min-height: 80vh;
+  min-height: 540px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
+}
+@media (min-width: 768px) {
+  .fullbleed { min-height: 640px; }
 }
 .fullbleed-bg {
   position: absolute; inset: 0;
@@ -972,11 +975,10 @@ section {
   width: 100%; height: auto; display: block;
   border-radius: 12px;
 }
-/* Desktop: gráfico vira BG da section full viewport + esconde a imagem abaixo dos cards */
+/* Desktop: gráfico vira BG da section + esconde a imagem abaixo dos cards */
 @media (min-width: 920px) {
   #pilares {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 720px;
     display: flex;
     align-items: center;
     background-image:
@@ -985,7 +987,6 @@ section {
     background-repeat: no-repeat, no-repeat;
     background-position: center center, center center;
     background-size: cover, cover;
-    background-attachment: scroll, scroll;
   }
   #pilares > .si {
     width: 100%;
@@ -1270,33 +1271,40 @@ section {
   opacity: 1;
   margin-top: 8px;
 }
-/* MOBILE: card ativo expande pra mostrar imagem de fundo */
+/* MOBILE: card ativo expande pra mostrar imagem de fundo + texto na base */
 @media (max-width: 1023px) {
   .mat-item.active.mat-img {
-    min-height: 320px;
+    min-height: 360px;
   }
   .mat-item.active.mat-img::before {
-    filter: grayscale(0%) brightness(0.9);
+    filter: grayscale(0%) brightness(0.95);
   }
   .mat-item.active.mat-img::after {
     background: linear-gradient(180deg,
-      rgba(0,0,0,0.15) 0%,
-      rgba(0,0,0,0.35) 35%,
-      rgba(0,0,0,0.75) 70%,
-      rgba(0,0,0,0.95) 100%);
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.2) 40%,
+      rgba(0,0,0,0.75) 72%,
+      rgba(0,0,0,0.97) 100%);
   }
   .mat-item.active .mat-item-inner {
-    height: 100%;
-    justify-content: flex-end;
-    min-height: 320px;
-    padding: 20px 22px;
-    gap: 10px;
+    position: relative;
+    min-height: 360px;
+    padding: 18px 20px;
   }
-  .mat-item.active .mat-num {
-    align-self: flex-start;
-  }
+  /* Num e toggle no topo (sobre a imagem) */
+  .mat-item.active .mat-num,
   .mat-item.active .mat-toggle {
-    align-self: flex-start;
+    position: absolute;
+    top: 18px;
+    z-index: 2;
+  }
+  .mat-item.active .mat-num { left: 20px; }
+  .mat-item.active .mat-toggle { right: 18px; }
+  /* Content (icon + nome + desc) ancora na base */
+  .mat-item.active .mat-content {
+    position: absolute;
+    left: 20px; right: 20px; bottom: 18px;
+    z-index: 2;
   }
 }
 .mat-toggle {
@@ -2137,18 +2145,19 @@ section {
 }
 .tc-play {
   position: absolute; inset: 0; margin: auto;
-  width: 64px; height: 64px;
+  width: 56px; height: 56px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.95);
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.7);
   display: flex; align-items: center; justify-content: center;
-  transition: transform 0.4s cubic-bezier(.16,1,.3,1), background 0.3s;
+  transition: transform 0.35s cubic-bezier(.16,1,.3,1), border-color 0.3s;
   pointer-events: none;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  filter: drop-shadow(0 4px 18px rgba(0,0,0,0.55));
   z-index: 2;
 }
 .tc-video:hover { transform: scale(1.01); }
-.tc-video:hover .tc-play { transform: scale(1.1); background: white; }
-.tc-play svg { width: 22px; height: 22px; fill: var(--black); margin-left: 3px; }
+.tc-video:hover .tc-play { transform: scale(1.08); border-color: #fff; }
+.tc-play svg { width: 18px; height: 18px; fill: #fff; margin-left: 3px; }
 .tc-video.playing { background: #000; cursor: default; }
 .tc-video.playing::before, .tc-video.playing .tc-play { display: none; }
 .tc-video iframe {
@@ -3953,18 +3962,14 @@ footer p {
       <div class="tc-card gs">
         <div class="tc-video" data-yt="E5EPIXj78bI" style="background-image:url('https://i.ytimg.com/vi/E5EPIXj78bI/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Juntei um pouquinho de um, do outro... virou o <strong>Frankenstein</strong>. Implementar o PDP foi a virada de chave.</p>
         <p class="tc-nm">Arq. Amanda Colombo · 10 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="KhV2II9aKBU" style="background-image:url('https://i.ytimg.com/vi/KhV2II9aKBU/maxresdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Mais de <strong>20 anos</strong> sobrecarregada... Era falta de processos.</p>
         <p class="tc-cta">20 ANOS → PRONTA PARA CONTRATAR</p>
         <p class="tc-nm">Arq. Priscilla Chaccur · 20 anos de carreira</p>
@@ -3972,99 +3977,77 @@ footer p {
       <div class="tc-card gs">
         <div class="tc-video" data-yt="5RyxHhRKOJI" style="background-image:url('https://i.ytimg.com/vi/5RyxHhRKOJI/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNO DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Voltar a colocar a minha filha para dormir, isso não tem preço. Antes eu ia dormir sempre às 2 da manhã.</p>
         <p class="tc-nm">Arq. Armstrong Gomes · 10 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="zoOUWrgjV7c" style="background-image:url('https://i.ytimg.com/vi/zoOUWrgjV7c/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Hoje eu pagaria <strong>DUAS, TRÊS VEZES</strong> de olhos fechados.</p>
         <p class="tc-nm">Arq. Amanda Cagliari · 9 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="7AvhTQmr2-A" style="background-image:url('https://i.ytimg.com/vi/7AvhTQmr2-A/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Não tem curso mais <strong>detalhista</strong> como esse. Todo passo a passo, meticulosamente pensado.</p>
         <p class="tc-nm">DI. Andrea Arnaud Camara Bento · 10 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="txBEIy6bMNc" style="background-image:url('https://i.ytimg.com/vi/txBEIy6bMNc/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Minha maior transformação foi <strong>ser dona do meu tempo</strong>. Saber onde respondo, onde crio, onde me concentro.</p>
         <p class="tc-nm">Arq. Beatriz Calsavara · 3 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="wa7Y8janrDI" style="background-image:url('https://i.ytimg.com/vi/wa7Y8janrDI/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Eu estava passando madrugadas, fins de semana, <strong>trabalhando direto</strong>. O desafio me deu a chance de virar o jogo.</p>
         <p class="tc-nm">Arq. Bianca Kruger · 12 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="w4iDw7XpqAg" style="background-image:url('https://i.ytimg.com/vi/w4iDw7XpqAg/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Mesmo com toda a experiência, o PDP me deu <strong>liberdade pra focar nas decisões estratégicas</strong>.</p>
         <p class="tc-nm">Arq. Débora Tumelero · 28 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="QTrjCw4FlZs" style="background-image:url('https://i.ytimg.com/vi/QTrjCw4FlZs/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Hoje eu tenho um <strong>processo, etapas, passo a passo</strong>. Sei exatamente como conduzir o cliente pelo projeto.</p>
         <p class="tc-nm">Arq. Jéssica Milena Brandão · 5 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="tVVxk3S5q0w" style="background-image:url('https://i.ytimg.com/vi/tVVxk3S5q0w/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">O desafio me fez <strong>sair da procrastinação total</strong>. Mostrou meus gargalos e me fez focar de verdade.</p>
         <p class="tc-nm">Arq. Lina Eleutério Costa · 17 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="5HyCzu4Mhr4" style="background-image:url('https://i.ytimg.com/vi/5HyCzu4Mhr4/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">A maior transformação foi <strong>reorganizar a central de projetos</strong> de acordo com as etapas que funcionam aqui dentro.</p>
         <p class="tc-nm">Arq. Roberta Grillo Coutinho · 19 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="LTmLSjDVcSQ" style="background-image:url('https://i.ytimg.com/vi/LTmLSjDVcSQ/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Hoje enxergo o projeto de forma <strong>estruturada, com um método claro</strong> que torna o processo mais seguro e consistente.</p>
         <p class="tc-nm">Arq. Vivian Gazzoli Araújo · 15 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="3Mjcp-nfn9Y" style="background-image:url('https://i.ytimg.com/vi/3Mjcp-nfn9Y/hqdefault.jpg')">
           <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <span class="tag" style="align-self:flex-start">ALUNA DA IMPLEMENTAÇÃO</span>
-        <p class="tc-qm">&ldquo;</p>
+        </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Eu precisava de uma <strong>direção</strong>, organizar os processos, ter mais segurança. O PDP me trouxe tudo isso e até mais um pouco.</p>
         <p class="tc-nm">DI. Renata Arruda de Toledo Bimbo · 5 anos de carreira</p>
       </div>
