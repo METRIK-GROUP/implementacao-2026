@@ -442,7 +442,7 @@ section {
 }
 .hero-logo-img {
   grid-area: logo;
-  max-width: clamp(150px, 36vw, 240px);
+  max-width: clamp(200px, 50vw, 280px);
   margin: 0 auto;
   opacity: 0.9;
   justify-self: center;
@@ -758,7 +758,7 @@ section {
 @media (max-width: 919px) {
   .hero-content { padding: 56px 18px 28px; row-gap: 16px; }
   .hero-video { max-width: 480px; margin: 0 auto; width: 100%; }
-  .hero-logo-img { max-width: clamp(130px, 34vw, 200px) !important; }
+  .hero-logo-img { max-width: clamp(200px, 56vw, 280px) !important; }
   .hero-text #h-sub { margin-top: 12px; font-size: clamp(12px, 1.8vw, 15px); }
   .hero-text .h-pillars { margin-top: 14px; }
 }
@@ -3406,7 +3406,7 @@ footer p {
 </div>
 
 <!-- STICKY URGENCY BAR -->
-<div class="sticky-bar" id="stickyBar" aria-hidden="true">
+<div class="sticky-bar" id="stickyBar" inert>
   <div class="sticky-bar-inner">
     <div class="sticky-bar-left">
       <span class="sticky-bar-dot"></span>
@@ -3416,6 +3416,7 @@ footer p {
   </div>
 </div>
 
+<main>
 <!-- ============================== -->
 <!-- 1. HERO                        -->
 <!-- ============================== -->
@@ -4572,12 +4573,14 @@ footer p {
 <!-- <div class="mob-cta" id="mobCta"><a href="#">GARANTIR MINHA VAGA</a></div> -->
 
 <!-- FOOTER -->
-<footer><p>METRIK Instituto · Todos os direitos reservados</p></footer>
+</main>
+<footer style="text-align:center;padding:32px 24px;background:#1E1E1E;color:#fff"><p style="margin:0;font-size:13px;color:rgba(255,255,255,0.85);font-family:'Maven Pro',sans-serif">© METRIK Instituto · Todos os direitos reservados</p></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-<script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script defer>
+window.addEventListener('DOMContentLoaded', function() {
 gsap.registerPlugin(ScrollTrigger);
 
 const IS_MOBILE = window.matchMedia('(max-width: 919px)').matches;
@@ -4639,10 +4642,10 @@ if (stickyBar && heroEl) {
   const stickyObs = new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting) {
       stickyBar.classList.remove('visible');
-      stickyBar.setAttribute('aria-hidden', 'true');
+      stickyBar.setAttribute('inert', '');
     } else {
       stickyBar.classList.add('visible');
-      stickyBar.setAttribute('aria-hidden', 'false');
+      stickyBar.removeAttribute('inert');
     }
   }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
   stickyObs.observe(heroEl);
@@ -4928,6 +4931,8 @@ if (PREFERS_REDUCED) {
     var a = document.getElementById('pr-actions'); if (a) a.hidden = false;
   }
 })();
+
+}); // end DOMContentLoaded
 </script>
 
 <!-- WhatsApp floating button -->
