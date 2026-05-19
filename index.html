@@ -300,28 +300,50 @@ section {
   width: 100%; height: 100%;
   border: 0; display: block;
 }
-.hero-video-placeholder {
-  position: absolute; inset: 0;
+/* Facade button (replaces iframe until clicked) */
+.hero-video-facade {
+  padding: 0; margin: 0;
+  appearance: none; cursor: pointer;
+  display: block;
+  font: inherit; color: inherit;
+}
+.hero-video-thumb {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.5s cubic-bezier(.16,1,.3,1), filter 0.3s ease;
+}
+.hero-video-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(56px, 9vw, 78px);
+  height: clamp(56px, 9vw, 78px);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255,255,255,0.35);
   display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 10px;
-  color: rgba(255,255,255,0.5);
-  font-family: 'Maven Pro', sans-serif;
+  color: #fff;
+  transition: transform 0.3s cubic-bezier(.16,1,.3,1), background 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  pointer-events: none;
 }
-.hero-video-placeholder svg {
-  width: 44px; height: 44px;
-  opacity: 0.7;
+.hero-video-play svg {
+  width: 38%; height: 38%;
+  margin-left: 8%;
 }
-.hero-video-placeholder p {
-  font-size: 13px; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin: 0;
+.hero-video-facade:hover .hero-video-play {
+  transform: translate(-50%, -50%) scale(1.06);
+  background: rgba(255,255,255,0.26);
+  border-color: rgba(255,255,255,0.55);
 }
-.hero-video-hint {
-  font-size: 11px !important;
-  color: rgba(255,255,255,0.3) !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
+.hero-video-facade:hover .hero-video-thumb {
+  transform: scale(1.02);
+  filter: brightness(1.04);
+}
+.hero-video-facade:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 4px;
 }
 @media (min-width: 920px) {
   .hero-content {
@@ -2565,16 +2587,14 @@ footer p {
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-video gs" id="h-video">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/ZYmfHtTaEdA?rel=0&amp;modestbranding=1"
-          title="Replay do pitch — Implementação Projeto de Primeira"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin"
-        ></iframe>
-      </div>
+      <button class="hero-video gs hero-video-facade" id="h-video" data-yt="ZYmfHtTaEdA" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
+        <img src="img/hero-video-thumb.png" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
+        <span class="hero-video-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <polygon points="8 5 19 12 8 19 8 5" fill="currentColor"/>
+          </svg>
+        </span>
+      </button>
     </div>
   </div>
 </section>
@@ -3689,6 +3709,26 @@ ScrollTrigger.create({
   end: 'bottom bottom',
   onUpdate: s => { pb.style.width = (s.progress * 100) + '%'; }
 });
+
+// HERO VIDEO facade.replace thumb by iframe only on click (perf)
+const heroVideoBtn = document.getElementById('h-video');
+if (heroVideoBtn && heroVideoBtn.classList.contains('hero-video-facade')) {
+  heroVideoBtn.addEventListener('click', () => {
+    const ytId = heroVideoBtn.dataset.yt;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`;
+    iframe.title = heroVideoBtn.getAttribute('aria-label') || 'Vídeo';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.style.cssText = 'width:100%;height:100%;border:0;display:block';
+    // Replace facade content with iframe
+    heroVideoBtn.innerHTML = '';
+    heroVideoBtn.appendChild(iframe);
+    heroVideoBtn.style.cursor = 'default';
+    heroVideoBtn.style.pointerEvents = 'none';
+  }, { once: true });
+}
 
 // STICKY URGENCY BAR.visible when hero is out of view
 const stickyBar = document.getElementById('stickyBar');
