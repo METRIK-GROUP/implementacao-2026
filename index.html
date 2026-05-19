@@ -276,15 +276,35 @@ section {
 .hero-content {
   position: relative; z-index: 2;
   width: 100%; max-width: 1280px;
-  padding: 80px 24px 48px;
+  padding: 70px 24px 40px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  grid-template-areas:
+    "logo"
+    "video"
+    "text";
+  column-gap: 56px;
+  row-gap: 20px;
   align-items: center;
   text-align: center;
 }
-.hero-left { display: flex; flex-direction: column; align-items: center; }
-.hero-right { width: 100%; }
+.hero-logo-img {
+  grid-area: logo;
+  max-width: clamp(150px, 36vw, 240px);
+  margin: 0 auto;
+  opacity: 0.9;
+  justify-self: center;
+}
+.hero-text { grid-area: text; }
+.hero-text #h-sub {
+  margin-top: 16px;
+  font-size: clamp(13px,2vw,18px);
+  color: rgba(255,255,255,0.7);
+  font-weight: 300; line-height: 1.5;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.hero-text .h-pillars { margin-top: 20px; }
+.hero-video { grid-area: video; }
 .hero-video {
   width: 100%;
   aspect-ratio: 16/9;
@@ -348,28 +368,28 @@ section {
 @media (min-width: 920px) {
   .hero-content {
     grid-template-columns: 1fr 1.1fr;
-    gap: 56px;
+    grid-template-areas:
+      "logo  video"
+      "text  video";
     padding: 96px 48px 72px;
     text-align: left;
+    column-gap: 56px;
+    row-gap: 24px;
+    align-items: start;
   }
-  .hero-left {
-    align-items: flex-start;
+  .hero-logo-img {
+    justify-self: start;
+    max-width: clamp(220px, 22vw, 320px);
+    margin: 0;
   }
-  .hero-left #h-logo {
-    margin: 0 0 32px 0 !important;
+  .hero-text { align-self: center; }
+  .hero-text .hero-promise { text-align: left; }
+  .hero-text #h-sub {
+    margin-left: 0; margin-right: 0;
+    max-width: 520px; text-align: left;
   }
-  .hero-left .hero-promise {
-    text-align: left;
-  }
-  .hero-left #h-sub {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    max-width: 520px;
-    text-align: left;
-  }
-  .hero-left .h-pillars {
-    justify-content: flex-start;
-  }
+  .hero-text .h-pillars { justify-content: flex-start; }
+  .hero-video { align-self: center; }
 }
 .hero-logo {
   font-family: 'Maven Pro'; font-weight: 800;
@@ -526,11 +546,11 @@ section {
 }
 @media (max-width: 919px) { .scroll-ind { display: none; } }
 @media (max-width: 919px) {
-  .hero-content { padding: 60px 18px 32px; gap: 22px; }
-  .hero-right { order: -1; max-width: 480px; margin: 0 auto; }
-  .hero-left #h-logo { margin-bottom: 16px !important; max-width: clamp(150px, 38vw, 240px) !important; }
-  .hero-left #h-sub { margin-top: 14px !important; }
-  .hero-left .h-pillars { margin-top: 18px !important; }
+  .hero-content { padding: 56px 18px 28px; row-gap: 16px; }
+  .hero-video { max-width: 480px; margin: 0 auto; width: 100%; }
+  .hero-logo-img { max-width: clamp(130px, 34vw, 200px) !important; }
+  .hero-text #h-sub { margin-top: 12px; font-size: clamp(12px, 1.8vw, 15px); }
+  .hero-text .h-pillars { margin-top: 14px; }
 }
 .scroll-dot {
   width: 3px; height: 8px; background: rgba(255,255,255,0.4);
@@ -2567,11 +2587,11 @@ footer p {
 <section class="hero" id="hero">
   <div class="grain"></div>
   <div class="hero-content">
-    <div class="hero-left">
-      <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs" id="h-logo" style="max-width:clamp(170px,32vw,340px);margin:0 auto 24px;opacity:0.9">
+    <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo">
+    <div class="hero-text">
       <h1 class="hero-promise gs" id="h-promise">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</h1>
-      <p class="gs" id="h-sub" style="margin-top:18px;font-size:clamp(13px,2vw,18px);color:rgba(255,255,255,0.7);font-weight:300;line-height:1.5;max-width:560px;margin-left:auto;margin-right:auto">Tenha controle sobre o seu tempo, implemente um processo de projeto profissional e acelere com inteligência artificial, tudo com acompanhamento semanal.</p>
-      <div class="gs h-pillars" id="h-pillars" style="margin-top:24px">
+      <p class="gs" id="h-sub">Tenha controle sobre o seu tempo, implemente um processo de projeto profissional e acelere com inteligência artificial, tudo com acompanhamento semanal.</p>
+      <div class="gs h-pillars" id="h-pillars">
         <span class="h-pill">
           <svg class="icon" style="width:14px;height:14px"><use href="#i-users"/></svg>
           <span>Acompanhamento</span>
@@ -2586,16 +2606,14 @@ footer p {
         </span>
       </div>
     </div>
-    <div class="hero-right">
-      <button class="hero-video gs hero-video-facade" id="h-video" data-yt="ZYmfHtTaEdA" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
-        <img src="img/hero-video-thumb.png" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
-        <span class="hero-video-play" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <polygon points="8 5 19 12 8 19 8 5" fill="currentColor"/>
-          </svg>
-        </span>
-      </button>
-    </div>
+    <button class="hero-video gs hero-video-facade" id="h-video" data-yt="ZYmfHtTaEdA" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
+      <img src="img/hero-video-thumb.png" alt="Replay do pitch — Implementação Projeto de Primeira" class="hero-video-thumb" loading="lazy">
+      <span class="hero-video-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <polygon points="8 5 19 12 8 19 8 5" fill="currentColor"/>
+        </svg>
+      </span>
+    </button>
   </div>
 </section>
 
