@@ -861,77 +861,104 @@ section {
   line-height: 1.55;
 }
 
-/* POSICIONAMENTO - 3 cards (NÃO É / É / E MELHOR) */
-.pos-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  max-width: 1100px;
+/* POSICIONAMENTO - manifesto editorial */
+.pos-manifest {
+  max-width: 880px;
   margin: 0 auto;
-}
-@media (min-width: 900px) {
-  .pos-grid { grid-template-columns: 1fr 1.2fr 1fr; gap: 18px; align-items: stretch; }
-}
-.pos-card {
-  position: relative;
-  padding: 32px 26px 30px;
-  border-radius: 18px;
-  background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(0,0,0,0.03) 100%);
-  border: 1px solid rgba(0,0,0,0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
   display: flex; flex-direction: column;
-  gap: 14px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
+  gap: 26px;
 }
-.pos-card:hover {
-  border-color: rgba(0,0,0,0.18);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-  transform: translateY(-3px);
-}
-.pos-tag {
-  align-self: flex-start;
+.pos-mani-line {
   font-family: 'Maven Pro', sans-serif;
-  font-size: 11px; font-weight: 800;
-  letter-spacing: 0.18em;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.06);
-  color: var(--graphite);
-}
-.pos-headline {
-  font-family: 'Maven Pro', sans-serif;
-  font-weight: 700;
-  font-size: clamp(18px, 2.2vw, 22px);
+  font-size: clamp(22px, 3.4vw, 36px);
+  line-height: 1.25;
+  font-weight: 500;
   color: var(--black);
-  line-height: 1.3;
   margin: 0;
   text-wrap: balance;
 }
-.pos-sub {
-  font-size: clamp(13px, 1.6vw, 15px);
+.pos-mani-tag {
+  display: inline-block;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 0.42em;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.06);
   color: var(--g500);
-  line-height: 1.5;
-  margin: 0;
+  margin-right: 14px;
+  transform: translateY(-3px);
 }
-/* NÃO É — apagado */
-.pos-card-neg .pos-headline { color: var(--g500); font-weight: 600; }
-.pos-card-neg .pos-tag { background: rgba(0,0,0,0.04); color: var(--g500); }
-/* É — destaque (preto sólido) */
-.pos-card-pos {
+.pos-mani-tag-pos {
   background: var(--black);
-  border-color: var(--black);
-}
-.pos-card-pos .pos-tag {
-  background: rgba(255,255,255,0.14);
   color: #fff;
 }
-.pos-card-pos .pos-headline { color: #fff; }
-.pos-card-pos .pos-sub { color: rgba(255,255,255,0.72); }
-.pos-card-pos .pos-sub strong { color: #fff; }
-.pos-card-pos:hover { border-color: var(--black); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
-/* E MELHOR */
-.pos-card-bonus .pos-tag { background: rgba(0,0,0,0.06); color: var(--black); }
+.pos-mani-neg {
+  color: var(--g500);
+  font-weight: 400;
+}
+.pos-mani-strike {
+  position: relative;
+  color: var(--g500);
+}
+.pos-mani-strike::after {
+  content: ""; position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.pos-mani-faded {
+  color: var(--g500);
+  font-size: 0.7em;
+  font-weight: 400;
+}
+.pos-mani-pos {
+  color: var(--black);
+  font-weight: 600;
+}
+.pos-mani-pos strong {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.15em;
+}
+.pos-mani-pillars {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--graphite);
+  margin: -10px 0 0;
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.pos-mani-dot { color: var(--g300); }
+.pos-mani-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--g300), transparent);
+  margin: 8px auto;
+}
+.pos-mani-bonus {
+  font-family: 'Maven Pro', sans-serif;
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.55;
+  color: var(--graphite);
+  max-width: 680px;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+.pos-mani-bonus strong { color: var(--black); }
+@media (max-width: 640px) {
+  .pos-mani-tag { display: block; margin: 0 auto 12px; font-size: 11px; padding: 5px 12px; }
+  .pos-mani-strike::after { top: 52%; }
+}
 
 /* 4 ÁREAS DE APLICAÇÃO IA (Documentação/Desenvolvimento/Representação/Gestão) */
 .ia-areas {
@@ -3365,32 +3392,27 @@ footer p {
 <!-- 6. POSICIONAMENTO              -->
 <!-- ============================== -->
 <section class="sec bg-w" id="posicionamento" aria-label="O que é a Implementação">
-  <div class="si">
-    <p class="gs label tc" style="margin-bottom:24px">O QUE É A IMPLEMENTAÇÃO</p>
-    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,36px);line-height:1.15;color:var(--black);max-width:720px;margin:0 auto 56px;text-wrap:balance">Não é mais um curso. É uma implementação completa.</p>
+  <div class="si pos-manifest">
+    <p class="gs pos-mani-line pos-mani-neg">
+      <span class="pos-mani-tag">não é</span>
+      mais um curso pra assistir <span class="pos-mani-strike">quando sobrar tempo</span> <span class="pos-mani-faded">(que nunca sobra)</span>.
+    </p>
 
-    <div class="pos-grid">
-      <!-- NÃO É -->
-      <div class="pos-card pos-card-neg gs">
-        <span class="pos-tag">NÃO É</span>
-        <p class="pos-headline">Mais um curso pra assistir <span style="text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:currentColor;opacity:0.7">quando sobrar tempo</span></p>
-        <p class="pos-sub">(que nunca sobra)</p>
-      </div>
+    <div class="pos-mani-divider gs" aria-hidden="true"></div>
 
-      <!-- É -->
-      <div class="pos-card pos-card-pos gs">
-        <span class="pos-tag">É</span>
-        <p class="pos-headline">Uma implementação que vai te guiar do início ao fim</p>
-        <p class="pos-sub"><strong>Clareza, direção e velocidade.</strong></p>
-      </div>
+    <p class="gs pos-mani-line pos-mani-pos">
+      <span class="pos-mani-tag pos-mani-tag-pos">é</span>
+      uma <strong>implementação</strong> que vai te guiar do início ao fim.
+    </p>
+    <p class="gs pos-mani-pillars">
+      <span>Clareza</span><span class="pos-mani-dot">·</span><span>Direção</span><span class="pos-mani-dot">·</span><span>Velocidade</span>
+    </p>
 
-      <!-- E MELHOR -->
-      <div class="pos-card pos-card-bonus gs">
-        <span class="pos-tag">E MELHOR</span>
-        <p class="pos-headline">Você <strong>não cria nada do zero</strong></p>
-        <p class="pos-sub">Recebe tudo pronto pra usar como está ou ajustar à sua forma de projetar.</p>
-      </div>
-    </div>
+    <div class="pos-mani-divider gs" aria-hidden="true"></div>
+
+    <p class="gs pos-mani-bonus">
+      E o melhor: <strong>você não cria nada do zero</strong>. Recebe tudo pronto pra usar como está ou ajustar à sua forma de projetar.
+    </p>
   </div>
 </section>
 
