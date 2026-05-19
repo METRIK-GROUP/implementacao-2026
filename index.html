@@ -859,6 +859,59 @@ section {
   line-height: 1.55;
 }
 
+/* 4 ÁREAS DE APLICAÇÃO IA (Documentação/Desenvolvimento/Representação/Gestão) */
+.ia-areas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .ia-areas { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
+@media (min-width: 1024px) {
+  .ia-areas { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+}
+.ia-area-card {
+  position: relative;
+  padding: 26px 22px;
+  border: 1px solid rgba(122,175,212,0.18);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(122,175,212,0.06) 0%, rgba(20,30,42,0.5) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex; flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.3s ease, transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+.ia-area-card:hover {
+  border-color: rgba(122,175,212,0.35);
+  transform: translateY(-3px);
+}
+.ia-area-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(122,175,212,0.14);
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.ia-area-icon svg { stroke: #BFDDF0; }
+.ia-area-name {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0;
+}
+.ia-area-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+  margin: 0;
+}
+
 /* FERRAMENTAS (Claude / Flora / 1CR) - cards grandes verticais */
 .ft-stack {
   display: grid;
@@ -3692,63 +3745,41 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 11. IA DE PRIMEIRA - EXPANDIDA  -->
-<!-- ============================== -->
-<section class="sec bg-d ia-bg-section" id="ia" aria-label="Curso IA de Primeira" style="padding-top:60px;padding-bottom:120px;position:relative;overflow:hidden">
-  <div class="grain"></div>
-  <div class="si" style="position:relative;z-index:1">
-    <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">CURSO IA DE PRIMEIRA</p>
-    <p class="gs fm tc" style="font-weight:800;font-size:clamp(28px,4.5vw,44px);line-height:1.12;color:#fff;max-width:880px;margin:0 auto 18px;text-wrap:balance">Você vai aprender a usar a inteligência artificial em todas as áreas do seu escritório. Do projeto à gestão.</p>
-    <p class="gs tc" style="font-size:clamp(14px,1.8vw,17px);color:rgba(255,255,255,0.6);max-width:680px;margin:0 auto 64px;line-height:1.6">Na implementação vamos muito além da representação. Você vai aprender a conectar tudo com IA.</p>
-
-    <div class="ia-grid">
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-award"/></svg></div>
-        <p class="ia-card-name">Construa suas próprias ferramentas</p>
-        <p class="ia-card-desc">Aprenda a criar agentes e automações específicas pro seu jeito de projetar. Sem precisar virar desenvolvedor.</p>
-      </div>
-
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-trending"/></svg></div>
-        <p class="ia-card-name">Vídeos com IA</p>
-        <p class="ia-card-desc">Aprenda a gerar vídeos de apresentação, animações de projeto e walkthroughs sem depender de produtora.</p>
-      </div>
-
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-users"/></svg></div>
-        <p class="ia-card-name">Interpretação de briefing</p>
-        <p class="ia-card-desc">IA que lê o briefing do cliente, extrai requisitos, identifica contradições e devolve resumo pronto pra você decidir.</p>
-      </div>
-
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-scale"/></svg></div>
-        <p class="ia-card-name">Diagramas e conceitos</p>
-        <p class="ia-card-desc">Crie diagramas de fluxo, mapas mentais e visualizações conceituais em minutos, direto da conversa com a IA.</p>
-      </div>
-
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-graduation"/></svg></div>
-        <p class="ia-card-name">Gestão do escritório com IA</p>
-        <p class="ia-card-desc">Automatize relatórios, follow-up de clientes, organização de tarefas e o operacional que rouba o seu tempo.</p>
-      </div>
-
-      <div class="ia-card gs">
-        <div class="ia-card-icon"><svg class="icon icon-lg"><use href="#i-book"/></svg></div>
-        <p class="ia-card-name">Renderização com IA</p>
-        <p class="ia-card-desc">Pipeline completo pra gerar imagens fotorrealistas dos seus projetos usando IA generativa de ponta a ponta.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== -->
 <!-- 11b. AS FERRAMENTAS QUE VOCÊ APRENDE -->
 <!-- ============================== -->
 <section class="sec bg-d ia-bg-section" id="ferramentas-ia" aria-label="As ferramentas que você vai aprender" style="padding:100px 24px 120px;position:relative;overflow:hidden">
   <div class="grain"></div>
   <div class="si" style="position:relative;z-index:1">
-    <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">AS FERRAMENTAS QUE VOCÊ VAI APRENDER</p>
-    <p class="gs fm tc" style="font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;color:#fff;max-width:760px;margin:0 auto 56px;text-wrap:balance">Você vai aprender somente as IAs que você precisa.</p>
+    <p class="gs label tc" style="margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">CURSO IA DE PRIMEIRA</p>
+    <p class="gs fm tc" style="font-weight:800;font-size:clamp(28px,4.5vw,44px);line-height:1.12;color:#fff;max-width:880px;margin:0 auto 18px;text-wrap:balance">Você vai aprender a usar IA em todas as áreas do seu escritório.</p>
+    <p class="gs tc" style="font-size:clamp(14px,1.8vw,17px);color:rgba(255,255,255,0.6);max-width:680px;margin:0 auto 56px;line-height:1.6">Quatro frentes onde a IA realmente muda o jogo, do projeto à gestão.</p>
+
+    <!-- 4 áreas de aplicação -->
+    <div class="ia-areas">
+      <div class="ia-area-card gs">
+        <div class="ia-area-icon"><svg class="icon icon-lg"><use href="#i-book"/></svg></div>
+        <p class="ia-area-name">Documentação</p>
+        <p class="ia-area-desc">Crie a documentação completa do seu método, dos seus processos e dos materiais que sustentam o dia a dia do escritório.</p>
+      </div>
+      <div class="ia-area-card gs">
+        <div class="ia-area-icon"><svg class="icon icon-lg"><use href="#i-scale"/></svg></div>
+        <p class="ia-area-name">Desenvolvimento</p>
+        <p class="ia-area-desc">Desenvolva projetos de interiores do briefing aos executivos com IA acelerando cada etapa do seu fluxo.</p>
+      </div>
+      <div class="ia-area-card gs">
+        <div class="ia-area-icon"><svg class="icon icon-lg"><use href="#i-star"/></svg></div>
+        <p class="ia-area-name">Representação</p>
+        <p class="ia-area-desc">Gere imagens e vídeos profissionais pra apresentar e aprovar seus projetos sem alterações.</p>
+      </div>
+      <div class="ia-area-card gs">
+        <div class="ia-area-icon"><svg class="icon icon-lg"><use href="#i-trending"/></svg></div>
+        <p class="ia-area-name">Gestão</p>
+        <p class="ia-area-desc">IA aplicada à gestão do escritório, otimização de rotinas e automação das tarefas operacionais do seu dia.</p>
+      </div>
+    </div>
+
+    <p class="gs label tc" style="margin-top:96px;margin-bottom:16px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65)">AS FERRAMENTAS QUE VOCÊ VAI APRENDER</p>
+    <p class="gs fm tc" style="font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;color:#fff;max-width:760px;margin:0 auto 56px;text-wrap:balance">Somente as IAs que você precisa.</p>
 
     <div class="ft-stack">
       <!-- CLAUDE -->
