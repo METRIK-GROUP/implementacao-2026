@@ -959,6 +959,14 @@ section {
 }
 .ft-card-head {
   display: flex; align-items: center; gap: 14px;
+  min-width: 0;
+}
+@media (max-width: 899px) {
+  .ft-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
 }
 .ft-logo {
   width: 56px; height: 56px;
@@ -969,6 +977,8 @@ section {
   display: flex; align-items: center; justify-content: center;
   padding: 10px;
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .ft-logo svg, .ft-logo img {
   width: 100%; height: 100%;
