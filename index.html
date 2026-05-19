@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Implementação Projeto de Primeira | METRIK Instituto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
@@ -27,12 +30,19 @@
   --black: #1E1E1E;
   --graphite: #3D3D3A;
   --g700: #5F5E5A;
-  --g500: #888780;
-  --g300: #B4B2A9;
+  --g500: #6B6864;
+  --g300: #9F9D94;
   --g100: #D3D1C7;
   --offwhite: #F5F4F0;
   --white: #FFFFFF;
   --dark: #1A1A1A;
+}
+
+/* Focus visible global (acessibilidade) */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -144,15 +154,17 @@ p, li { text-wrap: pretty; }
   color: #fff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 11.5px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 6px 14px;
+  font-size: 12px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 9px 18px;
+  min-height: 38px;
+  display: inline-flex; align-items: center;
   border-radius: 999px;
   transition: background 0.2s ease, border-color 0.2s ease;
   white-space: nowrap;
   flex-shrink: 0;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 .sticky-bar-cta:hover {
   background: rgba(255,255,255,0.22);
@@ -170,7 +182,7 @@ p, li { text-wrap: pretty; }
     color: rgba(255,255,255,0.6);
     font-size: 10px;
   }
-  .sticky-bar-cta { font-size: 11px; padding: 5px 12px; }
+  .sticky-bar-cta { font-size: 11.5px; padding: 8px 14px; min-height: 36px; }
   .sticky-bar-sep { display: none; }
 }
 
@@ -204,9 +216,11 @@ section {
 }
 .sec {
   padding: 96px 24px;
-  min-height: 70vh;
   display: flex;
   align-items: center;
+}
+@media (min-width: 768px) {
+  .sec { min-height: 540px; }
 }
 .sec-short {
   padding: 80px 24px;
@@ -2954,7 +2968,7 @@ footer p {
 <section class="hero" id="hero">
   <div class="grain"></div>
   <div class="hero-content">
-    <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo">
+    <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo" fetchpriority="high" decoding="async">
     <div class="hero-text">
       <div class="gs hero-trust" id="h-trust">
         <span class="hero-trust-item"><strong>26</strong> turmas</span>
@@ -4095,7 +4109,7 @@ footer p {
   <div class="sn" style="margin:0 auto">
     <div style="display:flex;gap:clamp(24px,4vw,48px);align-items:stretch;flex-wrap:wrap">
       <div class="img-z" style="flex:0 0 280px;border-radius:18px">
-        <img src="img/rodrigo-craft.jpg" alt="Rodrigo Rosar" class="gs" data-r="left" style="width:100%;height:100%;object-fit:cover;object-position:top">
+        <img src="img/rodrigo-craft.jpg" alt="Rodrigo Rosar" loading="lazy" decoding="async" class="gs" data-r="left" style="width:100%;height:100%;object-fit:cover;object-position:top">
       </div>
       <div style="flex:1;min-width:280px">
         <p class="gs label" style="color:var(--g500);margin-bottom:8px">QUEM VAI TE GUIAR</p>
