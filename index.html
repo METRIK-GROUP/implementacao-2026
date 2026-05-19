@@ -296,6 +296,25 @@ section {
   justify-self: center;
 }
 .hero-text { grid-area: text; }
+.hero-trust {
+  display: inline-flex; flex-wrap: wrap;
+  align-items: center; gap: 10px;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 11.5px; font-weight: 500;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.hero-trust strong { color: rgba(255,255,255,0.9); font-weight: 800; }
+.hero-trust-sep { color: rgba(255,255,255,0.25); }
+@media (max-width: 919px) {
+  .hero-trust {
+    justify-content: center;
+    font-size: 10.5px;
+    gap: 8px;
+  }
+}
 .hero-text #h-sub {
   margin-top: 16px;
   font-size: clamp(13px,2vw,18px);
@@ -2678,6 +2697,13 @@ footer p {
   <div class="hero-content">
     <img src="img/logo-implementacao-white.png" alt="Implementação Projeto de Primeira" class="gs hero-logo-img" id="h-logo">
     <div class="hero-text">
+      <div class="gs hero-trust" id="h-trust">
+        <span class="hero-trust-item"><strong>26</strong> turmas</span>
+        <span class="hero-trust-sep">·</span>
+        <span class="hero-trust-item"><strong>7.000+</strong> alunos em 12 países</span>
+        <span class="hero-trust-sep">·</span>
+        <span class="hero-trust-item">Chancela <strong>MEC</strong></span>
+      </div>
       <h1 class="hero-promise gs" id="h-promise">Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas.</h1>
       <p class="gs" id="h-sub">Tenha controle sobre o seu tempo, implemente um processo de projeto profissional e acelere com inteligência artificial, tudo com acompanhamento semanal.</p>
       <div class="gs h-pillars" id="h-pillars">
@@ -3317,63 +3343,6 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 12. CREDENCIAIS                 -->
-<!-- ============================== -->
-<section class="sec-short bg-w" style="padding-top:120px;padding-bottom:120px" id="credenciais">
-  <div class="si">
-    <!-- Header editorial -->
-    <p class="gs label tc" style="margin-bottom:20px">CREDENCIAIS</p>
-    <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 16px">Validado em campo. Reconhecido onde importa.</p>
-    <p class="gs tc" style="font-size:clamp(15px,1.8vw,17px);color:var(--g500);max-width:540px;margin:0 auto 72px;line-height:1.6;font-style:italic;font-family:'DM Serif Display'">Sete anos refinando. Milhares aplicando. Uma chancela que poucos têm.</p>
-
-    <!-- TIER 1: Stats com divisores verticais -->
-    <div class="cr-stats gs">
-      <div class="cr-stat">
-        <p class="cr-num" data-count="26">0</p>
-        <p class="cr-lab">turmas</p>
-      </div>
-      <div class="cr-divider"></div>
-      <div class="cr-stat">
-        <p class="cr-num" data-count="7000" data-suffix="+">0</p>
-        <p class="cr-lab">alunos em 12 países</p>
-      </div>
-      <div class="cr-divider"></div>
-      <div class="cr-stat">
-        <p class="cr-num" data-count="80" data-prefix="+" data-suffix="h">0</p>
-        <p class="cr-lab">documentadas</p>
-      </div>
-      <div class="cr-divider"></div>
-      <div class="cr-stat">
-        <p class="cr-num" style="font-size:clamp(28px,4vw,40px);line-height:1.1;font-style:italic">MEC</p>
-        <p class="cr-lab">chancela oficial</p>
-      </div>
-    </div>
-
-    <!-- TIER 2: Credenciais qualitativas com selo -->
-    <div class="cred-row" data-s style="margin-top:88px">
-      <div class="cred-card gs">
-        <div class="cred-seal"></div>
-        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-graduation"/></svg></span>
-        <p class="cred-name">Chancela MEC</p>
-        <p class="cred-desc">Curso de Extensão Universitária reconhecido pelo Ministério da Educação.</p>
-      </div>
-      <div class="cred-card gs">
-        <div class="cred-seal"></div>
-        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-scale"/></svg></span>
-        <p class="cred-name">Método Patenteado</p>
-        <p class="cred-desc">Processo proprietário registrado. Não é teoria solta. É metodologia rastreável.</p>
-      </div>
-      <div class="cred-card gs">
-        <div class="cred-seal"></div>
-        <span class="cred-i"><svg class="icon" style="width:22px;height:22px"><use href="#i-book"/></svg></span>
-        <p class="cred-name">Válido no Currículo</p>
-        <p class="cred-desc">Pontua em formação continuada. Vale para quem leciona ou está em pós-graduação.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== -->
 <!-- 13. BÔNUS HOJE                  -->
 <!-- ============================== -->
 <section class="sec bg-o" id="bonus">
@@ -3541,30 +3510,12 @@ footer p {
 </section>
 
 <!-- ============================== -->
-<!-- 15. EXCLUSIVIDADE               -->
-<!-- ============================== -->
-<section class="fullbleed" id="exclusividade">
-  <div class="fullbleed-bg"><img src="img/architectural_product_photography.png" alt="Método estruturado pronto pra você aplicar" loading="lazy" class="clip-r"></div>
-  <div class="fullbleed-overlay" style="background:linear-gradient(180deg,rgba(26,26,26,.78) 0%,rgba(26,26,26,.92) 100%)"></div>
-  <div class="fullbleed-content">
-    <div class="gs"><svg class="icon icon-lg icon-light" style="margin:0 auto"><use href="#i-star"/></svg></div>
-    <p class="gs fm" style="font-weight:700;font-size:clamp(24px,4vw,34px);color:#fff;margin-top:20px;line-height:1.2">Inscrições abertas. Vagas limitadas.</p>
-    <p class="gs" style="font-size:16px;color:var(--g300);margin-top:16px;line-height:1.6;max-width:540px;margin-left:auto;margin-right:auto">Você começa a implementar com o Rodrigo na próxima turma do Desafio.</p>
-    <ul class="checklist" style="margin-top:36px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto">
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso direto ao Rodrigo no Desafio de 6 semanas</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Bônus exclusivos por tempo limitado</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Acesso a 80+ horas de método PDP documentado</li>
-      <li class="gs" style="color:var(--g100)"><span class="chk chk-l"><svg><use href="#i-check"/></svg></span>Garantia incondicional de 97 dias</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ============================== -->
 <!-- 16. ANCORAGEM + PRODUTO         -->
 <!-- ============================== -->
 <section class="sec-short bg-w" style="padding:120px 24px" id="ancoragem">
   <div class="si">
-    <p class="gs label tc" style="margin-bottom:56px">VALOR REAL DA IMPLEMENTAÇÃO</p>
+    <p class="gs label tc" style="margin-bottom:16px">VALOR REAL DA IMPLEMENTAÇÃO</p>
+    <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:720px;margin:0 auto 56px;text-wrap:balance">Quanto vale todo esse conhecimento?</p>
 
     <div class="anc-receipt gs">
       <div class="anc-section">
@@ -3867,10 +3818,11 @@ if (stickyBar && heroEl) {
 // HERO timeline
 const ht = gsap.timeline({ defaults: { ease: 'power3.out' } });
 ht.from('#h-logo', { autoAlpha: 0, y: 20, duration: 0.7 })
+  .from('#h-trust', { autoAlpha: 0, y: 14, duration: 0.5 }, '-=0.3')
   .from('#h-promise', { autoAlpha: 0, y: 30, duration: 0.8 }, '-=0.3')
   .from('#h-sub', { autoAlpha: 0, y: 20, duration: 0.6 }, '-=0.4')
   .from('#h-pillars', { autoAlpha: 0, y: 20, duration: 0.5 }, '-=0.3')
-  .from('#h-video', { autoAlpha: 0, scale: 0.96, duration: 0.8 }, '-=0.9')
+  .from('#h-video', { autoAlpha: 0, scale: 0.96, duration: 0.8 }, '-=1.0')
 ;
 document.querySelectorAll('#hero .gs').forEach(e => e.style.visibility = 'visible');
 
