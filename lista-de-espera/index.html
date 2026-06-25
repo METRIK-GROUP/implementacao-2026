@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+
+<title>Lista de espera | Implementação Projeto de Primeira — METRIK Instituto</title>
+<meta name="description" content="Entre na lista de espera da Implementação Projeto de Primeira. A próxima turma abre dia 27 de julho. Seja avisado em primeira mão e garanta sua vaga.">
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="METRIK Instituto">
+<meta property="og:title" content="Lista de espera — Implementação Projeto de Primeira">
+<meta property="og:description" content="A próxima turma abre dia 27 de julho. Entre na lista e seja avisado em primeira mão.">
+<meta property="og:url" content="https://implementacao.rodrigorosar.com.br/lista-de-espera/">
+<meta property="og:image" content="https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E1E1E'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Maven Pro,Arial,sans-serif' font-weight='800' font-size='16' fill='%23fff'%3EIP%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="../img/logo-implementacao-white.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Maven+Pro:wght@500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#1E1E1E; --dark:#1A1A1A; --graphite:#3D3D3A;
+  --g500:#6B6864; --g300:#9F9D94; --g100:#D3D1C7;
+  --offwhite:#F5F4F0; --white:#FFFFFF;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',Arial,sans-serif;
+  background:var(--dark);color:#fff;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
+}
+.fm{font-family:'Maven Pro',sans-serif}
+.fs{font-family:'DM Serif Display',Georgia,serif}
+a{color:inherit;text-decoration:none;cursor:pointer}
+
+/* atmosfera */
+.grain{position:fixed;inset:0;opacity:0.03;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0%,rgba(255,255,255,0.06) 0%,transparent 60%)}
+
+.wrap{position:relative;z-index:1;flex:1;width:100%;max-width:680px;margin:0 auto;
+  padding:56px 22px 48px;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+.logo{width:auto;height:42px;opacity:0.92;margin-bottom:30px}
+
+.eyebrow{display:inline-flex;align-items:center;gap:9px;
+  font-family:'Maven Pro',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;color:rgba(255,255,255,0.66);
+  padding:7px 16px;border:1px solid rgba(255,255,255,0.16);border-radius:999px;margin-bottom:22px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;
+  box-shadow:0 0 0 0 rgba(255,255,255,0.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.4)}70%{box-shadow:0 0 0 8px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+
+h1{font-family:'Maven Pro',sans-serif;font-weight:800;
+  font-size:clamp(30px,6vw,52px);line-height:1.08;letter-spacing:-0.02em;
+  text-wrap:balance;margin-bottom:18px}
+h1 .fs{font-weight:400;font-style:italic;font-family:'DM Serif Display',Georgia,serif;letter-spacing:0}
+.lead{font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,0.72);
+  max-width:540px;line-height:1.6;text-wrap:pretty;margin-bottom:22px}
+
+.trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 12px;
+  font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.06em;
+  text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:34px}
+.trust strong{color:rgba(255,255,255,0.92);font-weight:800}
+.trust-sep{color:rgba(255,255,255,0.25)}
+
+/* countdown */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:440px;width:100%;margin-bottom:34px}
+.count-cell{padding:16px 6px;border-radius:14px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
+.count-num{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(26px,5.5vw,36px);line-height:1;color:#fff;font-variant-numeric:tabular-nums}
+.count-lab{font-family:'Maven Pro',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.45);text-transform:uppercase;margin-top:8px}
+
+/* card do formulário (claro sobre o hero escuro) */
+.card{width:100%;max-width:460px;background:var(--white);color:var(--black);
+  border-radius:20px;padding:30px 26px;box-shadow:0 30px 80px rgba(0,0,0,0.45);text-align:left}
+.card-title{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.01em;margin-bottom:4px;color:var(--black)}
+.card-sub{font-size:13.5px;color:var(--g500);margin-bottom:22px;line-height:1.5}
+
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.field label{font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--graphite)}
+.input{width:100%;padding:13px 15px;font-family:'Inter',sans-serif;font-size:15px;color:var(--black);
+  background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
+.input::placeholder{color:#A8A59C}
+.input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
+.input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
+.err{font-size:12.5px;color:#C0392B;min-height:0;line-height:1.4;margin-top:2px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:8px;
+  padding:16px 22px;border:none;border-radius:999px;cursor:pointer;
+  font-family:'Maven Pro',sans-serif;font-weight:700;font-size:14.5px;letter-spacing:0.03em;
+  background:var(--black);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  transition:transform .25s,box-shadow .3s,opacity .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(0,0,0,0.24)}
+.btn:active{transform:translateY(0)}
+.btn:focus-visible{outline:2px solid var(--black);outline-offset:3px}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.btn .arrow{width:18px;height:18px;transition:transform .25s}
+.btn:hover .arrow{transform:translateX(4px)}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.btn-wa-fallback{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:12px;
+  padding:14px 20px;border-radius:999px;background:#25D366;color:#06270f;
+  font-family:'Maven Pro',sans-serif;font-weight:800;font-size:14px}
+
+.formfoot{margin-top:14px;font-size:12px;color:var(--g500);text-align:center}
+
+.foot{position:relative;z-index:1;text-align:center;padding:22px;font-family:'Maven Pro',sans-serif;
+  font-size:12px;letter-spacing:0.04em;color:rgba(255,255,255,0.4)}
+
+@media (prefers-reduced-motion: reduce){
+  .eyebrow::before{animation:none}
+  .btn,.btn .arrow{transition:none}.btn:hover{transform:none}
+  .spinner{animation-duration:1.4s}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<main class="wrap">
+  <img class="logo" src="../img/logo-implementacao-white.webp" width="600" height="116" alt="Implementação Projeto de Primeira">
+
+  <span class="eyebrow">Lista de espera · vagas limitadas</span>
+
+  <h1>A próxima turma abre <span class="fs">dia 27 de julho.</span></h1>
+  <p class="lead">As vagas da turma atual encerraram. Entre na lista e seja avisado em primeira mão quando a próxima abrir, com prioridade na inscrição.</p>
+
+  <div class="trust">
+    <span><strong>26</strong> turmas</span>
+    <span class="trust-sep">·</span>
+    <span><strong>7.000+</strong> alunos em 12 países</span>
+  </div>
+
+  <div class="count" id="count" aria-label="Contagem regressiva para a abertura das vagas">
+    <div class="count-cell"><div class="count-num" id="c-d">00</div><div class="count-lab">dias</div></div>
+    <div class="count-cell"><div class="count-num" id="c-h">00</div><div class="count-lab">horas</div></div>
+    <div class="count-cell"><div class="count-num" id="c-m">00</div><div class="count-lab">min</div></div>
+    <div class="count-cell"><div class="count-num" id="c-s">00</div><div class="count-lab">seg</div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">Entre na lista de espera</h2>
+    <p class="card-sub">Avisamos você assim que a próxima turma abrir.</p>
+
+    <form id="wl-form" novalidate>
+      <div class="field">
+        <label for="wl-nome">Nome</label>
+        <input class="input" type="text" id="wl-nome" name="nome" autocomplete="given-name" placeholder="Seu nome" required>
+      </div>
+      <div class="field">
+        <label for="wl-email">E-mail</label>
+        <input class="input" type="email" id="wl-email" name="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
+      </div>
+      <div class="field">
+        <label for="wl-whatsapp">WhatsApp</label>
+        <input class="input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="wl-website">Não preencha</label>
+        <input type="text" id="wl-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="err" id="wl-error" role="alert" aria-live="assertive"></div>
+
+      <button class="btn" type="submit" id="wl-submit">
+        <span class="wl-submit-label">Entrar na lista de espera</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+
+    <p class="formfoot">Sem spam.</p>
+  </div>
+</main>
+
+<footer class="foot">METRIK Instituto</footer>
+
+<script>
+// ===== Countdown até 27/07 00h BRT =====
+(function(){
+  var TARGET = Date.UTC(2026, 6, 27, 3, 0, 0); // 03:00 UTC = 00h BRT segunda 27/07
+  var d=document.getElementById('c-d'),h=document.getElementById('c-h'),m=document.getElementById('c-m'),s=document.getElementById('c-s');
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    var diff=TARGET-Date.now();
+    if(diff<=0){d.textContent='00';h.textContent='00';m.textContent='00';s.textContent='00';return;}
+    var sec=Math.floor(diff/1000);
+    d.textContent=pad(Math.floor(sec/86400));
+    h.textContent=pad(Math.floor((sec%86400)/3600));
+    m.textContent=pad(Math.floor((sec%3600)/60));
+    s.textContent=pad(sec%60);
+  }
+  tick();setInterval(tick,1000);
+})();
+
+// ===== Formulário lista de espera =====
+(function(){
+  var ENDPOINT='https://dashboard.rodrigorosar.com.br/api/public/waitlist';
+  var GROUP_URL='https://chat.whatsapp.com/CkXPJ9gVYB5Ek9FpkpYxWH';
+  var SUBMIT_LABEL='Entrar na lista de espera';
+
+  var form=document.getElementById('wl-form');
+  if(!form)return;
+  var btn=document.getElementById('wl-submit');
+  var lblEl=form.querySelector('.wl-submit-label');
+  var errEl=document.getElementById('wl-error');
+  var nome=document.getElementById('wl-nome');
+  var email=document.getElementById('wl-email');
+  var wa=document.getElementById('wl-whatsapp');
+  var hp=document.getElementById('wl-website');
+
+  function showError(msg,field){
+    errEl.textContent=msg||'';
+    [nome,email,wa].forEach(function(f){f.classList.remove('is-invalid');});
+    if(field){field.classList.add('is-invalid');field.focus();}
+  }
+  [nome,email,wa].forEach(function(f){f.addEventListener('input',function(){this.classList.remove('is-invalid');});});
+
+  function loading(on){
+    btn.disabled=on;
+    if(on){lblEl.innerHTML='<span class="spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
+    else{lblEl.textContent=SUBMIT_LABEL;btn.removeAttribute('aria-busy');}
+  }
+
+  wa.addEventListener('input',function(){
+    var v=wa.value.replace(/\D/g,'').slice(0,11);
+    if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+    else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);
+    else if(v.length>0)v='('+v;
+    wa.value=v;
+  });
+
+  var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var vNome=nome.value.trim(),vEmail=email.value.trim().toLowerCase(),vWa=wa.value.replace(/\D/g,'');
+    if(!vNome){return showError('Informe seu nome.',nome);}
+    if(!EMAIL_RE.test(vEmail)){return showError('Informe um e-mail válido.',email);}
+    if(vWa.length<10){return showError('Informe um WhatsApp válido com DDD.',wa);}
+    showError('');loading(true);
+
+    var utm={};
+    new URLSearchParams(location.search).forEach(function(val,key){if(key.indexOf('utm_')===0)utm[key]=val;});
+
+    fetch(ENDPOINT,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:vWa,consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
+    })
+    .then(function(r){
+      if(r.ok){
+        try{sessionStorage.setItem('wl_nome',vNome.split(/\s+/)[0]);}catch(_){}
+        window.location.href='obrigado.html';
+        return;
+      }
+      return r.json().catch(function(){return{};}).then(function(data){
+        loading(false);showError(data.error||'Não foi possível enviar agora. Tente novamente.');
+      });
+    })
+    .catch(function(){
+      loading(false);
+      showError('Conexão instável. Você pode entrar no grupo direto:');
+      if(!errEl.nextElementSibling||!errEl.nextElementSibling.classList.contains('btn-wa-fallback')){
+        var a=document.createElement('a');
+        a.href=GROUP_URL;a.target='_blank';a.rel='noopener';a.className='btn-wa-fallback';
+        a.textContent='Entrar no grupo no WhatsApp';
+        errEl.parentNode.insertBefore(a,errEl.nextSibling);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
