@@ -1852,9 +1852,9 @@ if (PREFERS_REDUCED) {
     {src:"img/capturas-tela.webp",alt:"Documentos, checklists e planejador do método na mesa",area:0},
     {src:"img/workbook.webp",alt:"Workbooks de detalhamento impressos",area:0},
     {src:"img/notion.webp",alt:"Backlog de projeto no Notion",area:1},
-    {src:"img/autocad.webp",alt:"Projeto aberto em software CAD",area:1},
+    {src:"img/autocad.webp",alt:"Projeto aberto em software CAD",area:1,style:"transform:scale(1.55);transform-origin:52% 12%"},
     {src:"img/ferramenta-1cr.webp",alt:"Viewport do SketchUp virando render realista",area:2},
-    {src:"img/hero-video-thumb.webp",alt:"Apresentação visual de projeto",area:2},
+    {src:"img/ferramenta-fluxos.avif",alt:"Fluxos de imagem e vídeo para representação de projeto",area:2},
     {src:"img/chaos_vs._order.webp",alt:"Mesa de trabalho: caos de um lado, ordem do outro",area:3},
     {src:"img/office_evening_scene.webp",alt:"Escritório em ordem no fim do dia",area:3}
   ];
@@ -1870,7 +1870,7 @@ if (PREFERS_REDUCED) {
     d.setAttribute("aria-roledescription","slide");
     d.setAttribute("aria-label",(i+1)+" de "+count);
     var img=document.createElement("img");
-    img.src=s.src;img.alt=s.alt;img.loading="lazy";img.draggable=false;
+    img.src=s.src;img.alt=s.alt;img.loading="lazy";img.draggable=false;if(s.style)img.style.cssText+=s.style;
     d.appendChild(img);stage.appendChild(d);cards.push(d);
   });
   function indexAt(p){return ((Math.round(p)%count)+count)%count}
