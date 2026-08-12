@@ -509,3 +509,95 @@ git commit -m "chore: verificacao visual da jornada de 12 semanas"
 - [ ] **Step 6: Apresentar prévia ao Rafael**
 
 Mostrar screenshots. NÃO fazer push. Deploy só após aprovação explícita.
+
+---
+
+# ITERAÇÃO 2 (12/08, decisões de Rafael pós-prévia)
+
+Global constraints iguais. Referência: seção "Iteração 2" da spec.
+
+### Task 7: Volta pra 6 semanas + remove painel escuro + remove cabeçalho do bloco
+
+**Files:** Modify: `vendas.html`
+
+- [ ] Step 1: Reverter as 11 trocas de duração (âncoras exatas, cada uma ocorre 1 vez):
+
+| De | Para |
+|---|---|
+| `em 12 semanas. Método PDP` | `em 6 semanas. Método PDP` |
+| `Do caos à ordem em 12 semanas` (og:title) | `Do caos à ordem em 6 semanas` |
+| `Do caos à ordem em 12 semanas` (twitter:title — após a 1ª troca a âncora volta a ser única) | `Do caos à ordem em 6 semanas` |
+| `Acompanhamento semanal por 12 semanas` | `Acompanhamento semanal por 6 semanas` |
+| `Um programa de 12 semanas com acompanhamento` | `Um programa de 6 semanas com acompanhamento` |
+| `interiores em 12 semanas.` | `interiores em 6 semanas.` |
+| `coloca a casa em ordem em 12 semanas, mesmo que` | `coloca a casa em ordem em 6 semanas, mesmo que` |
+| `12 semanas de acompanhamento no WhatsApp` | `6 semanas de acompanhamento no WhatsApp` |
+| `12 sprints semanais` | `6 sprints semanais` |
+| `acesso direto durante as 12 semanas` | `acesso direto durante as 6 semanas` |
+| `Desafio de 12 semanas no WhatsApp com o Rodrigo` | `Desafio de 6 semanas no WhatsApp com o Rodrigo` |
+
+- [ ] Step 2: Seção #sprints:
+  - aria-label: `Sua jornada em 12 semanas` → `Sua jornada em 6 semanas`
+  - comentário: `<!-- 8. AS 12 SEMANAS               -->` → `<!-- 8. AS 6 SEMANAS                -->`
+  - label: `SUA JORNADA EM 12 SEMANAS` → `SUA JORNADA EM 6 SEMANAS`
+  - intro: `Dois blocos de 6 sprints semanais, com encontro ao vivo toda semana e grupo no WhatsApp.` → `6 sprints semanais, com encontro ao vivo toda segunda e grupo no WhatsApp.`
+- [ ] Step 3: Remover o painel escuro inteiro: do `<!-- BLOCO 2 · IA -->` até o `</div>` que fecha `<div class="jw-block jw-block-ia gs">` (inclusive).
+- [ ] Step 4: Remover o cabeçalho do Bloco 1: o `<div class="jw-head">...</div>` inteiro (pill "BLOCO 1 · SEMANAS 1 A 6", nome, sub). Manter o wrapper `<div class="jw-block gs">` e a `.sp-timeline`.
+- [ ] Step 5: Verificar: `grep -c "VOCÊ RECEBE PRONTO"` = 6; `grep -c "jw-block-ia"` no HTML (fora do <style>) = 0; parser OK. CSS jw-* não usado permanece (decisão: manter, sem risco).
+- [ ] Step 6: Commit `feat: volta pra 6 semanas, remove painel IA da jornada e cabecalho de bloco`
+
+### Task 8: Cards visuais (ícone + imagem por semana)
+
+**Files:** Modify: `vendas.html` (CSS + os 6 cards)
+
+- [ ] Step 1: CSS — inserir logo após `@media(min-width:768px){.jw-block-ia{padding:64px 48px}}`:
+
+```css
+.jw-card{padding:0;overflow:hidden}
+.jw-card-body{padding:22px 26px}
+.jw-card-media{position:relative;min-height:150px;background:var(--offwhite)}
+.jw-card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.jw-card-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.jw-icon{flex-shrink:0;width:40px;height:40px;border-radius:12px;background:var(--offwhite);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center}
+.jw-icon .icon{width:19px;height:19px;color:var(--graphite)}
+.jw-week{margin-bottom:2px}
+@media(min-width:768px){.jw-card{display:grid;grid-template-columns:1fr 230px}.jw-card-media{min-height:100%}.jw-card-body{padding:24px 28px}}
+```
+
+- [ ] Step 2: Em cada um dos 6 cards, trocar `<div class="sp-card">` por `<div class="sp-card jw-card">`, envolver o conteúdo atual em `<div class="jw-card-body">`, trocar o par `<p class="jw-week">…</p><p class="fm sp-title">…</p>` pelo bloco `jw-card-top` com ícone, e adicionar `<div class="jw-card-media">` como último filho do `.jw-card`. Mapa ícone/imagem/alt:
+
+| Sem | Ícone | Imagem | Alt |
+|---|---|---|---|
+| 1 | `#i-clock` | `img/office_evening_scene.webp` | `Escritório em ordem no fim do dia, relógio marcando 18h` |
+| 2 | `#i-shield` | `img/capturas-tela.webp` | `Contratos, checklists e planejador do Pré-Projeto PDP` |
+| 3 | `#i-check-circle` | `img/notion.webp` | `Backlog de projeto no Notion com todas as etapas do PDP` |
+| 4 | `#i-refresh` | `img/mockups-pdp.webp` | `Materiais do método PDP em vários dispositivos` |
+| 5 | `#i-cpu` | `img/autocad.webp` | `Template de projeto aberto em software CAD` |
+| 6 | `#i-award` | `img/workbook.webp` | `Workbooks de Detalhamento do Projeto de Primeira` |
+
+Estrutura de referência do card 1 (replicar padrão nos 6):
+
+```html
+<div class="sp-card jw-card">
+  <div class="jw-card-body">
+    <div class="jw-card-top">
+      <span class="jw-icon"><svg class="icon"><use href="#i-clock"/></svg></span>
+      <div><p class="jw-week">SEMANA 1</p><p class="fm sp-title">Você no controle do seu tempo</p></div>
+    </div>
+    <p class="sp-desc">…texto atual…</p>
+    <p class="jw-get-label">VOCÊ RECEBE PRONTO</p>
+    <ul class="jw-get">…itens atuais…</ul>
+  </div>
+  <div class="jw-card-media"><img src="img/office_evening_scene.webp" alt="Escritório em ordem no fim do dia, relógio marcando 18h" loading="lazy"></div>
+</div>
+```
+
+- [ ] Step 3: Verificar: `grep -c "jw-card-media"` = 6; parser OK; nenhuma imagem inexistente (todas já estão em img/).
+- [ ] Step 4: Commit `feat: cards da jornada com icone tematico e imagem por semana`
+
+### Task 9: Subir seções de IA + verificação visual
+
+- [ ] Step 1: Recortar o bloco das seções IA (do comentário `<!-- 11a. TRANSIÇÃO PDP -> IA        -->` até o `</section>` que fecha `#ferramentas-ia`) e colar imediatamente após o `</section>` da seção `#sprints`, antes do comentário `<!-- 9. TUDO PRONTO PARA USAR       -->`.
+- [ ] Step 2: Verificar ordem final das seções: sprints → transicao-ia → ferramentas-ia → metodo-pdp. Parser OK. Uma única ocorrência de cada id.
+- [ ] Step 3: Commit `feat: secoes de IA sobem para logo apos a jornada`
+- [ ] Step 4: Verificação visual (desktop 1440 + mobile 390): cards com imagem, transição jornada → IA, sem overflow. Screenshots pro Rafael.
