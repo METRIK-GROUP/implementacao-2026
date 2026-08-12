@@ -605,7 +605,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="gs tc" style="font-size:clamp(14px,1.8vw,17px);color:rgba(255,255,255,0.6);max-width:680px;margin:0 auto 56px;line-height:1.6">Quatro frentes onde a IA realmente muda o jogo, do projeto à gestão.</p>
 
     <!-- Carrossel: 4 frentes de IA -->
-    <div class="cf-wrap gs" style="--cf-card:clamp(150px,24vw,270px)" role="region" aria-roledescription="carousel" aria-label="Quatro frentes de IA no escritório">
+    <div class="cf-wrap gs" style="--cf-card:clamp(200px,30vw,340px)" role="region" aria-roledescription="carousel" aria-label="Quatro frentes de IA no escritório">
       <div class="cf-frame" id="cf-frame" tabindex="0">
         <div class="cf-stage" id="cf-stage"></div>
       </div>
@@ -1850,13 +1850,9 @@ if (PREFERS_REDUCED) {
   ];
   var SLIDES=[
     {src:"img/capturas-tela.webp",alt:"Documentos, checklists e planejador do método na mesa",area:0},
-    {src:"img/workbook.webp",alt:"Workbooks de detalhamento impressos",area:0},
     {src:"img/notion.webp",alt:"Backlog de projeto no Notion",area:1},
-    {src:"img/autocad.webp",alt:"Projeto aberto em software CAD",area:1,style:"transform:scale(1.55);transform-origin:52% 12%"},
     {src:"img/ferramenta-1cr.webp",alt:"Viewport do SketchUp virando render realista",area:2},
-    {src:"img/ferramenta-fluxos.avif",alt:"Fluxos de imagem e vídeo para representação de projeto",area:2},
-    {src:"img/chaos_vs._order.webp",alt:"Mesa de trabalho: caos de um lado, ordem do outro",area:3},
-    {src:"img/office_evening_scene.webp",alt:"Escritório em ordem no fim do dia",area:3}
+    {src:"img/chaos_vs._order.webp",alt:"Mesa de trabalho: caos de um lado, ordem do outro",area:3}
   ];
   var ROTATE=44,DEPTH=0.6,FALLOFF=0.56,FADE=0.16,GAP=0.05;
   var frame=document.getElementById("cf-frame"),stage=document.getElementById("cf-stage"),caption=document.getElementById("cf-caption");
@@ -1886,7 +1882,7 @@ if (PREFERS_REDUCED) {
       var tilt=Math.min(ROTATE*ramp,82)*(off<0?-1:off>0?1:0);
       cards[i].style.transform="translateX(calc(-50% + "+(off*pitch)+"px)) translateZ("+(-DEPTH*width*ramp)+"px) rotateY("+(-tilt)+"deg)";
       var edge=Math.min(1,Math.max(0,count/2-dist));
-      cards[i].style.opacity=String(Math.max(0,1-FADE*dist)*edge);
+      cards[i].style.opacity=String(Math.max(0,1-FADE*dist)*edge);cards[i].style.filter="brightness("+Math.max(0.4,1-0.5*Math.min(dist,1.4)).toFixed(3)+")";
       cards[i].style.zIndex=String(100-Math.round(dist));
     }
   }
