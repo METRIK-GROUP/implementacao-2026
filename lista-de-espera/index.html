@@ -1124,8 +1124,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     #preco .wl-trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px 12px;margin-top:22px;
       font-family:'Maven Pro',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--g500)}
     #preco .wl-trust strong{color:var(--black);font-weight:800}
-    #preco .wl-btn-wa-fallback{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:10px;
-      padding:14px 20px;border-radius:999px;background:#25D366;color:#06270f;font-family:'Maven Pro',sans-serif;font-weight:800;font-size:14px}
     @media (prefers-reduced-motion: reduce){#preco .wl-spinner{animation-duration:1.4s}}
   </style>
 
@@ -1785,7 +1783,6 @@ if (PREFERS_REDUCED) {
   }
 
   var ENDPOINT='https://dashboard.rodrigorosar.com.br/api/public/waitlist';
-  var GROUP_URL='https://chat.whatsapp.com/CkXPJ9gVYB5Ek9FpkpYxWH';
   var SUBMIT_LABEL='Entrar na lista de espera';
   var form=document.getElementById('wl-form');
   if(!form)return;
@@ -1839,13 +1836,7 @@ if (PREFERS_REDUCED) {
       });
     })
     .catch(function(){
-      loading(false);showError('Conexão instável. Você pode entrar no grupo direto:');
-      if(!errEl.nextElementSibling||!errEl.nextElementSibling.classList.contains('wl-btn-wa-fallback')){
-        var a=document.createElement('a');
-        a.href=GROUP_URL;a.target='_blank';a.rel='noopener';a.className='wl-btn-wa-fallback';
-        a.textContent='Entrar no grupo no WhatsApp';
-        errEl.parentNode.insertBefore(a,errEl.nextSibling);
-      }
+      loading(false);showError('Conexão instável. Tente novamente em instantes.');
     });
   });
 })();
