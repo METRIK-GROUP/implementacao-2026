@@ -1093,36 +1093,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ============================== -->
-<!-- 13. BÔNUS HOJE                  -->
-<!-- ============================== -->
-<section class="sec bg-o" id="bonus" aria-label="Bônus exclusivo">
-  <div class="si">
-    <p class="gs label tc" style="margin-bottom:18px">BÔNUS EXCLUSIVO</p>
-    <p class="gs fm tc" style="font-weight:700;font-size:clamp(24px,3.8vw,34px);line-height:1.15;color:var(--black);max-width:680px;margin:0 auto 64px;text-wrap:balance">Mais produtividade? Hora de vender mais.</p>
-
-    <div class="bonus-card gs">
-      <div class="bonus-img img-z">
-        <span class="bonus-stamp">BÔNUS</span>
-        <img src="img/imersao-vendas.webp" width="1280" height="720" alt="Imersão de Vendas — captação, networking e proposta" loading="lazy">
-      </div>
-      <div class="bonus-text">
-        <span class="bonus-tag">Por tempo limitado</span>
-        <p class="bonus-name fm">Imersão de Vendas</p>
-        <p class="bonus-desc">Captação de clientes, networking estratégico, e o modelo de proposta que o Rodrigo usa no próprio escritório.</p>
-        <ul class="bonus-list">
-          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>Como atrair clientes que valorizam o seu trabalho</li>
-          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>Networking que gera indicações de verdade</li>
-          <li><span class="bonus-chk"><svg><use href="#i-check"/></svg></span>A proposta de projetos real do Rodrigo, pronta para adaptar e usar</li>
-        </ul>
-        <p class="bonus-foot">Disponível apenas nesta janela de inscrição.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
 
 
 
@@ -1799,30 +1769,6 @@ ScrollTrigger.create({
 });
 // Fallback: garantir visibilidade após 3s
 setTimeout(() => { const el = document.getElementById('big-price'); if (el) el.style.opacity = '1'; }, 3000);
-
-// BONUS COUNTDOWN.20 minutes
-const countdownEl = document.getElementById('bonus-countdown');
-if (countdownEl) {
-  let totalSec = 20 * 60;
-  const tick = () => {
-    if (totalSec <= 0) {
-      countdownEl.textContent = '00:00';
-      countdownEl.style.color = 'var(--g500)';
-      return;
-    }
-    totalSec--;
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
-    countdownEl.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  };
-  // Start countdown when section enters viewport
-  ScrollTrigger.create({
-    trigger: '#bonus',
-    start: 'top 80%',
-    once: true,
-    onEnter: () => setInterval(tick, 1000)
-  });
-}
 
 // STAGGER REVEAL.containers with [data-s] reveal direct .gs children sequentially
 gsap.utils.toArray('[data-s]').forEach(container => {
