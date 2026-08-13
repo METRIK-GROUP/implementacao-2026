@@ -738,6 +738,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           .ia-orbit .up-rev{animation:iaSpin 70s linear infinite;transform-box:fill-box;transform-origin:center}
           @keyframes iaSpin{to{transform:rotate(360deg)}}
           @keyframes iaSpinRev{to{transform:rotate(-360deg)}}
+          .ia-orbit .ia-badge{filter:drop-shadow(0 4px 8px rgba(30,30,30,0.14))}
           @media (prefers-reduced-motion:reduce){.ia-orbit .spin,.ia-orbit .spin-rev,.ia-orbit .up,.ia-orbit .up-rev{animation:none!important}}
         </style>
         <svg class="ia-orbit" viewBox="0 0 760 560" role="img" aria-label="Mapa das skills de IA: ícones de e-mail, mensagens, documentos, agenda, finanças, imagens, apresentações e gestão orbitando o núcleo de IA">
@@ -754,35 +755,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </defs>
           <circle cx="380" cy="280" r="150" fill="none" stroke="#D3D1C7" stroke-width="1.5"/>
           <circle cx="380" cy="280" r="228" fill="none" stroke="#D3D1C7" stroke-width="1.5"/>
-          <circle cx="380" cy="280" r="140" fill="url(#ia-glow)"/>
           <g class="spin" stroke="#D3D1C7" stroke-width="1">
             <line x1="380" y1="280" x2="380" y2="55"/><line x1="380" y1="280" x2="575" y2="167"/><line x1="380" y1="280" x2="575" y2="393"/><line x1="380" y1="280" x2="380" y2="505"/><line x1="380" y1="280" x2="185" y2="393"/><line x1="380" y1="280" x2="185" y2="167"/>
           </g>
           <g class="spin-rev" stroke="#D3D1C7" stroke-width="1" stroke-dasharray="3 6">
             <line x1="380" y1="280" x2="483" y2="177"/><line x1="380" y1="280" x2="483" y2="383"/><line x1="380" y1="280" x2="277" y2="383"/><line x1="380" y1="280" x2="277" y2="177"/>
           </g>
-          <circle cx="380" cy="280" r="64" fill="url(#ia-core)"/>
-          <g stroke="#FFFFFF" stroke-width="7" stroke-linecap="round">
-            <line x1="380" y1="240" x2="380" y2="256"/><line x1="380" y1="304" x2="380" y2="320"/>
-            <line x1="340" y1="280" x2="356" y2="280"/><line x1="404" y1="280" x2="420" y2="280"/>
-            <line x1="352" y1="252" x2="363" y2="263"/><line x1="397" y1="297" x2="408" y2="308"/>
-            <line x1="408" y1="252" x2="397" y2="263"/><line x1="363" y1="297" x2="352" y2="308"/>
-            <line x1="344" y1="266" x2="359" y2="272"/><line x1="401" y1="288" x2="416" y2="294"/>
-            <line x1="416" y1="266" x2="401" y2="272"/><line x1="359" y1="288" x2="344" y2="294"/>
+          <circle cx="380" cy="280" r="86" fill="var(--offwhite)"/>
+          <circle cx="380" cy="280" r="130" fill="url(#ia-glow)"/>
+          <g fill="#9F9D94">
+            <circle cx="380" cy="130" r="3"/><circle cx="510" cy="355" r="3"/><circle cx="250" cy="355" r="3"/>
+            <circle cx="218.8" cy="118.8" r="3.5"/><circle cx="541.2" cy="441.2" r="3.5"/>
           </g>
+          <image href="img/claude-simbolo.webp" x="310" y="210" width="140" height="140"/>
           <g class="spin">
-            <g transform="translate(380,55)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></g></g></g>
-            <g transform="translate(575,167)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></g></g></g>
-            <g transform="translate(575,393)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></g></g></g>
-            <g transform="translate(380,505)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></g></g></g>
-            <g transform="translate(185,393)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></g></g></g>
-            <g transform="translate(185,167)"><g class="up"><circle r="26" fill="#3D3D3A"/><g transform="translate(-12,-12)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></g></g></g>
+            <g transform="translate(380,55)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></g></g></g>
+            <g transform="translate(575,167)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></g></g></g>
+            <g transform="translate(575,393)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></g></g></g>
+            <g transform="translate(380,505)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></g></g></g>
+            <g transform="translate(185,393)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></g></g></g>
+            <g transform="translate(185,167)"><g class="up"><circle r="26" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-12,-12)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></g></g></g>
           </g>
           <g class="spin-rev">
-            <g transform="translate(483,177)"><g class="up-rev"><circle r="23" fill="#3D3D3A"/><g transform="translate(-11,-11)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" transform-origin="11 11"><g transform="scale(0.92)"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g></g></g></g>
-            <g transform="translate(483,383)"><g class="up-rev"><circle r="23" fill="#3D3D3A"/><g transform="translate(-11,-11)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></g></g></g></g>
-            <g transform="translate(277,383)"><g class="up-rev"><circle r="23" fill="#3D3D3A"/><g transform="translate(-11,-11)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></g></g></g></g>
-            <g transform="translate(277,177)"><g class="up-rev"><circle r="23" fill="#3D3D3A"/><g transform="translate(-11,-11)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></g></g></g></g>
+            <g transform="translate(483,177)"><g class="up-rev"><circle r="23" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-11,-11)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" transform-origin="11 11"><g transform="scale(0.92)"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g></g></g></g>
+            <g transform="translate(483,383)"><g class="up-rev"><circle r="23" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-11,-11)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></g></g></g></g>
+            <g transform="translate(277,383)"><g class="up-rev"><circle r="23" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-11,-11)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></g></g></g></g>
+            <g transform="translate(277,177)"><g class="up-rev"><circle r="23" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1.5" class="ia-badge"/><g transform="translate(-11,-11)" fill="none" stroke="#3D3D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="scale(0.92)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></g></g></g></g>
           </g>
         </svg>
       </div>
