@@ -983,6 +983,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- ============================== -->
+<!-- 9a-bis. DEPOIMENTO EM DESTAQUE 2 -->
+<!-- ============================== -->
+<section class="fdep" id="depoimento-destaque-2" aria-label="Depoimento em destaque" style="background:var(--white)">
+  <div class="fdep-grid">
+    <div class="gs" data-r="left">
+      <div class="fdep-player">
+        <video preload="none" playsinline poster="video/depoimento-amanda-poster.webp" aria-label="Depoimento em vídeo da arquiteta Amanda Cagliari">
+          <source src="video/depoimento-amanda.mp4" type="video/mp4">
+        </video>
+        <button class="fdep-playbtn" aria-label="Reproduzir depoimento em vídeo"><svg viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+    </div>
+    <div>
+      <p class="gs label" style="margin-bottom:18px">VALE O INVESTIMENTO?</p>
+      <p class="gs fdep-quote">&ldquo;Foi um investimento que no começo preocupou. Hoje eu pagaria <strong>duas, três vezes de olhos fechados</strong>, porque valeu muito a pena.&rdquo;</p>
+      <p class="gs fdep-nm">Arq. Amanda Cagliari · 9 anos de carreira</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
 <!-- 9b. TUDO QUE ESTÁ PRONTO       -->
 <!-- ============================== -->
 <section class="sec-short bg-d" style="padding:80px 24px" id="entregaveis" aria-label="Bônus da Implementação">
@@ -1375,20 +1396,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>        <p class="tc-qm">&ldquo;</p>
         <p class="tc-qt">Mais de <strong>20 anos</strong> sobrecarregada... Era falta de processos.</p>
         <p class="tc-nm">Arq. Priscilla Chaccur · 20 anos de carreira</p>
-      </div>
-      <div class="tc-card gs">
-        <div class="tc-video" data-yt="5RyxHhRKOJI"><img src="https://i.ytimg.com/vi/5RyxHhRKOJI/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360" class="tc-thumb">
-          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>        <p class="tc-qm">&ldquo;</p>
-        <p class="tc-qt">Voltar a colocar a minha filha para dormir, isso não tem preço. Antes eu ia dormir sempre às 2 da manhã.</p>
-        <p class="tc-nm">Arq. Armstrong Gomes · 10 anos de carreira</p>
-      </div>
-      <div class="tc-card gs">
-        <div class="tc-video" data-yt="zoOUWrgjV7c"><img src="https://i.ytimg.com/vi/zoOUWrgjV7c/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360" class="tc-thumb">
-          <div class="tc-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>        <p class="tc-qm">&ldquo;</p>
-        <p class="tc-qt">Hoje eu pagaria <strong>DUAS, TRÊS VEZES</strong> de olhos fechados.</p>
-        <p class="tc-nm">Arq. Amanda Cagliari · 9 anos de carreira</p>
       </div>
       <div class="tc-card gs">
         <div class="tc-video" data-yt="7AvhTQmr2-A"><img src="https://i.ytimg.com/vi/7AvhTQmr2-A/hqdefault.jpg" alt="" loading="lazy" decoding="async" width="480" height="360" class="tc-thumb">
@@ -1943,12 +1950,11 @@ if (PREFERS_REDUCED) {
   });
 })();
 
-// PLAYER PRÓPRIO — depoimento em destaque (sem YouTube)
-(function(){
-  const wrap = document.getElementById('fdep-player');
-  const vid = document.getElementById('fdep-vid');
-  const btn = document.getElementById('fdep-playbtn');
-  if (!wrap || !vid || !btn) return;
+// PLAYER PRÓPRIO — depoimentos em destaque (sem YouTube)
+document.querySelectorAll('.fdep-player').forEach(function(wrap){
+  const vid = wrap.querySelector('video');
+  const btn = wrap.querySelector('.fdep-playbtn');
+  if (!vid || !btn) return;
   btn.addEventListener('click', () => {
     wrap.classList.add('playing');
     vid.setAttribute('controls', '');
@@ -1959,7 +1965,7 @@ if (PREFERS_REDUCED) {
     vid.removeAttribute('controls');
     vid.load();
   });
-})();
+});
 
 // YOUTUBE LITE EMBED — depoimentos (carrega iframe só no clique)
 (function(){
