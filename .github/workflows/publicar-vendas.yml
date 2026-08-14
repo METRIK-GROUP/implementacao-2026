@@ -22,16 +22,19 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Merge da branch de vendas na main
+      - name: Merge da branch de vendas e publicar
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git merge --no-edit origin/feat/jornada-12-semanas
+          git push origin main
 
+      # Autolimpeza: se falhar, nao afeta a publicacao (ja feita acima).
+      # Sem ela, o cron so dispararia de novo em 16/08/2027, e o merge
+      # repetido seria "Already up to date" (inofensivo).
       - name: Remover este workflow (publicacao e unica)
+        continue-on-error: true
         run: |
           git rm .github/workflows/publicar-vendas.yml
           git commit -m "chore: remove workflow de publicacao agendada (ja executado)"
-
-      - name: Push
-        run: git push origin main
+          git push origin main
