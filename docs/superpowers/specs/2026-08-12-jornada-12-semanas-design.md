@@ -89,3 +89,15 @@ Vira **2 stacks de entrega**, uma por bloco:
 - Preço, bônus, condições de pagamento (não discutidos).
 - Lista de espera e página de obrigado.
 - Novas imagens/mockups (usar os existentes; se precisar de arte nova, tarefa separada).
+
+---
+
+## Iteração 2 — decisões de Rafael (12/08/2026, após prévia)
+
+1. Split "O que você recebe · Bloco IA": mantido. Trocar a imagem depois por mockup mais visual (tarefa futura).
+2. Mensagem de duração volta a ser **6 semanas** em toda a página (12 semanas assusta aluno sem tempo; "vão descobrir depois"). Reverter as 11 trocas.
+3. Painel escuro das semanas 7 a 12: **removido**. O conteúdo de IA fica coberto pelas seções de IA existentes.
+4. Seções de IA (#transicao-ia "Hora de acelerar" + #ferramentas-ia) **sobem** para logo depois da seção "Como será a sua transformação" (#sprints).
+5. Pill "BLOCO 1 · SEMANAS 1 A 6" removida (cabeçalho do bloco sai; a intro da seção cobre).
+6. Cards das 6 semanas mais visuais: ícone temático + imagem por semana (imagens já existentes no repo):
+   - S1 i-clock + office_evening_scene.webp · S2 i-shield + capturas-tela.webp · S3 i-check-circle + notion.webp · S4 i-refresh + mockups-pdp.webp · S5 i-cpu + autocad.webp · S6 i-award + workbook.webp
