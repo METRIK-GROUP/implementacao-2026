@@ -186,15 +186,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <!-- STICKY URGENCY BAR -->
-<div class="sticky-bar" id="stickyBar" inert style="display:none">
+<style>
+  /* Modo fixo: barra sempre visível no topo, sem depender de scroll */
+  .sticky-bar.always{transform:translateY(0);pointer-events:auto}
+  /* Fundo mais opaco: a barra agora fica visivel tambem sobre secoes claras */
+  .sticky-bar{background:rgba(12,12,12,0.88)}
+  body.bar-on .hero{padding-top:42px}
+  .sticky-bar-sm{display:none}
+  body.bar-on #preco{scroll-margin-top:52px}
+  @media (max-width:720px){
+    body.bar-on .hero{padding-top:54px}
+    body.bar-on #preco{scroll-margin-top:62px}
+    .sticky-bar-lg{display:none}
+    .sticky-bar-sm{display:inline}
+  }
+  @media (prefers-reduced-motion:reduce){.sticky-bar{transition:none}.sticky-bar-dot{animation:none}}
+</style>
+<div class="sticky-bar always" id="stickyBar" role="region" aria-label="Aviso: prazo de matrículas">
   <div class="sticky-bar-inner">
     <div class="sticky-bar-left">
-      <span class="sticky-bar-dot"></span>
-      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1">Matrículas encerram nesta semana</span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2">Implementação inicia segunda, 24/08</span></span>
+      <span class="sticky-bar-dot" aria-hidden="true"></span>
+      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1"><span class="sticky-bar-lg">Matrículas abertas somente esta semana</span><span class="sticky-bar-sm">Matrículas só esta semana</span></span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2"><span class="sticky-bar-lg">A turma começa segunda, 24/08</span><span class="sticky-bar-sm">Começa segunda, 24/08</span></span></span>
     </div>
-    <a href="#preco" class="sticky-bar-cta">Garantir vaga</a>
+    <a href="#preco" class="sticky-bar-cta"><span class="sticky-bar-lg">Garantir minha vaga</span><span class="sticky-bar-sm">Quero minha vaga</span></a>
   </div>
 </div>
+<script>document.body.classList.add('bar-on');</script>
 
 <main>
 <!-- ============================== -->
@@ -1798,20 +1815,55 @@ if (heroVideoBtn && heroVideoBtn.classList.contains('hero-video-facade')) {
   }, { once: true });
 }
 
-// STICKY URGENCY BAR.visible when hero is out of view
+// STICKY URGENCY BAR.padrao: fixa no topo o tempo todo (?bar=scroll volta ao modo "aparece apos o hero")
 const stickyBar = document.getElementById('stickyBar');
 const heroEl = document.getElementById('hero');
-if (stickyBar && heroEl) {
-  const stickyObs = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      stickyBar.classList.remove('visible');
-      stickyBar.setAttribute('inert', '');
-    } else {
-      stickyBar.classList.add('visible');
-      stickyBar.removeAttribute('inert');
+if (stickyBar) {
+  const barParams = new URLSearchParams(location.search);
+
+  // Variantes de copy para aprovacao: ?copy=b | ?copy=c (padrao = copy do HTML)
+  const BAR_COPY = {
+    b: {
+      p1: ['Última semana de matrículas', 'Última semana'],
+      p2: ['Depois desta turma, o preço sobe', 'Depois o preço sobe'],
+      cta: ['Garantir minha vaga', 'Quero minha vaga']
+    },
+    c: {
+      p1: ['Matrículas encerram domingo', 'Encerram domingo'],
+      p2: ['A turma começa segunda, 24/08', 'Começa segunda, 24/08'],
+      cta: ['Entrar nesta turma', 'Entrar na turma']
     }
-  }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
-  stickyObs.observe(heroEl);
+  };
+  const variant = BAR_COPY[(barParams.get('copy') || '').toLowerCase()];
+  if (variant) {
+    const setCopy = function(sel, pair) {
+      const host = stickyBar.querySelector(sel);
+      if (!host) return;
+      const lg = host.querySelector('.sticky-bar-lg');
+      const sm = host.querySelector('.sticky-bar-sm');
+      if (lg) lg.textContent = pair[0];
+      if (sm) sm.textContent = pair[1];
+    };
+    setCopy('.sticky-bar-piece-1', variant.p1);
+    setCopy('.sticky-bar-piece-2', variant.p2);
+    setCopy('.sticky-bar-cta', variant.cta);
+  }
+
+  if (barParams.get('bar') === 'scroll' && heroEl) {
+    stickyBar.classList.remove('always');
+    stickyBar.setAttribute('inert', '');
+    document.body.classList.remove('bar-on');
+    const stickyObs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        stickyBar.classList.remove('visible');
+        stickyBar.setAttribute('inert', '');
+      } else {
+        stickyBar.classList.add('visible');
+        stickyBar.removeAttribute('inert');
+      }
+    }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+    stickyObs.observe(heroEl);
+  }
 }
 
 // Mobile CTA.desativado (modo apresentação)
