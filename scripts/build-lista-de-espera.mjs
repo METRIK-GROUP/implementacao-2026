@@ -128,7 +128,7 @@ html = replaceOnce(
   `      </div>
       <h1 class="hero-promise gs" id="h-promise">`,
   `      </div>
-      <span class="gs hero-date-note" id="h-date-note">Inscrições encerradas · entre na lista de espera da próxima turma</span>
+      <span class="gs hero-date-note" id="h-date-note">Entre na lista de espera</span>
       <h1 class="hero-promise gs" id="h-promise">`
 );
 
