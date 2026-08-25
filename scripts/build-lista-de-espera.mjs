@@ -120,18 +120,10 @@ html = cutBlock(
 );
 
 // ---------------------------------------------------------------------------
-// 4. Hero: aviso de inscrições encerradas + CTA para o formulário
+// 4. Hero: CTA para o formulário
+// Sem pill de aviso acima do título: o botão logo abaixo já diz "Entrar na
+// lista de espera", então a pill só repetia a mesma frase na mesma dobra.
 // ---------------------------------------------------------------------------
-html = replaceOnce(
-  html,
-  'hero: aviso',
-  `      </div>
-      <h1 class="hero-promise gs" id="h-promise">`,
-  `      </div>
-      <span class="gs hero-date-note" id="h-date-note">Entre na lista de espera</span>
-      <h1 class="hero-promise gs" id="h-promise">`
-);
-
 // id="h-cta" é o alvo que a timeline GSAP do hero já espera (em vendas.html ele
 // ficou órfão quando o CTA do hero saiu).
 const HERO_CTA = `      <a href="#preco" class="hero-wl-cta gs" id="h-cta">
@@ -146,17 +138,6 @@ const HERO_CTA = `      <a href="#preco" class="hero-wl-cta gs" id="h-cta">
         .hero-wl-cta:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.45)}
         .hero-wl-cta svg{width:18px;height:18px;transition:transform .25s ease}
         .hero-wl-cta:hover svg{transform:translateX(4px)}
-        /* Aviso da próxima turma — coerente com IA de Primeira (pill + dot), adaptado pra hero escura alinhada a esquerda */
-        .hero-date-note{display:inline-flex;align-items:center;gap:10px;width:fit-content;
-          margin:20px 0 2px;padding:9px 18px;border-radius:999px;
-          background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);
-          font-family:'Maven Pro',sans-serif;font-size:clamp(11.5px,1.4vw,13.5px);font-weight:700;
-          letter-spacing:0.07em;text-transform:uppercase;color:#F5F4F0;line-height:1.3}
-        .hero-date-note::before{content:'';width:8px;height:8px;border-radius:50%;background:#fff;flex-shrink:0;
-          box-shadow:0 0 0 0 rgba(255,255,255,0.5);animation:heroDotPulse 2.2s infinite}
-        @keyframes heroDotPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.4)}70%{box-shadow:0 0 0 7px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
-        @media (prefers-reduced-motion:reduce){.hero-date-note::before{animation:none}}
-        @media (max-width:600px){.hero-date-note{font-size:11px;letter-spacing:0.035em;padding:8px 14px;gap:8px;margin:16px 0 2px}}
       </style>
 `;
 
@@ -169,15 +150,6 @@ html = replaceOnce(
   `      </div>
 ${HERO_CTA}    </div>
     <button class="hero-video gs hero-video-facade"`
-);
-
-// GSAP: o aviso entra na timeline entre o trust e a promessa.
-html = replaceOnce(
-  html,
-  'gsap: aviso',
-  `  .from('#h-promise', { autoAlpha: 0, y: 30, duration: 0.8 }, '-=0.3')`,
-  `  .from('#h-date-note', { autoAlpha: 0, y: 12, duration: 0.45 }, '-=0.3')
-  .from('#h-promise', { autoAlpha: 0, y: 30, duration: 0.8 }, '-=0.25')`
 );
 
 // ---------------------------------------------------------------------------
@@ -402,6 +374,7 @@ const FORBIDDEN = [
   ['preço de venda no markup', /class="[^"]*\b(pr-pix-val|big-price|pr-old|pr-ribbon|pr-actions)\b/],
   ['id de preço no markup', /id="(big-price|pr-actions|pr-countdown)"/],
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
+  ['pill de aviso no hero (removida: repetia o botão)', /hero-date-note|h-date-note/],
 ];
 for (const [label, re] of FORBIDDEN) {
   if (re.test(html)) throw new Error(`Guarda falhou: ${label} ainda presente no HTML gerado (${re})`);
