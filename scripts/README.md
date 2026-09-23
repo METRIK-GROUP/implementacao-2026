@@ -26,6 +26,22 @@ Fora isso, o conteúdo é o mesmo. As duas também recebem dois ajustes técnico
 caminhos de imagem absolutos (porque vivem em subpastas) e `noindex` (para não
 competir com o site principal no Google).
 
+## Antes de editar pela primeira vez neste computador
+
+Rode isto uma vez, dentro da pasta do projeto:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+A partir daí você edita só o `vendas.html` normalmente. A cada commit que toca a
+fonte, as páginas geradas são refeitas e entram no mesmo commit, sem você
+precisar lembrar de nada.
+
+Se ninguém rodar esse comando, o site continua funcionando — mas as variantes
+param de acompanhar o `vendas.html`, e quem avisa é o robô do GitHub, depois do
+envio, com um X vermelho no commit.
+
 ## Rodando
 
 ```bash

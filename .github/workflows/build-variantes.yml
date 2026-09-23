@@ -1,27 +1,37 @@
-name: Conferir variantes do site
+name: Gerar variantes do site
 
 # Por que existe: entre 25/06 e 23/09/2026 o vendas.html recebeu 77 commits que
-# nunca chegaram na página de alunos, porque ela era editada à mão. Aqui o robô
-# regenera as variantes e compara com o que foi enviado. Se não bater, o commit
-# fica marcado com falha e o erro diz exatamente qual arquivo está atrasado.
+# nunca chegaram na página de alunos, porque ela era editada à mão.
 #
-# Ele confere, não corrige. Corrigir exigiria permissão de escrita para o robô,
-# que a organização METRIK-GROUP mantém desligada. Quem gera na prática é o hook
-# de pre-commit (veja .githooks/pre-commit), que roda antes de cada commit.
-# Se um dia a organização liberar escrita, dá para trocar este passo por um
-# commit automático — o build é o mesmo.
+# O robô regenera as variantes a partir do vendas.html e:
+#   - se nada mudou, termina em silêncio;
+#   - se mudou, tenta commitar a correção;
+#   - se não tiver permissão para commitar, falha avisando o que ficou para trás.
+#
+# O terceiro caso existe porque a organização METRIK-GROUP pode manter desligada
+# a escrita para Actions (Settings da organização → Actions → General → Workflow
+# permissions → Read and write). Ligando lá, este mesmo workflow passa a corrigir
+# sozinho, sem precisar de nenhuma alteração aqui.
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'vendas.html'
+      - 'scripts/**'
+      - '.github/workflows/build-variantes.yml'
   pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: build-variantes
+  cancel-in-progress: false
 
 jobs:
-  conferir:
+  gerar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,22 +43,45 @@ jobs:
       - name: Gerar variantes a partir de vendas.html
         run: node scripts/build.mjs
 
-      - name: Conferir se o que foi enviado está em dia
+      - name: Publicar a correção (ou avisar, se não puder)
+        env:
+          EVENTO: ${{ github.event_name }}
         run: |
-          if [ -n "$(git status --porcelain lista-de-espera upgrade)" ]; then
-            echo "::error::As variantes estão atrasadas em relação ao vendas.html."
-            echo ""
-            echo "Arquivos que sairiam diferentes se fossem gerados agora:"
-            git status --porcelain lista-de-espera upgrade
-            echo ""
-            echo "Para resolver, rode na sua máquina:"
-            echo "    node scripts/build.mjs"
-            echo "e faça commit do que mudou."
-            echo ""
-            echo "Para isso acontecer sozinho daqui em diante:"
-            echo "    git config core.hooksPath .githooks"
-            echo ""
-            git --no-pager diff --stat lista-de-espera upgrade
+          if [ -z "$(git status --porcelain lista-de-espera upgrade)" ]; then
+            echo "Variantes em dia com o vendas.html."
+            exit 0
+          fi
+
+          echo "As variantes estavam atrasadas. Arquivos afetados:"
+          git status --porcelain lista-de-espera upgrade
+
+          # Em pull request não dá para commitar no branch de origem; aqui o
+          # papel é só avisar que o merge levaria páginas desatualizadas.
+          if [ "$EVENTO" = "pull_request" ]; then
+            echo "::error::As variantes estão atrasadas. Rode 'node scripts/build.mjs' e faça commit."
             exit 1
           fi
-          echo "Variantes em dia com o vendas.html."
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lista-de-espera upgrade
+          git commit -m "chore: regenera variantes a partir de vendas.html"
+
+          if git push; then
+            echo "Variantes regeneradas e publicadas automaticamente."
+            exit 0
+          fi
+
+          echo "::error::As variantes estão atrasadas e o robô não tem permissão para corrigir."
+          echo ""
+          echo "Para o robô corrigir sozinho daqui em diante:"
+          echo "  Settings da organização METRIK-GROUP -> Actions -> General"
+          echo "  -> Workflow permissions -> marcar 'Read and write permissions'"
+          echo ""
+          echo "Para resolver agora, no computador onde o site é editado:"
+          echo "  node scripts/build.mjs"
+          echo "  git add lista-de-espera upgrade && git commit && git push"
+          echo ""
+          echo "Para nunca mais precisar fazer isso à mão, uma vez só:"
+          echo "  git config core.hooksPath .githooks"
+          exit 1
