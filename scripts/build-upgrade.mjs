@@ -126,7 +126,58 @@ t.replaceOnce(
 );
 
 // ---------------------------------------------------------------------------
-// 5. Preço: R$ 3.997 -> R$ 1.997
+// 5. Comparação: o que o aluno paga x o que um não-aluno paga
+//
+// Sem isso a página mostra R$ 1.997 sem referência, e a vantagem de ser aluno
+// fica invisível justamente na hora da decisão.
+//
+// O valor de referência é R$ 5.997, definido pelo Rodrigo em 23/09/2026 como o
+// preço previsto para aluno novo na reabertura das inscrições.
+//
+// ATENÇÃO na reabertura: hoje o vendas.html ainda está em R$ 3.997. Quando a
+// página principal voltar ao ar, ela precisa estar cobrando os mesmos R$ 5.997
+// anunciados aqui — se as duas páginas discordarem, o aluno que comparar perde
+// a confiança no número. O `precoNaoAluno` abaixo é o único lugar a mudar.
+// ---------------------------------------------------------------------------
+const precoNaoAluno = 'R$ 5.997';
+const precoAluno = 'R$ 1.997';
+const economia = 'R$ 4.000';
+
+t.replaceOnce(
+  'comparação: rótulo e preço de não-aluno',
+  `    <p class="pr-intro">Tudo isso por apenas</p>
+    <p class="pr-old">De <s>R$ 19.964</s></p>`,
+  `    <style>
+      /* O preço de não-aluno precisa ser legível para servir de comparação, mas
+         não pode competir com o valor do aluno logo abaixo. */
+      #preco .pr-old{font-size:20px;color:var(--g500);margin-bottom:24px}
+      #preco .pr-old s{text-decoration-thickness:1.5px;text-decoration-color:var(--g300)}
+      #preco .pr-voce{color:var(--black);margin-bottom:0}
+      #preco .pr-economia{font-family:'Maven Pro',sans-serif;font-weight:700;font-size:13px;
+        color:#15803d;margin-top:12px;padding-top:12px;border-top:1px solid #E4E2DA;letter-spacing:0.01em}
+      #preco .pr-economia strong{font-weight:800}
+    </style>
+
+    <p class="pr-intro">Para quem não é aluno</p>
+    <p class="pr-old"><s>${precoNaoAluno}</s></p>
+
+    <p class="pr-intro pr-voce">Seu valor como aluno do PDP</p>`
+);
+
+t.replaceOnce(
+  'comparação: quanto o aluno economiza',
+  `      <p class="pr-pix-save">Valor com desconto de 15% no PIX</p>`,
+  `      <p class="pr-pix-save">Valor com desconto de 15% no PIX</p>
+      <p class="pr-economia">Você economiza <strong>${economia}</strong> por ser aluno do PDP</p>`
+);
+
+// `precoAluno` fica declarado junto dos outros valores para o bloco inteiro ser
+// lido num lugar só; quem escreve o preço na página é a transformação de preço,
+// logo abaixo.
+void precoAluno;
+
+// ---------------------------------------------------------------------------
+// 6. Preço: R$ 3.997 -> R$ 1.997
 // 12 x 197 = 2.364, e 15% abaixo disso é 1.997 — a mesma relação que o site
 // principal tem entre cartão e PIX, então os textos de desconto continuam
 // verdadeiros.
@@ -448,6 +499,9 @@ t.guard([
 // Guardas positivas: o que precisa existir.
 t.require([
   ['preço do upgrade no PIX', /pr-pix-val fm">R\$ 1\.997/],
+  ['preço de referência para não-aluno', /pr-old"><s>R\$ 5\.997<\/s>/],
+  ['rótulo de quem paga cada valor', /Para quem não é aluno[\s\S]*Seu valor como aluno do PDP/],
+  ['quanto o aluno economiza', /Você economiza <strong>R\$ 4\.000<\/strong>/],
   ['parcela do upgrade', /pr-val">197/],
   ['checkout PIX do upgrade', /asaas\.com\/c\/rf09mpzqnty6wtyq/],
   ['checkout cartão do upgrade', /off=atem2nx9/],

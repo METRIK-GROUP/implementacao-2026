@@ -1284,8 +1284,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="pr-card gs">
     <div class="pr-ribbon">EXCLUSIVO PARA ALUNO PDP</div>
 
-    <p class="pr-intro">Tudo isso por apenas</p>
-    <p class="pr-old">De <s>R$ 19.964</s></p>
+    <style>
+      /* O preço de não-aluno precisa ser legível para servir de comparação, mas
+         não pode competir com o valor do aluno logo abaixo. */
+      #preco .pr-old{font-size:20px;color:var(--g500);margin-bottom:24px}
+      #preco .pr-old s{text-decoration-thickness:1.5px;text-decoration-color:var(--g300)}
+      #preco .pr-voce{color:var(--black);margin-bottom:0}
+      #preco .pr-economia{font-family:'Maven Pro',sans-serif;font-weight:700;font-size:13px;
+        color:#15803d;margin-top:12px;padding-top:12px;border-top:1px solid #E4E2DA;letter-spacing:0.01em}
+      #preco .pr-economia strong{font-weight:800}
+    </style>
+
+    <p class="pr-intro">Para quem não é aluno</p>
+    <p class="pr-old"><s>R$ 5.997</s></p>
+
+    <p class="pr-intro pr-voce">Seu valor como aluno do PDP</p>
 
     <p class="big-price pr-main fm" id="big-price">
       <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">197</span>
@@ -1297,6 +1310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="pr-pix-row">
       <p class="pr-pix-val fm">R$ 1.997</p>
       <p class="pr-pix-save">Valor com desconto de 15% no PIX</p>
+      <p class="pr-economia">Você economiza <strong>R$ 4.000</strong> por ser aluno do PDP</p>
     </div>
 
     <noscript><style>#pr-countdown{display:none!important}#pr-actions{display:flex!important}.tc-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}</style></noscript>
