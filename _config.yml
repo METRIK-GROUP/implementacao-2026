@@ -1,0 +1,16 @@
+# O GitHub Pages publica, por padrão, todo arquivo do repositório — inclusive os
+# que existem só para gerar o site. Em 23/09/2026 estavam acessíveis pela web:
+# os scripts de build, este README e o código da função de verificação.
+#
+# Nenhum deles contém senha (as credenciais vivem em variáveis de ambiente do
+# Supabase), mas publicar a mecânica da página de upgrade não serve a ninguém:
+# expõe os links de checkout da condição de aluno.
+#
+# `exclude` mantém os arquivos no repositório e fora do site publicado.
+
+exclude:
+  - scripts
+  - supabase
+  - .githooks
+  - .gitattributes
+  - README.md
