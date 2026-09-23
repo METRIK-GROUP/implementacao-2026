@@ -159,10 +159,31 @@ t.replaceOnce(
   `        <a href="${CHECKOUT_CARTAO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
 );
 
-t.replaceOnce(
-  'checkout: boleto',
+// O boleto parcelado sai da página.
+//
+// A oferta da TMB (B9B1915303N) respondia "Oferta Indisponível" em 23/09/2026,
+// e a do site principal (M4E188885X5) também — o problema é da conta na TMB,
+// não desta página. Um botão de compra que leva a erro custa mais do que um
+// botão a menos.
+//
+// O aluno não fica sem boleto: o checkout da Hotmart oferece Pix, Boleto,
+// Apple Pay e PayPal além do cartão. O que se perde é o boleto PARCELADO.
+//
+// Para trazer de volta quando a oferta for reativada: troque o cutBlock abaixo
+// pelo replaceOnce que está logo acima dele, comentado.
+//
+// t.replaceOnce(
+//   'checkout: boleto',
+//   `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
+//   `        <a href="${CHECKOUT_BOLETO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
+// );
+t.cutBlock(
+  'checkout: boleto removido (oferta TMB indisponível)',
   `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
-  `        <a href="${CHECKOUT_BOLETO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
+  `</a>
+`,
+  `        <!-- Botão de boleto parcelado removido: a oferta da TMB está indisponível desde 23/09/2026. -->
+`
 );
 
 // ---------------------------------------------------------------------------
@@ -401,6 +422,7 @@ t.guard([
   ['checkout da oferta cheia (Asaas)', /asaas\.com\/c\/2x3ccx7lhp4q23up/],
   ['checkout da oferta cheia (Hotmart)', /pay\.hotmart\.com\/U104887798W\?bid=/],
   ['checkout da oferta cheia (TMB)', /pay\.tmb\.com\.br\/RodrigoRosar\/M4E188885X5/],
+  ['checkout na TMB (oferta indisponível desde 23/09/2026)', /pay\.tmb\.com\.br/],
   ['link "Já é PDP?" (o visitante já está na oferta de upgrade)', /J%C3%A1%20sou%20PDP/],
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
   ['indexação no Google', /<meta name="robots" content="index/],
@@ -413,8 +435,7 @@ t.require([
   ['parcela do upgrade', /pr-val">197/],
   ['checkout PIX do upgrade', /asaas\.com\/c\/rf09mpzqnty6wtyq/],
   ['checkout cartão do upgrade', /off=atem2nx9/],
-  ['checkout boleto do upgrade', /pay\.tmb\.com\.br\/RodrigoRosar\/B9B1915303N/],
-  ['os três botões com o gancho de verificação', /data-upgrade-checkout[\s\S]*data-upgrade-checkout[\s\S]*data-upgrade-checkout/],
+  ['os dois botões de compra com o gancho de verificação', /data-upgrade-checkout[\s\S]*data-upgrade-checkout/],
   ['janela de confirmação', /id="up-modal"/],
   ['endpoint de verificação', /functions\/v1\/verificar-aluno/],
   ['canonical do upgrade', /rel="canonical" href="https:\/\/implementacao\.rodrigorosar\.com\.br\/upgrade\/"/],

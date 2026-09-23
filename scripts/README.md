@@ -75,6 +75,31 @@ páginas precisam ser diferentes. Se o `vendas.html` mudar ali, alguém precisa
 decidir o que o upgrade passa a mostrar — e enquanto ninguém decide, o build
 recusa publicar um preço adivinhado.
 
+## Conferir se os botões de compra estão de pé
+
+```bash
+node scripts/checar-checkouts.mjs
+```
+
+Abre cada link de compra e confere se ele responde **e** se o valor é o esperado.
+
+Vale rodar antes de divulgar a página para alguém e depois de mexer em oferta na
+Hotmart, Asaas ou TMB. Uma oferta desativada não dá erro de rede: a página abre
+normalmente e mostra "Oferta Indisponível" dentro dela, então só olhar se o
+endereço responde não pega o problema. Foi assim que o boleto parcelado ficou
+quebrado sem ninguém notar, até 23/09/2026.
+
+### Boleto parcelado: fora do ar
+
+A oferta da TMB está indisponível nas duas páginas desde 23/09/2026. O botão foi
+removido da página de upgrade — o aluno continua com PIX e cartão 12x, e ainda
+consegue boleto (à vista) dentro do próprio checkout da Hotmart.
+
+Para trazer o botão de volta quando a oferta for reativada: em
+`build-upgrade.mjs`, troque o `cutBlock` do boleto pelo `replaceOnce` que está
+comentado logo acima dele, e reative a entrada correspondente em
+`checar-checkouts.mjs`.
+
 ## Quando o build falha
 
 Toda transformação é obrigatória. Se um trecho que o script procura não existe
