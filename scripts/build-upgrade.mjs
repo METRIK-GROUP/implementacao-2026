@@ -159,18 +159,19 @@ t.replaceOnce(
   `        <a href="${CHECKOUT_CARTAO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
 );
 
-// O boleto parcelado sai da página.
+// O boleto parcelado sai da página de upgrade.
 //
-// A oferta da TMB (B9B1915303N) respondia "Oferta Indisponível" em 23/09/2026,
-// e a do site principal (M4E188885X5) também — o problema é da conta na TMB,
-// não desta página. Um botão de compra que leva a erro custa mais do que um
-// botão a menos.
+// Decisão do Rodrigo em 23/09/2026: para esse público não faz falta. O aluno
+// segue com PIX e cartão 12x, e ainda encontra boleto (à vista) dentro do
+// próprio checkout da Hotmart, que oferece Pix, Boleto, Apple Pay e PayPal.
 //
-// O aluno não fica sem boleto: o checkout da Hotmart oferece Pix, Boleto,
-// Apple Pay e PayPal além do cartão. O que se perde é o boleto PARCELADO.
+// O que motivou olhar para isso: a oferta da TMB apontada aqui (B9B1915303N)
+// respondia "Oferta Indisponível", então o botão levava o aluno a uma tela de
+// erro. As ofertas da TMB ficam desativadas enquanto as inscrições estão
+// fechadas — comportamento normal, não defeito.
 //
-// Para trazer de volta quando a oferta for reativada: troque o cutBlock abaixo
-// pelo replaceOnce que está logo acima dele, comentado.
+// Para trazer o botão de volta um dia: troque o cutBlock abaixo pelo
+// replaceOnce que está logo acima dele, comentado.
 //
 // t.replaceOnce(
 //   'checkout: boleto',

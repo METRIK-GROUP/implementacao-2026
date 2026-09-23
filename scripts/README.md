@@ -89,16 +89,25 @@ normalmente e mostra "Oferta Indisponível" dentro dela, então só olhar se o
 endereço responde não pega o problema. Foi assim que o boleto parcelado ficou
 quebrado sem ninguém notar, até 23/09/2026.
 
-### Boleto parcelado: fora do ar
+### Ofertas fechadas não são defeito
 
-A oferta da TMB está indisponível nas duas páginas desde 23/09/2026. O botão foi
-removido da página de upgrade — o aluno continua com PIX e cartão 12x, e ainda
-consegue boleto (à vista) dentro do próprio checkout da Hotmart.
+Com as inscrições encerradas, as ofertas do site principal ficam desativadas de
+propósito e respondem "Oferta Indisponível". O script sabe disso: enquanto
+`INSCRICOES_ABERTAS` estiver `false` no topo dele, esses checkouts aparecem como
+`.... oferta fechada (esperado)` em vez de falha.
 
-Para trazer o botão de volta quando a oferta for reativada: em
-`build-upgrade.mjs`, troque o `cutBlock` do boleto pelo `replaceOnce` que está
-comentado logo acima dele, e reative a entrada correspondente em
-`checar-checkouts.mjs`.
+**Na reabertura, vire essa chave para `true`.** Aí o script passa a cobrar que os
+três checkouts do site principal estejam de pé — serve como checklist do dia.
+
+### Boleto na página de upgrade: não tem
+
+Decisão de 23/09/2026: para o público do upgrade não faz falta. O aluno tem PIX e
+cartão 12x na página, e ainda encontra boleto à vista dentro do checkout da
+Hotmart.
+
+Para trazer o botão de volta um dia: em `build-upgrade.mjs`, troque o `cutBlock`
+do boleto pelo `replaceOnce` comentado logo acima dele, e reative a entrada
+correspondente em `checar-checkouts.mjs`.
 
 ## Quando o build falha
 
