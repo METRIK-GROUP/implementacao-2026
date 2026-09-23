@@ -185,33 +185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<!-- STICKY URGENCY BAR -->
-<style>
-  /* Modo fixo: barra sempre visível no topo, sem depender de scroll */
-  .sticky-bar.always{transform:translateY(0);pointer-events:auto}
-  /* Fundo mais opaco: a barra agora fica visivel tambem sobre secoes claras */
-  .sticky-bar{background:rgba(12,12,12,0.88)}
-  body.bar-on .hero{padding-top:42px}
-  .sticky-bar-sm{display:none}
-  body.bar-on #preco{scroll-margin-top:52px}
-  @media (max-width:720px){
-    body.bar-on .hero{padding-top:54px}
-    body.bar-on #preco{scroll-margin-top:62px}
-    .sticky-bar-lg{display:none}
-    .sticky-bar-sm{display:inline}
-  }
-  @media (prefers-reduced-motion:reduce){.sticky-bar{transition:none}.sticky-bar-dot{animation:none}}
-</style>
-<div class="sticky-bar always" id="stickyBar" role="region" aria-label="Aviso: prazo de matrículas">
-  <div class="sticky-bar-inner">
-    <div class="sticky-bar-left">
-      <span class="sticky-bar-dot" aria-hidden="true"></span>
-      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1"><span class="sticky-bar-lg">Matrículas abertas somente esta semana</span><span class="sticky-bar-sm">Matrículas só esta semana</span></span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2"><span class="sticky-bar-lg">A turma começa segunda, 24/08</span><span class="sticky-bar-sm">Começa segunda, 24/08</span></span></span>
-    </div>
-    <a href="#preco" class="sticky-bar-cta"><span class="sticky-bar-lg">Garantir minha vaga</span><span class="sticky-bar-sm">Quero minha vaga</span></a>
-  </div>
-</div>
-<script>document.body.classList.add('bar-on');</script>
+<!-- Barra de urgência removida na página de upgrade: o aluno pode fazer upgrade a qualquer momento. -->
 
 <main>
 <!-- ============================== -->
@@ -1299,7 +1273,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ============================== -->
 <section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">
   <div class="pr-card gs">
-    <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>
+    <div class="pr-ribbon">EXCLUSIVO PARA ALUNO PDP</div>
 
     <p class="pr-intro">Tudo isso por apenas</p>
     <p class="pr-old">De <s>R$ 19.964</s></p>

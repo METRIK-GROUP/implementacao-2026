@@ -77,14 +77,20 @@ export function createTransform(sourcePath) {
     },
 
     /**
-     * Como `guard`, mas ignora o que está dentro de comentários HTML.
-     * Use para regras sobre o que o visitante VÊ (preço, oferta, chamada):
-     * o vendas.html guarda seções inteiras comentadas para reuso, e elas não
-     * renderizam. Para regras sobre o que o navegador EXECUTA ou o buscador LÊ
-     * (links, meta tags, caminhos de imagem), use `guard`.
+     * Como `guard`, mas olha só o que o visitante lê na tela: descarta
+     * comentários HTML, blocos <script> e blocos <style> antes de testar.
+     *
+     * Use para regras sobre conteúdo (preço, oferta, chamada, urgência). O
+     * vendas.html guarda seções comentadas para reuso e tem textos alternativos
+     * dentro do JavaScript que só aparecem sob parâmetros de URL — nada disso
+     * renderiza sozinho. Para regras sobre o que o navegador EXECUTA ou o
+     * buscador LÊ (links, meta tags, caminhos de imagem), use `guard`.
      */
     guardVisible(rules) {
-      const visivel = this.html.replace(/<!--[\s\S]*?-->/g, '');
+      const visivel = this.html
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+        .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
       for (const [label, re] of rules) {
         if (re.test(visivel)) {
           throw new Error(`Guarda falhou: ${label} ainda presente no HTML visível gerado (${re})`);

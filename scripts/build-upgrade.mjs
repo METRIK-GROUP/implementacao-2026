@@ -102,7 +102,31 @@ t.replaceOnce(
 t.replaceAll('schema: urls do site', /"https:\/\/implementacao\.rodrigorosar\.com\.br\/"/g, `"${URL_UPGRADE}"`);
 
 // ---------------------------------------------------------------------------
-// 4. Preço: R$ 3.997 -> R$ 1.997
+// 4. Gatilhos de urgência: fora
+//
+// O site principal trabalha com prazo ("Matrículas abertas somente esta semana",
+// "A turma começa segunda, 24/08", "OFERTA EXCLUSIVA DESTA TURMA"). No upgrade
+// isso é falso: o aluno pode fazer a qualquer momento. Urgência inventada para
+// quem já comprou de você uma vez cobra caro em confiança.
+//
+// O JavaScript que alimenta a barra é todo protegido por `if (stickyBar)`, então
+// ele desliga sozinho quando o elemento não existe. Não precisa ser removido.
+// ---------------------------------------------------------------------------
+t.cutBlock(
+  'barra de urgência removida',
+  '<!-- STICKY URGENCY BAR -->',
+  `<script>document.body.classList.add('bar-on');</script>\n`,
+  '<!-- Barra de urgência removida na página de upgrade: o aluno pode fazer upgrade a qualquer momento. -->\n'
+);
+
+t.replaceOnce(
+  'selo: sem referência a turma',
+  `    <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>`,
+  `    <div class="pr-ribbon">EXCLUSIVO PARA ALUNO PDP</div>`
+);
+
+// ---------------------------------------------------------------------------
+// 5. Preço: R$ 3.997 -> R$ 1.997
 // 12 x 197 = 2.364, e 15% abaixo disso é 1.997 — a mesma relação que o site
 // principal tem entre cartão e PIX, então os textos de desconto continuam
 // verdadeiros.
@@ -353,6 +377,17 @@ t.replaceOnce('js do upgrade', `\n}); // end DOMContentLoaded`, `${JS_UPGRADE}})
 t.guardVisible([
   ['preço de venda de R$ 3.997 no bloco de compra', /pr-pix-val fm">R\$ 3\.997/],
   ['parcela de R$ 390', /pr-val">390/],
+
+  // Urgência de prazo não existe no upgrade: o aluno pode fazer quando quiser.
+  // Se o vendas.html ganhar um gatilho novo, o build para aqui e avisa, em vez
+  // de publicar um prazo falso para quem já é seu aluno.
+  ['barra fixa de urgência', /class="sticky-bar/],
+  ['aviso de prazo de matrículas', /Matr[íi]culas (abertas|encerram|s[óo])/i],
+  ['data de início de turma', /turma come[çc]a|Come[çc]a segunda/i],
+  ['aviso de que o preço sobe', /o pre[çc]o sobe/i],
+  ['chamada de garantir vaga', /Garantir minha vaga|Quero minha vaga/i],
+  ['oferta amarrada a uma turma', /DESTA TURMA|desta janela|janela de inscri[çc][ãa]o/i],
+  ['contagem regressiva', /id="pr-countdown"/],
 ]);
 
 t.guard([
