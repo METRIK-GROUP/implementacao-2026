@@ -1,0 +1,54 @@
+name: Conferir variantes do site
+
+# Por que existe: entre 25/06 e 23/09/2026 o vendas.html recebeu 77 commits que
+# nunca chegaram na página de alunos, porque ela era editada à mão. Aqui o robô
+# regenera as variantes e compara com o que foi enviado. Se não bater, o commit
+# fica marcado com falha e o erro diz exatamente qual arquivo está atrasado.
+#
+# Ele confere, não corrige. Corrigir exigiria permissão de escrita para o robô,
+# que a organização METRIK-GROUP mantém desligada. Quem gera na prática é o hook
+# de pre-commit (veja .githooks/pre-commit), que roda antes de cada commit.
+# Se um dia a organização liberar escrita, dá para trocar este passo por um
+# commit automático — o build é o mesmo.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Gerar variantes a partir de vendas.html
+        run: node scripts/build.mjs
+
+      - name: Conferir se o que foi enviado está em dia
+        run: |
+          if [ -n "$(git status --porcelain lista-de-espera upgrade)" ]; then
+            echo "::error::As variantes estão atrasadas em relação ao vendas.html."
+            echo ""
+            echo "Arquivos que sairiam diferentes se fossem gerados agora:"
+            git status --porcelain lista-de-espera upgrade
+            echo ""
+            echo "Para resolver, rode na sua máquina:"
+            echo "    node scripts/build.mjs"
+            echo "e faça commit do que mudou."
+            echo ""
+            echo "Para isso acontecer sozinho daqui em diante:"
+            echo "    git config core.hooksPath .githooks"
+            echo ""
+            git --no-pager diff --stat lista-de-espera upgrade
+            exit 1
+          fi
+          echo "Variantes em dia com o vendas.html."

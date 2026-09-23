@@ -1,0 +1,10 @@
+# Scripts de shell precisam de LF. Com CRLF o Windows grava "#!/bin/sh\r" e o
+# sistema procura um interpretador chamado "sh\r", que não existe — o hook
+# simplesmente não roda, em silêncio.
+.githooks/* text eol=lf
+*.sh        text eol=lf
+
+# Os HTML deste repositório são gravados com CRLF, e os scripts de build
+# preservam essa convenção. Deixar explícito evita que um clone em outro sistema
+# gere um diff gigante e falso na primeira execução do build.
+*.html      text eol=crlf

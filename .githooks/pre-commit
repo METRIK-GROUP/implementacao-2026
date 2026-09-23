@@ -1,0 +1,39 @@
+#!/bin/sh
+# Gera as variantes do site antes de cada commit que toca vendas.html ou scripts/.
+#
+# Isto é o que impede a defasagem de voltar: você edita só o vendas.html, e as
+# páginas geradas entram no mesmo commit, sem você precisar lembrar.
+#
+# Para ativar neste clone (uma vez só):
+#     git config core.hooksPath .githooks
+
+set -e
+
+# Só faz alguma coisa se a fonte mudou neste commit.
+if ! git diff --cached --name-only | grep -qE '^(vendas\.html|scripts/)'; then
+  exit 0
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node não encontrado; as variantes NÃO foram geradas." >&2
+  echo "            Instale o Node ou rode 'node scripts/build.mjs' onde houver." >&2
+  exit 1
+fi
+
+echo "pre-commit: gerando as variantes a partir do vendas.html..."
+if ! node scripts/build.mjs; then
+  echo "" >&2
+  echo "pre-commit: o build falhou, então o commit foi cancelado." >&2
+  echo "            Normalmente isso quer dizer que um trecho que os scripts" >&2
+  echo "            procuram mudou no vendas.html. O erro acima diz qual." >&2
+  exit 1
+fi
+
+# O que o build gerou entra neste mesmo commit.
+git add lista-de-espera upgrade
+
+if git diff --cached --quiet --exit-code lista-de-espera upgrade; then
+  echo "pre-commit: variantes já estavam em dia."
+else
+  echo "pre-commit: variantes atualizadas e incluídas no commit."
+fi

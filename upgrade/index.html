@@ -15,19 +15,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="format-detection" content="telephone=no">
 
 <!-- SEO Core -->
-<title>Lista de espera | Implementação Projeto de Primeira — METRIK Instituto</title>
-<meta name="description" content="Entre na lista de espera da Implementação Projeto de Primeira. Seja avisado em primeira mão quando a próxima turma abrir e entre com prioridade.">
+<title>Implementação Projeto de Primeira | Upgrade aluno PDP — METRIK Instituto</title>
+<meta name="description" content="Do caos à ordem no seu escritório de arquitetura e interiores em 6 semanas. Método PDP com chancela MEC + IA aplicada à documentação, desenvolvimento, representação e gestão.">
+<meta name="keywords" content="implementação projeto de primeira, PDP, curso arquitetura, IA arquitetura, escritório de arquitetura, projeto de interiores, MEC, Rodrigo Rosar, METRIK">
 <meta name="author" content="Rodrigo Rosar — METRIK Instituto">
 <meta name="robots" content="noindex, follow">
-<link rel="canonical" href="https://implementacao.rodrigorosar.com.br/lista-de-espera/">
+<meta name="googlebot" content="noindex, follow">
+<link rel="canonical" href="https://implementacao.rodrigorosar.com.br/upgrade/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="METRIK Instituto">
-<meta property="og:title" content="Lista de espera — Implementação Projeto de Primeira">
-<meta property="og:description" content="Entre na lista e seja avisado em primeira mão quando a próxima turma abrir, com prioridade na inscrição.">
-<meta property="og:url" content="https://implementacao.rodrigorosar.com.br/lista-de-espera/">
+<meta property="og:title" content="Implementação Projeto de Primeira | Do caos à ordem em 6 semanas">
+<meta property="og:description" content="Método PDP + IA aplicada ao escritório de arquitetura e interiores. Acompanhamento semanal com o Rodrigo, chancela MEC, 7.000+ alunos em 12 países.">
+<meta property="og:url" content="https://implementacao.rodrigorosar.com.br/upgrade/">
 <meta property="og:image" content="https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp">
 <meta property="og:image:width" content="1376">
 <meta property="og:image:height" content="768">
@@ -35,8 +37,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Lista de espera — Implementação Projeto de Primeira">
-<meta name="twitter:description" content="Entre na lista e seja avisado em primeira mão quando a próxima turma abrir, com prioridade na inscrição.">
+<meta name="twitter:title" content="Implementação Projeto de Primeira | Do caos à ordem em 6 semanas">
+<meta name="twitter:description" content="Método PDP + IA aplicada ao escritório de arquitetura e interiores. 7.000+ alunos em 12 países.">
 <meta name="twitter:image" content="https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp">
 
 <!-- Favicon -->
@@ -84,7 +86,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "provider": {
         "@id": "https://institutometrik.com.br/#organization"
       },
-      "url": "https://implementacao.rodrigorosar.com.br/",
+      "url": "https://implementacao.rodrigorosar.com.br/upgrade/",
       "image": "https://implementacao.rodrigorosar.com.br/img/hero-video-thumb.webp",
       "inLanguage": "pt-BR",
       "educationalCredentialAwarded": "Certificado de Extensão Universitária reconhecido pelo MEC (Faculdade Brasília)",
@@ -100,10 +102,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "offers": {
         "@type": "Offer",
         "category": "Educational Course",
-        "price": "3997.00",
+        "price": "1997.00",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
-        "url": "https://implementacao.rodrigorosar.com.br/#preco"
+        "url": "https://implementacao.rodrigorosar.com.br/upgrade/#preco"
       },
       "aggregateRating": {
         "@type": "AggregateRating",
@@ -114,7 +116,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     },
     {
       "@type": "WebSite",
-      "url": "https://implementacao.rodrigorosar.com.br/",
+      "url": "https://implementacao.rodrigorosar.com.br/upgrade/",
       "name": "Implementação Projeto de Primeira",
       "inLanguage": "pt-BR",
       "publisher": {
@@ -183,7 +185,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<!-- Barra fixa de urgência removida na lista de espera: não há matrícula aberta. -->
+<!-- STICKY URGENCY BAR -->
+<style>
+  /* Modo fixo: barra sempre visível no topo, sem depender de scroll */
+  .sticky-bar.always{transform:translateY(0);pointer-events:auto}
+  /* Fundo mais opaco: a barra agora fica visivel tambem sobre secoes claras */
+  .sticky-bar{background:rgba(12,12,12,0.88)}
+  body.bar-on .hero{padding-top:42px}
+  .sticky-bar-sm{display:none}
+  body.bar-on #preco{scroll-margin-top:52px}
+  @media (max-width:720px){
+    body.bar-on .hero{padding-top:54px}
+    body.bar-on #preco{scroll-margin-top:62px}
+    .sticky-bar-lg{display:none}
+    .sticky-bar-sm{display:inline}
+  }
+  @media (prefers-reduced-motion:reduce){.sticky-bar{transition:none}.sticky-bar-dot{animation:none}}
+</style>
+<div class="sticky-bar always" id="stickyBar" role="region" aria-label="Aviso: prazo de matrículas">
+  <div class="sticky-bar-inner">
+    <div class="sticky-bar-left">
+      <span class="sticky-bar-dot" aria-hidden="true"></span>
+      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1"><span class="sticky-bar-lg">Matrículas abertas somente esta semana</span><span class="sticky-bar-sm">Matrículas só esta semana</span></span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2"><span class="sticky-bar-lg">A turma começa segunda, 24/08</span><span class="sticky-bar-sm">Começa segunda, 24/08</span></span></span>
+    </div>
+    <a href="#preco" class="sticky-bar-cta"><span class="sticky-bar-lg">Garantir minha vaga</span><span class="sticky-bar-sm">Quero minha vaga</span></a>
+  </div>
+</div>
+<script>document.body.classList.add('bar-on');</script>
 
 <main>
 <!-- ============================== -->
@@ -215,19 +243,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span>IA de ponta a ponta</span>
         </span>
       </div>
-      <a href="#preco" class="hero-wl-cta gs" id="h-cta">
-        Entrar na lista de espera
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <style>
-        .hero-wl-cta{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:15px 30px;
-          background:#fff;color:#1E1E1E;font-family:'Maven Pro',sans-serif;font-weight:700;font-size:14.5px;
-          letter-spacing:0.03em;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,0.35);
-          transition:transform .25s ease,box-shadow .25s ease}
-        .hero-wl-cta:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.45)}
-        .hero-wl-cta svg{width:18px;height:18px;transition:transform .25s ease}
-        .hero-wl-cta:hover svg{transform:translateX(4px)}
-      </style>
     </div>
     <button class="hero-video gs hero-video-facade" id="h-video" data-yt="l-TjTtAPJh4" aria-label="Assistir ao replay do pitch — Implementação Projeto de Primeira">
       <picture>
@@ -1223,7 +1238,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ============================== -->
 <!-- 16. ANCORAGEM + PRODUTO         -->
 <!-- ============================== -->
-<section class="sec-short bg-w" style="padding:120px 24px;display:none" id="ancoragem" aria-label="Valor real da implementação" hidden>
+<section class="sec-short bg-w" style="padding:120px 24px" id="ancoragem" aria-label="Valor real da implementação">
   <div class="si">
     <p class="gs label tc" style="margin-bottom:16px">VALOR REAL DA IMPLEMENTAÇÃO</p>
     <p class="gs fm tc" style="font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;color:var(--black);max-width:720px;margin:0 auto 56px;text-wrap:balance">Quanto vale todo esse conhecimento?</p>
@@ -1282,90 +1297,101 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ============================== -->
 <!-- 17. PREÇO                       -->
 <!-- ============================== -->
-<section class="sec bg-o" id="preco" aria-label="Lista de espera">
-  <style>
-    #preco .wl-card{max-width:480px;margin:0 auto;background:var(--white);border-radius:22px;
-      padding:clamp(30px,4vw,44px);box-shadow:0 24px 70px rgba(30,30,30,0.12);border:1px solid #ECEAE2;text-align:center}
-    #preco .wl-ribbon{display:inline-block;font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:800;
-      letter-spacing:0.14em;text-transform:uppercase;color:var(--graphite);
-      background:rgba(0,0,0,0.06);padding:7px 16px;border-radius:999px;margin-bottom:18px}
-    #preco .wl-title{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(24px,4vw,34px);
-      line-height:1.12;letter-spacing:-0.02em;color:var(--black);margin-bottom:12px;text-wrap:balance}
-    #preco .wl-title .fs{font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-style:italic;letter-spacing:0}
-    #preco .wl-sub{font-size:15px;color:var(--g500);line-height:1.55;max-width:400px;margin:0 auto 26px}
-    #preco .wl-count{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;max-width:380px;margin:0 auto 28px}
-    #preco .wl-cell{padding:14px 4px;border-radius:12px;background:var(--offwhite);border:1px solid #E4E2DA}
-    #preco .wl-num{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(22px,4.5vw,30px);line-height:1;color:var(--black);font-variant-numeric:tabular-nums}
-    #preco .wl-lab{font-family:'Maven Pro',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.12em;color:var(--g500);text-transform:uppercase;margin-top:7px}
-    #preco .wl-form{display:flex;flex-direction:column;gap:12px;text-align:left}
-    #preco .wl-field{display:flex;flex-direction:column;gap:6px}
-    #preco .wl-field label{font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--graphite)}
-    #preco .wl-input{width:100%;padding:13px 15px;font-family:'Inter',sans-serif;font-size:15px;color:var(--black);
-      background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
-    #preco .wl-input::placeholder{color:#A8A59C}
-    #preco .wl-input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
-    #preco .wl-input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
-    #preco .wl-error{font-size:12.5px;color:#C0392B;line-height:1.4}
-    #preco .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
-    #preco .wl-submit{width:100%;margin-top:4px}
-    #preco .wl-spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:wlspin .7s linear infinite}
-    @keyframes wlspin{to{transform:rotate(360deg)}}
-    #preco .wl-foot{margin-top:14px;font-size:12px;color:var(--g500)}
-    #preco .wl-trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px 12px;margin-top:22px;
-      font-family:'Maven Pro',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--g500)}
-    #preco .wl-trust strong{color:var(--black);font-weight:800}
-    @media (prefers-reduced-motion: reduce){#preco .wl-spinner{animation-duration:1.4s}}
-  </style>
+<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">
+  <div class="pr-card gs">
+    <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>
 
-  <div class="wl-card gs">
-    <div class="wl-ribbon">Lista de espera · vagas limitadas</div>
-    <h2 class="wl-title">Garanta prioridade na <span class="fs">próxima turma.</span></h2>
-    <p class="wl-sub">Entre na lista e seja avisado em primeira mão. Quem está na lista entra com prioridade na inscrição e uma condição especial na abertura.</p>
+    <p class="pr-intro">Tudo isso por apenas</p>
+    <p class="pr-old">De <s>R$ 19.964</s></p>
 
-    <!-- Countdown oculto: sem data definida para a próxima turma. Ao definir, mostrar o bloco wl-count e reativar o JS de contagem. -->
-    <div class="wl-count" id="wl-count" hidden style="display:none" aria-label="Contagem regressiva para a abertura das vagas">
-      <div class="wl-cell"><div class="wl-num" id="wl-d">00</div><div class="wl-lab">dias</div></div>
-      <div class="wl-cell"><div class="wl-num" id="wl-h">00</div><div class="wl-lab">horas</div></div>
-      <div class="wl-cell"><div class="wl-num" id="wl-m">00</div><div class="wl-lab">min</div></div>
-      <div class="wl-cell"><div class="wl-num" id="wl-s">00</div><div class="wl-lab">seg</div></div>
+    <p class="big-price pr-main fm" id="big-price">
+      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">197</span>
+    </p>
+    <p class="pr-meta">sem juros, no plano anual</p>
+
+    <div class="pr-or"><span>OU</span></div>
+
+    <div class="pr-pix-row">
+      <p class="pr-pix-val fm">R$ 1.997</p>
+      <p class="pr-pix-save">Valor com desconto de 15% no PIX</p>
     </div>
 
-    <form class="wl-form" id="wl-form" novalidate>
-      <div class="wl-field">
-        <label for="wl-nome">Nome</label>
-        <input class="wl-input" type="text" id="wl-nome" name="nome" autocomplete="given-name" placeholder="Seu nome" required>
+    <noscript><style>#pr-countdown{display:none!important}#pr-actions{display:flex!important}.tc-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}</style></noscript>
+
+    <div class="pr-actions" id="pr-actions">
+      <a href="https://www.asaas.com/c/rf09mpzqnty6wtyq" target="_blank" class="pr-btn primary" data-upgrade-checkout>
+        <span>Pagar no PIX</span>
+        <span class="pr-btn-tag">15% OFF</span>
+      </a>
+      <div class="pr-btn-row">
+        <a href="https://pay.hotmart.com/U104887798W?off=atem2nx9&checkoutMode=6&bid=1779451195139" target="_blank" class="pr-btn ghost" data-upgrade-checkout>
+          Cartão 12x sem juros
+        </a>
+        <a href="https://pay.tmb.com.br/RodrigoRosar/B9B1915303N" target="_blank" class="pr-btn ghost" data-upgrade-checkout>
+          Boleto parcelado
+        </a>
       </div>
-      <div class="wl-field">
-        <label for="wl-email">E-mail</label>
-        <input class="wl-input" type="email" id="wl-email" name="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
-      </div>
-      <div class="wl-field">
-        <label for="wl-whatsapp">WhatsApp</label>
-        <input class="wl-input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required>
-      </div>
+    </div>
 
-      <div class="wl-hp" aria-hidden="true">
-        <label for="wl-website">Não preencha</label>
-        <input type="text" id="wl-website" name="website" tabindex="-1" autocomplete="off">
-      </div>
-
-      <div class="wl-error" id="wl-error" role="alert" aria-live="assertive"></div>
-
-      <button class="pr-btn primary wl-submit" type="submit" id="wl-submit">
-        <span class="wl-submit-label">Entrar na lista de espera</span>
-      </button>
-    </form>
-
-    <p class="wl-foot">Sem spam.</p>
-
-    <div class="wl-trust">
-      <span><strong>26</strong> turmas</span>
+    <div class="pr-trust">
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg> Garantia 97 dias</span>
       <span class="pr-dot"></span>
-      <span><strong>7.000+</strong> alunos em 12 países</span>
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-check-circle"/></svg> Pagamento seguro</span>
       <span class="pr-dot"></span>
-      <span>Certificado MEC</span>
+      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-graduation"/></svg> Certificado MEC</span>
+    </div>
+
+    <p class="pr-note">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira.</p>
+    <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->
+  </div>
+
+  <div class="up-modal" id="up-modal" role="dialog" aria-modal="true" aria-labelledby="up-modal-title" hidden>
+    <div class="up-modal-card">
+      <button type="button" class="up-modal-close" id="up-modal-close" aria-label="Fechar">&times;</button>
+      <h2 class="up-modal-title" id="up-modal-title">Confirme seu e-mail de aluno</h2>
+      <p class="up-modal-sub">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira. Use o mesmo e-mail da sua compra.</p>
+
+      <form class="up-modal-form" id="up-form" novalidate>
+        <label for="up-email">E-mail</label>
+        <input class="up-input" type="email" id="up-email" name="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
+        <p class="up-msg" id="up-msg" role="status" aria-live="polite"></p>
+        <div class="up-modal-actions">
+          <button class="pr-btn primary" type="submit" id="up-submit"><span id="up-submit-label">Confirmar e ir para o pagamento</span></button>
+          <a class="pr-btn ghost" id="up-wa" href="https://api.whatsapp.com/send?phone=5547989163007&text=Sou%20aluno%20do%20PDP%20e%20quero%20fazer%20o%20upgrade%20para%20a%20Implementa%C3%A7%C3%A3o%2C%20mas%20meu%20e-mail%20n%C3%A3o%20foi%20reconhecido%20na%20p%C3%A1gina." target="_blank" rel="noopener" hidden>Falar com o suporte no WhatsApp</a>
+        </div>
+      </form>
     </div>
   </div>
+  <style>
+    .up-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+      background:rgba(14,14,14,0.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+    .up-modal.is-open{display:flex}
+    /* .pr-btn declara display:flex, o que venceria o atributo hidden do HTML.
+       Sem esta regra o botão de suporte apareceria antes de existir erro. */
+    .up-modal [hidden]{display:none !important}
+    .up-modal-card{background:var(--white);border-radius:16px;padding:clamp(26px,4vw,36px);max-width:440px;width:100%;
+      box-shadow:0 30px 80px rgba(0,0,0,0.35);position:relative;text-align:left}
+    .up-modal-title{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(20px,3vw,25px);line-height:1.15;color:var(--black);text-wrap:balance;padding-right:36px}
+    .up-modal-sub{font-size:14.5px;color:var(--g500);line-height:1.55;margin-top:10px;text-wrap:pretty}
+    .up-modal-form{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+    .up-modal-form label{font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--graphite)}
+    .up-input{width:100%;padding:13px 15px;font-family:'Inter',sans-serif;font-size:16px;color:var(--black);
+      background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
+    .up-input::placeholder{color:#A8A59C}
+    .up-input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
+    .up-input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
+    .up-msg{font-size:13px;line-height:1.5}
+    .up-msg:empty{display:none}
+    .up-msg.erro{color:#C0392B}
+    .up-msg.ok{color:#1E7A4A}
+    .up-modal-actions{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+    .up-modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;background:transparent;
+      color:var(--g500);font-size:24px;line-height:1;border-radius:50%;transition:background .2s}
+    .up-modal-close:hover{background:var(--offwhite);color:var(--black)}
+    .up-spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:upspin .7s linear infinite;vertical-align:-3px}
+    @keyframes upspin{to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion: reduce){.up-spinner{animation-duration:1.4s}}
+  </style>
 </section>
 <!-- ============================== -->
 <!-- 18. ROI                         -->
@@ -1960,7 +1986,13 @@ document.querySelectorAll('[data-count]').forEach(el => {
   });
 });
 
-// BIG PRICE: sem preço na lista de espera, nada a animar.
+// BIG PRICE
+ScrollTrigger.create({
+  trigger: '#big-price', start: 'top 85%', once: true,
+  onEnter: () => gsap.fromTo('#big-price', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.4)' })
+});
+// Fallback: garantir visibilidade após 3s
+setTimeout(() => { const el = document.getElementById('big-price'); if (el) el.style.opacity = '1'; }, 3000);
 
 // STAGGER REVEAL.containers with [data-s] reveal direct .gs children sequentially
 gsap.utils.toArray('[data-s]').forEach(container => {
@@ -2156,63 +2188,118 @@ document.querySelectorAll('.fdep-player').forEach(function(wrap){
   }
 })();
 
-// ===== LISTA DE ESPERA: formulário (countdown desativado — sem data da próxima turma) =====
+// ===== UPGRADE: confirmação de matrícula antes do checkout =====
+// Regra de negócio: na dúvida, vender. Se a verificação falhar por rede, timeout
+// ou erro do servidor, o checkout é liberado assim mesmo — perder um aluno de
+// verdade custa mais do que um não-aluno entrar pela condição de upgrade.
 (function(){
-  var ENDPOINT='https://dashboard.rodrigorosar.com.br/api/public/waitlist';
-  var SUBMIT_LABEL='Entrar na lista de espera';
-  var form=document.getElementById('wl-form');
-  if(!form)return;
-  var btn=document.getElementById('wl-submit');
-  var lblEl=form.querySelector('.wl-submit-label');
-  var errEl=document.getElementById('wl-error');
-  var nome=document.getElementById('wl-nome');
-  var email=document.getElementById('wl-email');
-  var wa=document.getElementById('wl-whatsapp');
-  var hp=document.getElementById('wl-website');
+  var ENDPOINT='https://kaktarlhwpezebhercll.supabase.co/functions/v1/verificar-aluno';
+  var TIMEOUT_MS=7000;
+  var LABEL='Confirmar e ir para o pagamento';
 
-  function showError(msg,field){
-    errEl.textContent=msg||'';
-    [nome,email,wa].forEach(function(f){f.classList.remove('is-invalid');});
-    if(field){field.classList.add('is-invalid');field.focus();}
+  var modal=document.getElementById('up-modal');
+  var form=document.getElementById('up-form');
+  if(!modal||!form)return;
+
+  var input=document.getElementById('up-email');
+  var msg=document.getElementById('up-msg');
+  var btn=document.getElementById('up-submit');
+  var btnLabel=document.getElementById('up-submit-label');
+  var wa=document.getElementById('up-wa');
+  var fechar=document.getElementById('up-modal-close');
+  var destino=null;
+  var ultimoFoco=null;
+
+  function abrir(url){
+    destino=url;
+    ultimoFoco=document.activeElement;
+    modal.hidden=false;
+    modal.classList.add('is-open');
+    document.body.style.overflow='hidden';
+    setTimeout(function(){input.focus();},60);
   }
-  [nome,email,wa].forEach(function(f){f.addEventListener('input',function(){this.classList.remove('is-invalid');});});
-  function loading(on){
+  function fecharModal(){
+    modal.classList.remove('is-open');
+    modal.hidden=true;
+    document.body.style.overflow='';
+    carregando(false);
+    mostrar('','');
+    wa.hidden=true;
+    if(ultimoFoco&&ultimoFoco.focus)ultimoFoco.focus();
+  }
+  function mostrar(texto,tipo){
+    msg.textContent=texto||'';
+    msg.className='up-msg'+(tipo?' '+tipo:'');
+  }
+  function carregando(on){
     btn.disabled=on;
-    if(on){lblEl.innerHTML='<span class="wl-spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
-    else{lblEl.textContent=SUBMIT_LABEL;btn.removeAttribute('aria-busy');}
+    if(on){btnLabel.innerHTML='<span class="up-spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
+    else{btnLabel.textContent=LABEL;btn.removeAttribute('aria-busy');}
   }
-  wa.addEventListener('input',function(){
-    var v=wa.value.replace(/\D/g,'').slice(0,11);
-    if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
-    else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);
-    else if(v.length>0)v='('+v;
-    wa.value=v;
+  function irParaCheckout(){
+    var url=destino;
+    fecharModal();
+    window.open(url,'_blank','noopener');
+  }
+
+  // Intercepta os botões de compra. O href continua correto: se este script não
+  // rodar, o botão funciona como link normal e a venda acontece mesmo assim.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-upgrade-checkout]'),function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      abrir(a.getAttribute('href'));
+    });
   });
+
+  fechar.addEventListener('click',fecharModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)fecharModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))fecharModal();});
+  input.addEventListener('input',function(){input.classList.remove('is-invalid');mostrar('','');});
+
   var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var vNome=nome.value.trim(),vEmail=email.value.trim().toLowerCase(),vWa=wa.value.replace(/\D/g,'');
-    if(!vNome){return showError('Informe seu nome.',nome);}
-    if(!EMAIL_RE.test(vEmail)){return showError('Informe um e-mail válido.',email);}
-    if(vWa.length<10){return showError('Informe um WhatsApp válido com DDD.',wa);}
-    showError('');loading(true);
-    var utm={};
-    new URLSearchParams(location.search).forEach(function(val,key){if(key.indexOf('utm_')===0)utm[key]=val;});
+    var email=input.value.trim().toLowerCase();
+    if(!EMAIL_RE.test(email)){
+      input.classList.add('is-invalid');input.focus();
+      return mostrar('Informe um e-mail válido.','erro');
+    }
+    mostrar('');carregando(true);wa.hidden=true;
+
+    var ctrl=('AbortController' in window)?new AbortController():null;
+    var timer=setTimeout(function(){if(ctrl)ctrl.abort();},TIMEOUT_MS);
+
     fetch(ENDPOINT,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:vWa,consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email}),
+      signal:ctrl?ctrl.signal:undefined
     })
     .then(function(r){
-      if(r.ok){
-        try{sessionStorage.setItem('wl_nome',vNome.split(/\s+/)[0]);}catch(_){}
-        window.location.href='obrigado.html';return;
+      clearTimeout(timer);
+      if(r.status===429){
+        carregando(false);
+        wa.hidden=false;
+        return mostrar('Muitas tentativas seguidas. Aguarde alguns minutos ou fale com o suporte.','erro');
       }
-      return r.json().catch(function(){return{};}).then(function(data){
-        loading(false);showError(data.error||'Não foi possível enviar agora. Tente novamente.');
+      if(!r.ok)throw new Error('http_'+r.status);
+      return r.json().then(function(dados){
+        if(dados&&dados.elegivel===true){
+          mostrar('Matrícula confirmada. Abrindo o pagamento…','ok');
+          return setTimeout(irParaCheckout,450);
+        }
+        carregando(false);
+        wa.hidden=false;
+        mostrar('Não encontramos esse e-mail na turma do PDP. Se você comprou com outro e-mail, tente ele — ou fale com o suporte que a gente resolve na hora.','erro');
       });
     })
     .catch(function(){
-      loading(false);showError('Conexão instável. Tente novamente em instantes.');
+      clearTimeout(timer);
+      // Verificação indisponível não bloqueia a venda.
+      console.warn('verificação indisponível; checkout liberado');
+      mostrar('Seguindo para o pagamento…','ok');
+      setTimeout(irParaCheckout,350);
     });
   });
 })();
@@ -2220,7 +2307,10 @@ document.querySelectorAll('.fdep-player').forEach(function(wrap){
 }); // end DOMContentLoaded
 </script>
 
-<!-- Botão flutuante de suporte WhatsApp removido na lista de espera (não usamos suporte aqui) -->
+<!-- WhatsApp floating button -->
+<a class="wa-float" href="https://api.whatsapp.com/send?phone=5547992360031&amp;text=Preciso%20de%20ajuda%20com%20a%20minha%20matr%C3%ADcula%20na%20Implementa%C3%A7%C3%A3o" target="_blank" rel="noopener" aria-label="Falar com o suporte no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
 
 <script>
 (function(){

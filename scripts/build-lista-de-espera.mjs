@@ -64,8 +64,11 @@ let html = readFileSync(SOURCE, 'utf8').replace(/\r\n/g, '\n');
 // A lista de espera vive em /lista-de-espera/, então img/ e video/ relativos
 // quebrariam. Inclui ocorrências dentro de strings JS (src:"img/...").
 // ---------------------------------------------------------------------------
-html = replaceAll(html, 'paths img', /(["'])img\//g, '$1/img/');
-html = replaceAll(html, 'paths video', /(["'])video\//g, '$1/video/');
+// O lookbehind de `type=` não é detalhe: sem ele, type="video/mp4" de um
+// <source> vira type="/video/mp4", que é um tipo de mídia inválido e faz o
+// navegador descartar a fonte do vídeo. Esse bug ficou publicado até 23/09/2026.
+html = replaceAll(html, 'paths img', /(?<!type=)(["'])img\//g, '$1/img/');
+html = replaceAll(html, 'paths video', /(?<!type=)(["'])video\//g, '$1/video/');
 
 // ---------------------------------------------------------------------------
 // 2. SEO: noindex, canonical e copy próprios da lista de espera
