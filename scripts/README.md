@@ -26,21 +26,21 @@ Fora isso, o conteúdo é o mesmo. As duas também recebem dois ajustes técnico
 caminhos de imagem absolutos (porque vivem em subpastas) e `noindex` (para não
 competir com o site principal no Google).
 
-## Antes de editar pela primeira vez neste computador
+## Você não precisa fazer nada além de editar o vendas.html
 
-Rode isto uma vez, dentro da pasta do projeto:
+Edite o `vendas.html` e envie normalmente. O robô do GitHub regenera as variantes
+e commita a correção sozinho, em cerca de um minuto (verificado em 23/09/2026,
+com a escrita para Actions liberada na organização).
+
+Opcional, só por conveniência: rodando o comando abaixo uma vez, as páginas são
+geradas já no seu commit, e o robô não precisa criar um commit extra depois.
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-A partir daí você edita só o `vendas.html` normalmente. A cada commit que toca a
-fonte, as páginas geradas são refeitas e entram no mesmo commit, sem você
-precisar lembrar de nada.
-
-Se ninguém rodar esse comando, o site continua funcionando — mas as variantes
-param de acompanhar o `vendas.html`, e quem avisa é o robô do GitHub, depois do
-envio, com um X vermelho no commit.
+Isso também adianta o aviso: se uma âncora sumir do `vendas.html`, você descobre
+na hora do commit, e não depois do envio.
 
 ## Rodando
 

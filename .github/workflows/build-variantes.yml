@@ -8,10 +8,11 @@ name: Gerar variantes do site
 #   - se mudou, tenta commitar a correção;
 #   - se não tiver permissão para commitar, falha avisando o que ficou para trás.
 #
-# O terceiro caso existe porque a organização METRIK-GROUP pode manter desligada
-# a escrita para Actions (Settings da organização → Actions → General → Workflow
-# permissions → Read and write). Ligando lá, este mesmo workflow passa a corrigir
-# sozinho, sem precisar de nenhuma alteração aqui.
+# A escrita para Actions foi liberada na organização METRIK-GROUP em 23/09/2026 e
+# a correção automática foi verificada de ponta a ponta no mesmo dia. O terceiro
+# caso continua no script porque a configuração é da organização e pode ser
+# revertida sem que ninguém aqui perceba — se isso acontecer, o workflow volta a
+# se comportar como alarme em vez de falhar sem explicação.
 
 on:
   push:
