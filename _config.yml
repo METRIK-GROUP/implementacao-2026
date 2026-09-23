@@ -9,6 +9,15 @@
 # `exclude` mantém os arquivos no repositório e fora do site publicado.
 
 exclude:
+  # vendas.html é a FONTE das outras páginas, não uma página do site. Até
+  # 23/09/2026 ele ficava acessível em /vendas.html, com a oferta cheia e os
+  # três checkouts ativos — ou seja, dá para comprar por R$ 3.997 com as
+  # inscrições fechadas, bastando digitar o endereço.
+  #
+  # Quando as inscrições reabrirem, a página de vendas volta pela raiz do site
+  # (hoje a raiz redireciona para /lista-de-espera/). Esta linha não atrapalha
+  # isso: ela só impede que o arquivo-fonte seja servido diretamente.
+  - vendas.html
   - scripts
   - supabase
   - .githooks
