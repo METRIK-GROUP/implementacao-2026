@@ -178,6 +178,21 @@ t.replaceOnce(
 //   `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
 //   `        <a href="${CHECKOUT_BOLETO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
 // );
+// Com dois meios de pagamento em vez de três, a linha de baixo precisa de
+// ajuste: `.pr-btn-row` é uma grade de duas colunas, então o botão do cartão
+// sozinho ficava com metade da largura, encolhido e desalinhado embaixo do botão
+// preto do PIX. Uma coluna só, e o botão secundário ganha o mesmo respiro do
+// principal — a hierarquia continua vindo da cor, não do tamanho.
+t.replaceOnce(
+  'botões: duas formas de pagamento em vez de três',
+  `<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">`,
+  `<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">
+  <style>
+    #preco .pr-btn-row{grid-template-columns:1fr}
+    #preco .pr-btn.ghost{padding:16px 22px;font-size:14px;font-weight:700}
+  </style>`
+);
+
 t.cutBlock(
   'checkout: boleto removido (oferta TMB indisponível)',
   `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
