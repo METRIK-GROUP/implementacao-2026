@@ -54,6 +54,27 @@ No GitHub isso roda sozinho: todo push que toca `vendas.html` ou `scripts/`
 dispara `.github/workflows/build-variantes.yml`, que regenera as variantes e
 commita o que mudou.
 
+## “Se eu mudar X, a página de upgrade acompanha?”
+
+```bash
+node scripts/simular-edicoes.mjs
+```
+
+Aplica as edições típicas de uma reabertura de turma e mostra o que acontece com
+a página de upgrade em cada uma. Não altera nada em definitivo.
+
+A regra que sai dali:
+
+| Você edita | A página de upgrade |
+|---|---|
+| Texto, imagem, seção nova, depoimento, FAQ, data da barra | acompanha sozinha |
+| Preço, parcela, link de checkout, selo do bloco, contagem regressiva | o build para e avisa |
+
+A segunda linha é de propósito: é exatamente no bloco de compra que as duas
+páginas precisam ser diferentes. Se o `vendas.html` mudar ali, alguém precisa
+decidir o que o upgrade passa a mostrar — e enquanto ninguém decide, o build
+recusa publicar um preço adivinhado.
+
 ## Quando o build falha
 
 Toda transformação é obrigatória. Se um trecho que o script procura não existe

@@ -1323,54 +1323,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="pr-note">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira.</p>
     <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->
   </div>
-
-  <div class="up-modal" id="up-modal" role="dialog" aria-modal="true" aria-labelledby="up-modal-title" hidden>
-    <div class="up-modal-card">
-      <button type="button" class="up-modal-close" id="up-modal-close" aria-label="Fechar">&times;</button>
-      <h2 class="up-modal-title" id="up-modal-title">Confirme seu e-mail de aluno</h2>
-      <p class="up-modal-sub">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira. Use o mesmo e-mail da sua compra.</p>
-
-      <form class="up-modal-form" id="up-form" novalidate>
-        <label for="up-email">E-mail</label>
-        <input class="up-input" type="email" id="up-email" name="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
-        <p class="up-msg" id="up-msg" role="status" aria-live="polite"></p>
-        <div class="up-modal-actions">
-          <button class="pr-btn primary" type="submit" id="up-submit"><span id="up-submit-label">Confirmar e ir para o pagamento</span></button>
-          <a class="pr-btn ghost" id="up-wa" href="https://api.whatsapp.com/send?phone=5547989163007&text=Sou%20aluno%20do%20PDP%20e%20quero%20fazer%20o%20upgrade%20para%20a%20Implementa%C3%A7%C3%A3o%2C%20mas%20meu%20e-mail%20n%C3%A3o%20foi%20reconhecido%20na%20p%C3%A1gina." target="_blank" rel="noopener" hidden>Falar com o suporte no WhatsApp</a>
-        </div>
-      </form>
-    </div>
-  </div>
-  <style>
-    .up-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
-      background:rgba(14,14,14,0.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-    .up-modal.is-open{display:flex}
-    /* .pr-btn declara display:flex, o que venceria o atributo hidden do HTML.
-       Sem esta regra o botão de suporte apareceria antes de existir erro. */
-    .up-modal [hidden]{display:none !important}
-    .up-modal-card{background:var(--white);border-radius:16px;padding:clamp(26px,4vw,36px);max-width:440px;width:100%;
-      box-shadow:0 30px 80px rgba(0,0,0,0.35);position:relative;text-align:left}
-    .up-modal-title{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(20px,3vw,25px);line-height:1.15;color:var(--black);text-wrap:balance;padding-right:36px}
-    .up-modal-sub{font-size:14.5px;color:var(--g500);line-height:1.55;margin-top:10px;text-wrap:pretty}
-    .up-modal-form{display:flex;flex-direction:column;gap:9px;margin-top:22px}
-    .up-modal-form label{font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--graphite)}
-    .up-input{width:100%;padding:13px 15px;font-family:'Inter',sans-serif;font-size:16px;color:var(--black);
-      background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
-    .up-input::placeholder{color:#A8A59C}
-    .up-input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
-    .up-input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
-    .up-msg{font-size:13px;line-height:1.5}
-    .up-msg:empty{display:none}
-    .up-msg.erro{color:#C0392B}
-    .up-msg.ok{color:#1E7A4A}
-    .up-modal-actions{display:flex;flex-direction:column;gap:9px;margin-top:6px}
-    .up-modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;background:transparent;
-      color:var(--g500);font-size:24px;line-height:1;border-radius:50%;transition:background .2s}
-    .up-modal-close:hover{background:var(--offwhite);color:var(--black)}
-    .up-spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:upspin .7s linear infinite;vertical-align:-3px}
-    @keyframes upspin{to{transform:rotate(360deg)}}
-    @media (prefers-reduced-motion: reduce){.up-spinner{animation-duration:1.4s}}
-  </style>
 </section>
 <!-- ============================== -->
 <!-- 18. ROI                         -->
@@ -2400,6 +2352,55 @@ document.querySelectorAll('.fdep-player').forEach(function(wrap){
   setCaption(0);
 })();
 </script>
+
+
+  <div class="up-modal" id="up-modal" role="dialog" aria-modal="true" aria-labelledby="up-modal-title" hidden>
+    <div class="up-modal-card">
+      <button type="button" class="up-modal-close" id="up-modal-close" aria-label="Fechar">&times;</button>
+      <h2 class="up-modal-title" id="up-modal-title">Confirme seu e-mail de aluno</h2>
+      <p class="up-modal-sub">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira. Use o mesmo e-mail da sua compra.</p>
+
+      <form class="up-modal-form" id="up-form" novalidate>
+        <label for="up-email">E-mail</label>
+        <input class="up-input" type="email" id="up-email" name="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" required>
+        <p class="up-msg" id="up-msg" role="status" aria-live="polite"></p>
+        <div class="up-modal-actions">
+          <button class="pr-btn primary" type="submit" id="up-submit"><span id="up-submit-label">Confirmar e ir para o pagamento</span></button>
+          <a class="pr-btn ghost" id="up-wa" href="https://api.whatsapp.com/send?phone=5547989163007&text=Sou%20aluno%20do%20PDP%20e%20quero%20fazer%20o%20upgrade%20para%20a%20Implementa%C3%A7%C3%A3o%2C%20mas%20meu%20e-mail%20n%C3%A3o%20foi%20reconhecido%20na%20p%C3%A1gina." target="_blank" rel="noopener" hidden>Falar com o suporte no WhatsApp</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <style>
+    .up-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+      background:rgba(14,14,14,0.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+    .up-modal.is-open{display:flex}
+    /* .pr-btn declara display:flex, o que venceria o atributo hidden do HTML.
+       Sem esta regra o botão de suporte apareceria antes de existir erro. */
+    .up-modal [hidden]{display:none !important}
+    .up-modal-card{background:var(--white);border-radius:16px;padding:clamp(26px,4vw,36px);max-width:440px;width:100%;
+      box-shadow:0 30px 80px rgba(0,0,0,0.35);position:relative;text-align:left}
+    .up-modal-title{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:clamp(20px,3vw,25px);line-height:1.15;color:var(--black);text-wrap:balance;padding-right:36px}
+    .up-modal-sub{font-size:14.5px;color:var(--g500);line-height:1.55;margin-top:10px;text-wrap:pretty}
+    .up-modal-form{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+    .up-modal-form label{font-family:'Maven Pro',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--graphite)}
+    .up-input{width:100%;padding:13px 15px;font-family:'Inter',sans-serif;font-size:16px;color:var(--black);
+      background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
+    .up-input::placeholder{color:#A8A59C}
+    .up-input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
+    .up-input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
+    .up-msg{font-size:13px;line-height:1.5}
+    .up-msg:empty{display:none}
+    .up-msg.erro{color:#C0392B}
+    .up-msg.ok{color:#1E7A4A}
+    .up-modal-actions{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+    .up-modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;background:transparent;
+      color:var(--g500);font-size:24px;line-height:1;border-radius:50%;transition:background .2s}
+    .up-modal-close:hover{background:var(--offwhite);color:var(--black)}
+    .up-spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:upspin .7s linear infinite;vertical-align:-3px}
+    @keyframes upspin{to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion: reduce){.up-spinner{animation-duration:1.4s}}
+  </style>
 
 </body>
 </html>

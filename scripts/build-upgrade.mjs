@@ -231,16 +231,23 @@ const MODAL = `
 `;
 
 t.replaceOnce(
-  'modal inserido na seção de preço',
+  'nota do bloco de preço',
   `    <p class="pr-note">Esse valor é exclusivo para quem entra nesta janela de inscrição. Depois, o preço sobe.</p>`,
   `    <p class="pr-note">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira.</p>`
 );
 
-t.replaceOnce(
-  'modal: markup',
-  `  </div>\n</section>\n<!-- ============================== -->\n<!-- 18. ROI`,
-  `  </div>\n${MODAL}</section>\n<!-- ============================== -->\n<!-- 18. ROI`
-);
+// A janela entra no fim do documento, e não dentro da seção de preço.
+//
+// Dois motivos. O primeiro é de robustez: amarrar a inserção ao comentário da
+// seção seguinte ("18. ROI") fazia o build quebrar sempre que alguém
+// acrescentava uma seção nova ali — e acrescentar seção é das coisas mais
+// comuns numa reabertura de turma. `</body>` não se move.
+//
+// O segundo é de comportamento: um elemento `position:fixed` deixa de se
+// posicionar pela tela se qualquer elemento acima dele tiver `transform`, e o
+// GSAP anima com transform vários blocos dessa página. Fora de todos eles, a
+// janela sempre abre centralizada.
+t.replaceOnce('modal: markup', `\n</body>`, `\n${MODAL}\n</body>`);
 
 // ---------------------------------------------------------------------------
 // 8. JS: verificação antes do checkout
