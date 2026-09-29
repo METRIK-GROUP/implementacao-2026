@@ -233,16 +233,16 @@ const ESTILO_ESCOLHA = `
 
     #preco .pr-duo{display:grid;grid-template-columns:minmax(0,1fr);gap:44px;align-items:start}
     #preco .pr-duo > .pr-card{width:100%}
-    #preco .pr-upgrade{order:-1}
+    #preco .pr-card-upgrade{order:-1}
     @media (min-width:960px){
       #preco .pr-duo{grid-template-columns:minmax(0,420px) minmax(0,560px);justify-content:center;gap:28px}
       #preco .pr-duo > .pr-card{max-width:none;margin:0}
-      #preco .pr-upgrade{order:0}
+      #preco .pr-card-upgrade{order:0}
     }
 
     /* Upgrade: o card principal. Borda escura para ser lido como a escolha
        recomendada mesmo antes de ler o selo. */
-    #preco .pr-upgrade{border:1.5px solid var(--black);
+    #preco .pr-card-upgrade{border:1.5px solid var(--black);
       box-shadow:0 30px 70px rgba(0,0,0,0.09),0 4px 12px rgba(0,0,0,0.04)}
 
     /* Renovação: mesma estrutura, peso visual menor. */
@@ -314,7 +314,7 @@ t.replaceOnce(
 ${CABECALHO_ESCOLHA}
 ${CARD_RENOVACAO}
 
-  <article class="pr-card pr-upgrade gs" aria-labelledby="pr-upgrade-titulo">
+  <article class="pr-card pr-card-upgrade gs" aria-labelledby="pr-upgrade-titulo">
     <div class="pr-ribbon">MELHOR ESCOLHA</div>
 
     <h3 class="pr-plano" id="pr-upgrade-titulo">Upgrade para a Implementação</h3>
@@ -388,13 +388,21 @@ t.replaceOnce(
 // sozinho ficava com metade da largura, encolhido e desalinhado embaixo do botão
 // preto do PIX. Uma coluna só, e o botão secundário ganha o mesmo respiro do
 // principal — a hierarquia continua vindo da cor, não do tamanho.
+//
+// Refino de 29/09/2026: os botões de compra (PIX, cartão e renovação) passam a
+// ter a mesma altura fixa de 56px, com o texto centralizado pela altura e não
+// pelo padding. Assim nenhuma regra de padding herdada consegue achatar um
+// deles, e os três ficam do mesmo tamanho lado a lado no desktop.
 t.replaceOnce(
   'botões: duas formas de pagamento em vez de três',
   `<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">`,
   `<section class="sec bg-o" id="preco" aria-label="Preço e formas de pagamento">
   <style>
     #preco .pr-btn-row{grid-template-columns:1fr}
-    #preco .pr-btn.ghost{padding:16px 22px;font-size:14px;font-weight:700}
+    #preco .pr-btn{min-height:56px;padding:0 24px;line-height:1.2}
+    #preco .pr-btn.primary{font-size:15px;letter-spacing:0.03em;gap:12px}
+    #preco .pr-btn.ghost{font-size:14px;font-weight:700}
+    #preco .pr-btn-tag{line-height:1.5;padding:2px 10px}
   </style>`
 );
 
@@ -405,6 +413,18 @@ t.cutBlock(
 `,
   `        <!-- Botão de boleto parcelado removido: a oferta da TMB está indisponível desde 23/09/2026. -->
 `
+);
+
+// O selo "Garantia 97 dias" sai da linha de selos do bloco de compra. Pedido do
+// Rodrigo em 29/09/2026: quem chega aqui já é aluno e conhece o PDP, e o selo é
+// argumento para quem compra pela primeira vez. "Pagamento seguro" e
+// "Certificado MEC" ficam. A seção de garantia e o FAQ não foram tocados.
+t.replaceOnce(
+  'selo de garantia removido do bloco de compra',
+  `      <span><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg> Garantia 97 dias</span>
+      <span class="pr-dot"></span>
+`,
+  ''
 );
 
 // ---------------------------------------------------------------------------
@@ -652,6 +672,7 @@ t.guardVisible([
   ['chamada de garantir vaga', /Garantir minha vaga|Quero minha vaga/i],
   ['oferta amarrada a uma turma', /DESTA TURMA|desta janela|janela de inscri[çc][ãa]o/i],
   ['contagem regressiva', /id="pr-countdown"/],
+  ['selo de garantia no bloco de compra', /class="pr-trust">(?:(?!<\/div>)[\s\S])*Garantia/],
 ]);
 
 t.guard([
@@ -663,6 +684,12 @@ t.guard([
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
   ['indexação no Google', /<meta name="robots" content="index/],
   ['preço de 3997 no schema', /"price": "3997\.00"/],
+  // `.pr-upgrade` é o estilo do antigo link "Já é PDP? faça upgrade" no
+  // vendas.html: fonte 12,5px, 1px de respiro embaixo e sublinhado tracejado
+  // em todo <a> de dentro. Em 29/09/2026 o card do upgrade foi publicado com
+  // essa classe e o botão do PIX herdou tudo isso: ficou achatado, com a borda
+  // de baixo pontilhada. O card agora é `.pr-card-upgrade`; isto impede a volta.
+  ['classe pr-upgrade (estilo de link do vendas.html, achata os botões)', /class="[^"]*\bpr-upgrade\b/],
 ]);
 
 // Casa `trecho` literalmente, mas só dentro do card cujo título tem `idTitulo`
@@ -675,7 +702,7 @@ function dentroDoCard(idTitulo, trecho) {
 
 // Guardas positivas: o que precisa existir.
 t.require([
-  ['selo de melhor escolha', /<article class="pr-card pr-upgrade gs"[^>]*>\s*<div class="pr-ribbon">MELHOR ESCOLHA<\/div>/],
+  ['selo de melhor escolha', /<article class="pr-card pr-card-upgrade gs"[^>]*>\s*<div class="pr-ribbon">MELHOR ESCOLHA<\/div>/],
   ['preço do upgrade no PIX', /pr-pix-val fm">R\$ 1\.997/],
   ['preço de referência para não-aluno', /pr-old"><s>R\$ 5\.997<\/s>/],
   ['rótulo de quem paga cada valor', /Para quem não é aluno[\s\S]*Seu valor como aluno do PDP/],
@@ -690,7 +717,7 @@ t.require([
   // A janela de e-mail é só do upgrade: o link da renovação não pode ganhar o gancho.
   ['checkout da renovação, sem a janela de e-mail',
     dentroDoCard('pr-renov-titulo', `<a href="${CHECKOUT_RENOVACAO}" target="_blank" rel="noopener" class="pr-btn ghost">`)],
-  ['renovação antes do upgrade no HTML (ordem do Tab = ordem visual no desktop)', /class="pr-card pr-renov[\s\S]*class="pr-card pr-upgrade/],
+  ['renovação antes do upgrade no HTML (ordem do Tab = ordem visual no desktop)', /class="pr-card pr-renov[\s\S]*class="pr-card pr-card-upgrade/],
   ['janela de confirmação', /id="up-modal"/],
   ['endpoint de verificação', /functions\/v1\/verificar-aluno/],
   ['canonical do upgrade', /rel="canonical" href="https:\/\/implementacao\.rodrigorosar\.com\.br\/upgrade\/"/],
