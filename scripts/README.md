@@ -20,7 +20,7 @@ commits. Por três meses o aluno viu uma página três meses velha.
 | Variante | O que muda em relação ao `vendas.html` |
 |---|---|
 | `lista-de-espera/` | Sem checkout e sem preço; no lugar, formulário de lista de espera |
-| `upgrade/` | Preço de R$ 1.997, checkouts da oferta de upgrade e confirmação de e-mail de aluno antes do pagamento |
+| `upgrade/` | Preço de R$ 1.997, checkouts da oferta de upgrade, confirmação de e-mail de aluno antes do pagamento e, ao lado, o card da Renovação do PDP (R$ 997) para comparar |
 
 Fora isso, o conteúdo é o mesmo. As duas também recebem dois ajustes técnicos:
 caminhos de imagem absolutos (porque vivem em subpastas) e `noindex` (para não
@@ -108,6 +108,39 @@ Hotmart.
 Para trazer o botão de volta um dia: em `build-upgrade.mjs`, troque o `cutBlock`
 do boleto pelo `replaceOnce` comentado logo acima dele, e reative a entrada
 correspondente em `checar-checkouts.mjs`.
+
+### Renovação ao lado do upgrade
+
+Desde 29/09/2026 o bloco de compra da página de upgrade tem dois cards:
+
+| | Renovação PDP (esquerda) | Upgrade (direita, "melhor escolha") |
+|---|---|---|
+| Renovação do PDP, 1 ano de acesso, suporte no WhatsApp | sim | sim |
+| Curso completo IA de Primeira | não | sim |
+| Desafio de Implementação por 1 ano | não | sim |
+| Dúvidas com o Rodrigo direto no WhatsApp | não | sim |
+| Valor | R$ 997 (Hotmart, oferta `5bgwg9qj`) | R$ 1.997 no PIX (Asaas) ou 12x de R$ 197 (Hotmart, `atem2nx9`) |
+
+No celular o upgrade aparece primeiro. O botão da renovação vai direto para a
+Hotmart, sem a janela de e-mail: a janela protege o preço de aluno do upgrade,
+e a renovação tem preço próprio.
+
+Os itens das duas listas moram em `ITENS_RENOVACAO` e `ITENS_SO_NO_UPGRADE`, e
+o link e o valor da renovação em `CHECKOUT_RENOVACAO` e `PRECO_RENOVACAO`, no
+topo do `build-upgrade.mjs`. Mudou a oferta na Hotmart? Troque ali e em
+`checar-checkouts.mjs`.
+
+### O que cada forma de pagamento cobra de verdade (conferido em 29/09/2026)
+
+| Onde o aluno paga | Upgrade | Renovação |
+|---|---|---|
+| Botão "Pagar no PIX" (Asaas) | R$ 1.997 | não tem |
+| Hotmart, cartão 1x | R$ 1.997 | R$ 997 |
+| Hotmart, cartão 2x a 12x | R$ 2.364 no total (12x R$ 197, juros por conta do produtor) | juros por conta do aluno (12x R$ 103,11) |
+| Hotmart, Pix ou boleto | **R$ 2.364** | R$ 997 |
+
+Por isso o PIX da página aponta para o Asaas: quem escolhe Pix dentro do
+checkout da Hotmart paga R$ 367 a mais.
 
 ## Quando o build falha
 

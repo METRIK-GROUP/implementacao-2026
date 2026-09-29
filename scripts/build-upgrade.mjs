@@ -13,6 +13,9 @@
  *   3. O resto do conteúdo é idêntico — o aluno vê a mesma página que todo
  *      mundo vê.
  *
+ * Em 29/09/2026 o bloco de compra ganhou, ao lado, o card da Renovação do PDP
+ * (R$ 997), com a lista do que cada opção inclui. Ver a seção 5b.
+ *
  * Mais dois ajustes técnicos, invisíveis para o visitante: caminhos de imagem
  * absolutos (a página vive num subdiretório) e noindex + canonical (não competir
  * com o site principal no Google).
@@ -46,6 +49,13 @@ const WHATSAPP_SUPORTE =
 const CHECKOUT_PIX = 'https://www.asaas.com/c/rf09mpzqnty6wtyq';
 const CHECKOUT_CARTAO = 'https://pay.hotmart.com/U104887798W?off=atem2nx9&checkoutMode=6&bid=1779451195139';
 const CHECKOUT_BOLETO = 'https://pay.tmb.com.br/RodrigoRosar/B9B1915303N';
+
+// Renovação do PDP: produto "Renovação de Primeira (Plano Anual)", oferta
+// 5bgwg9qj. Conferida no ar em 29/09/2026: R$ 997 à vista ou 12x de R$ 103,11
+// (juros pagos pelo aluno). É o mesmo link e o mesmo valor que a página de
+// upgrade de março/2026 usava, e o valor de renovação da régua da Clint.
+const CHECKOUT_RENOVACAO = 'https://pay.hotmart.com/F79474514K?off=5bgwg9qj';
+const PRECO_RENOVACAO = 'R$ 997';
 
 const ENDPOINT_VERIFICACAO = 'https://kaktarlhwpezebhercll.supabase.co/functions/v1/verificar-aluno';
 
@@ -119,11 +129,8 @@ t.cutBlock(
   '<!-- Barra de urgência removida na página de upgrade: o aluno pode fazer upgrade a qualquer momento. -->\n'
 );
 
-t.replaceOnce(
-  'selo: sem referência a turma',
-  `    <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>`,
-  `    <div class="pr-ribbon">EXCLUSIVO PARA ALUNO PDP</div>`
-);
+// O selo "OFERTA EXCLUSIVA DESTA TURMA" também é urgência de turma. Ele é
+// trocado na seção 5b, junto com a montagem dos dois cards.
 
 // ---------------------------------------------------------------------------
 // 5. Comparação: o que o aluno paga x o que um não-aluno paga
@@ -177,10 +184,157 @@ t.replaceOnce(
 void precoAluno;
 
 // ---------------------------------------------------------------------------
+// 5b. Renovação x Upgrade, lado a lado
+//
+// Pedido do Rodrigo em 29/09/2026. Muita gente que chega aqui quer só renovar o
+// acesso ao PDP. Sem a renovação na página, essa pessoa sai para pedir no
+// WhatsApp, e ninguém mostra a ela o que o upgrade acrescenta. Com os dois
+// cards lado a lado e a MESMA lista nos dois, a diferença fica visível sem
+// precisar de argumento: a renovação para nos três primeiros itens.
+//
+// Decisões:
+//   - Desktop: renovação à esquerda, upgrade à direita com o selo.
+//   - Celular: o upgrade vem primeiro. É a oferta desta página, e quem clica em
+//     "Fazer upgrade" em qualquer ponto cai aqui; abrir no card mais barato
+//     puxaria a escolha para baixo.
+//   - No HTML a renovação vem antes, na mesma ordem do desktop. É no desktop
+//     que se navega por teclado, e a ordem do Tab precisa bater com a ordem
+//     visual (WCAG 2.4.3). No celular, só o CSS (`order:-1`) sobe o upgrade.
+//   - O botão da renovação NÃO passa pela janela de e-mail. A janela existe
+//     para proteger o preço de aluno do upgrade; a renovação é um produto
+//     próprio, com o preço dela, e fricção ali só atrapalha.
+// ---------------------------------------------------------------------------
+const ITENS_RENOVACAO = ['Renovação do PDP', '1 ano de acesso', 'Suporte no WhatsApp'];
+const ITENS_SO_NO_UPGRADE = [
+  'Curso completo IA de Primeira',
+  'Desafio de Implementação por 1 ano',
+  'Dúvidas com o Rodrigo direto no WhatsApp',
+];
+
+const ICONE_SIM = '<span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span>';
+const ICONE_NAO = '<span class="pr-cmp-ic nao" aria-hidden="true"><svg><use href="#up-i-x"/></svg></span>';
+
+const itemIncluso = (texto) => `        <li>${ICONE_SIM}<span>${texto}</span></li>`;
+const itemDestaque = (texto) => `        <li class="destaque">${ICONE_SIM}<strong>${texto}</strong></li>`;
+const itemAusente = (texto) =>
+  `        <li class="fora">${ICONE_NAO}<span><span class="pr-vh">Não inclui: </span>${texto}</span></li>`;
+
+const LISTA_UPGRADE = [...ITENS_RENOVACAO.map(itemIncluso), ...ITENS_SO_NO_UPGRADE.map(itemDestaque)].join('\n');
+const LISTA_RENOVACAO = [...ITENS_RENOVACAO.map(itemIncluso), ...ITENS_SO_NO_UPGRADE.map(itemAusente)].join('\n');
+
+const ESTILO_ESCOLHA = `
+  <style>
+    /* O .sec é flex em linha; o invólucro ocupa a largura toda. */
+    #preco .pr-escolha{width:100%;max-width:1060px;margin:0 auto}
+    #preco .pr-escolha-head{text-align:center;margin-bottom:52px}
+    #preco .pr-escolha-title{font-family:'Maven Pro',sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);
+      line-height:1.1;color:var(--black);margin-top:18px;text-wrap:balance}
+    #preco .pr-escolha-sub{font-size:16px;color:var(--g500);line-height:1.55;max-width:540px;margin:12px auto 0;text-wrap:balance}
+
+    #preco .pr-duo{display:grid;grid-template-columns:minmax(0,1fr);gap:44px;align-items:start}
+    #preco .pr-duo > .pr-card{width:100%}
+    #preco .pr-upgrade{order:-1}
+    @media (min-width:960px){
+      #preco .pr-duo{grid-template-columns:minmax(0,420px) minmax(0,560px);justify-content:center;gap:28px}
+      #preco .pr-duo > .pr-card{max-width:none;margin:0}
+      #preco .pr-upgrade{order:0}
+    }
+
+    /* Upgrade: o card principal. Borda escura para ser lido como a escolha
+       recomendada mesmo antes de ler o selo. */
+    #preco .pr-upgrade{border:1.5px solid var(--black);
+      box-shadow:0 30px 70px rgba(0,0,0,0.09),0 4px 12px rgba(0,0,0,0.04)}
+
+    /* Renovação: mesma estrutura, peso visual menor. */
+    #preco .pr-renov{background:rgba(255,255,255,0.5);box-shadow:none}
+    #preco .pr-renov-val{font-weight:800;font-size:clamp(40px,5vw,52px);color:var(--graphite);line-height:1;letter-spacing:-0.02em}
+    #preco .pr-renov .pr-intro{margin-bottom:12px}
+    #preco .pr-renov .pr-meta{margin-top:10px}
+    #preco .pr-renov .pr-btn{margin-top:28px}
+
+    #preco .pr-plano{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:22px;line-height:1.2;color:var(--black)}
+    #preco .pr-plano-sub{font-size:14px;color:var(--g500);line-height:1.5;margin-top:6px}
+
+    #preco .pr-cmp{list-style:none;margin:24px 0 36px;padding:24px 0 0;border-top:1px solid var(--g100);
+      display:flex;flex-direction:column;gap:13px;text-align:left}
+    #preco .pr-cmp li{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.45;color:var(--graphite)}
+    #preco .pr-cmp li.destaque strong{font-weight:700;color:var(--black)}
+    #preco .pr-cmp li.fora{color:var(--g300)}
+    #preco .pr-cmp-ic{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    #preco .pr-cmp-ic svg{width:11px;height:11px;fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+    #preco .pr-cmp-ic.sim{background:var(--black)}
+    #preco .pr-cmp-ic.sim svg{stroke:#fff}
+    #preco .pr-renov .pr-cmp-ic.sim{background:var(--g500)}
+    #preco .pr-cmp-ic.nao{border:1.5px solid var(--g100)}
+    #preco .pr-cmp-ic.nao svg{stroke:var(--g300);width:9px;height:9px}
+
+    #preco .pr-vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    @media (max-width:540px){
+      #preco .pr-escolha-head{margin-bottom:40px}
+      #preco .pr-cmp li{font-size:14.5px}
+    }
+  </style>`;
+
+const CABECALHO_ESCOLHA = `
+  <div class="pr-escolha">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <symbol id="up-i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    </svg>
+    <div class="pr-escolha-head gs">
+      <p class="label tc">Exclusivo para aluno PDP</p>
+      <h2 class="pr-escolha-title">Renovar ou fazer o upgrade?</h2>
+      <p class="pr-escolha-sub">As duas opções renovam seu acesso ao PDP por mais um ano. A diferença é o que vem junto.</p>
+    </div>
+
+    <div class="pr-duo">`;
+
+const CARD_RENOVACAO = `
+    <article class="pr-card pr-renov gs" aria-labelledby="pr-renov-titulo">
+      <h3 class="pr-plano" id="pr-renov-titulo">Renovação PDP</h3>
+      <p class="pr-plano-sub">Mais um ano de acesso ao PDP.</p>
+      <ul class="pr-cmp">
+${LISTA_RENOVACAO}
+      </ul>
+      <p class="pr-intro">Valor da renovação</p>
+      <p class="pr-renov-val fm">${PRECO_RENOVACAO}</p>
+      <p class="pr-meta">à vista, ou em até 12x no cartão (com juros)</p>
+      <a href="${CHECKOUT_RENOVACAO}" target="_blank" rel="noopener" class="pr-btn ghost">Renovar só o PDP</a>
+    </article>`;
+
+// Abre o invólucro, põe o card da renovação, troca o selo de urgência por
+// "MELHOR ESCOLHA" e coloca no topo do card do upgrade a mesma lista que a
+// renovação mostra. O card do upgrade vira <article>, como o da renovação:
+// dois cards comparáveis, a mesma semântica para o leitor de tela.
+t.replaceOnce(
+  'escolha: abertura, renovação, selo e o que o upgrade inclui',
+  `  <div class="pr-card gs">
+    <div class="pr-ribbon">OFERTA EXCLUSIVA DESTA TURMA</div>`,
+  `${ESTILO_ESCOLHA}
+${CABECALHO_ESCOLHA}
+${CARD_RENOVACAO}
+
+  <article class="pr-card pr-upgrade gs" aria-labelledby="pr-upgrade-titulo">
+    <div class="pr-ribbon">MELHOR ESCOLHA</div>
+
+    <h3 class="pr-plano" id="pr-upgrade-titulo">Upgrade para a Implementação</h3>
+    <p class="pr-plano-sub">Tudo da renovação, mais a Implementação completa.</p>
+    <ul class="pr-cmp">
+${LISTA_UPGRADE}
+    </ul>`
+);
+
+// ---------------------------------------------------------------------------
 // 6. Preço: R$ 3.997 -> R$ 1.997
-// 12 x 197 = 2.364, e 15% abaixo disso é 1.997 — a mesma relação que o site
-// principal tem entre cartão e PIX, então os textos de desconto continuam
-// verdadeiros.
+// 12 x 197 = 2.364. R$ 1.997 fica 15,5% abaixo disso, então "15% de desconto
+// no PIX" é verdade com folga — a mesma relação que o site principal tem entre
+// cartão e PIX.
+//
+// Conferido no checkout da Hotmart (oferta atem2nx9) em 29/09/2026: 12x de
+// R$ 197,00 sem juros para o aluno (total R$ 2.364). Na própria Hotmart, cartão
+// em 1x, PayPal e Apple Pay saem por R$ 1.997; Pix e boleto dentro da Hotmart
+// saem por R$ 2.364. Por isso o botão de PIX desta página leva ao Asaas, e não
+// à Hotmart.
 // ---------------------------------------------------------------------------
 t.replaceOnce(
   'preço: parcela do cartão',
@@ -263,6 +417,21 @@ t.cutBlock(
   `    <p class="pr-upgrade"><a href="https://api.whatsapp.com/send?phone=5547992360031&text=J%C3%A1%20sou%20PDP`,
   `</a></p>\n`,
   `    <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->\n`
+);
+
+// Fecha o card do upgrade (aberto como <article> na seção 5b) e o invólucro dos
+// dois cards. A âncora é o fim da seção de preço logo depois do link removido
+// acima, então esta transformação precisa vir depois daquela.
+t.replaceOnce(
+  'escolha: fechamento dos dois cards',
+  `    <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->
+  </div>
+</section>`,
+  `    <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->
+  </article>
+    </div>
+  </div>
+</section>`
 );
 
 // ---------------------------------------------------------------------------
@@ -496,8 +665,17 @@ t.guard([
   ['preço de 3997 no schema', /"price": "3997\.00"/],
 ]);
 
+// Casa `trecho` literalmente, mas só dentro do card cujo título tem `idTitulo`
+// (entre o título e o </article> que fecha aquele card). Assim uma lista trocada
+// de card, ou o link da renovação caindo no card do upgrade, reprova o build.
+function dentroDoCard(idTitulo, trecho) {
+  const literal = trecho.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`id="${idTitulo}"(?:(?!</article>)[\\s\\S])*?${literal}`);
+}
+
 // Guardas positivas: o que precisa existir.
 t.require([
+  ['selo de melhor escolha', /<article class="pr-card pr-upgrade gs"[^>]*>\s*<div class="pr-ribbon">MELHOR ESCOLHA<\/div>/],
   ['preço do upgrade no PIX', /pr-pix-val fm">R\$ 1\.997/],
   ['preço de referência para não-aluno', /pr-old"><s>R\$ 5\.997<\/s>/],
   ['rótulo de quem paga cada valor', /Para quem não é aluno[\s\S]*Seu valor como aluno do PDP/],
@@ -506,6 +684,13 @@ t.require([
   ['checkout PIX do upgrade', /asaas\.com\/c\/rf09mpzqnty6wtyq/],
   ['checkout cartão do upgrade', /off=atem2nx9/],
   ['os dois botões de compra com o gancho de verificação', /data-upgrade-checkout[\s\S]*data-upgrade-checkout/],
+  ['lista completa dentro do card do upgrade', dentroDoCard('pr-upgrade-titulo', LISTA_UPGRADE)],
+  ['lista com os três itens ausentes dentro do card da renovação', dentroDoCard('pr-renov-titulo', LISTA_RENOVACAO)],
+  ['preço da renovação dentro do card dela', dentroDoCard('pr-renov-titulo', `pr-renov-val fm">${PRECO_RENOVACAO}<`)],
+  // A janela de e-mail é só do upgrade: o link da renovação não pode ganhar o gancho.
+  ['checkout da renovação, sem a janela de e-mail',
+    dentroDoCard('pr-renov-titulo', `<a href="${CHECKOUT_RENOVACAO}" target="_blank" rel="noopener" class="pr-btn ghost">`)],
+  ['renovação antes do upgrade no HTML (ordem do Tab = ordem visual no desktop)', /class="pr-card pr-renov[\s\S]*class="pr-card pr-upgrade/],
   ['janela de confirmação', /id="up-modal"/],
   ['endpoint de verificação', /functions\/v1\/verificar-aluno/],
   ['canonical do upgrade', /rel="canonical" href="https:\/\/implementacao\.rodrigorosar\.com\.br\/upgrade\/"/],

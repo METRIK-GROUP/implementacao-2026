@@ -37,8 +37,21 @@ const CHECKOUTS = [
     sempreAtivo: true,
     forma: 'Cartão (Hotmart)',
     url: 'https://pay.hotmart.com/U104887798W?off=atem2nx9&checkoutMode=6&bid=1779451195139',
-    esperado: /1\.997|197,00/,
-    descricaoEsperada: 'R$ 1.997 ou 12x de R$ 197',
+    // A página promete "12x de R$ 197 sem juros"; é isso que a Hotmart tem que
+    // mostrar. Em 29/09/2026: 12x de R$ 197,00 (total R$ 2.364) e R$ 1.997 em
+    // 1x no cartão. Pix e boleto DENTRO da Hotmart saem por R$ 2.364.
+    // `\s` e não espaço: a Hotmart separa "R$" do valor com espaço não
+    // separável (U+00A0), que um espaço comum no padrão não reconhece.
+    esperado: /12\s*x\s+de\s+R\$\s*197,00/,
+    descricaoEsperada: '12x de R$ 197',
+  },
+  {
+    pagina: '/upgrade/ (no ar agora)',
+    sempreAtivo: true,
+    forma: 'Renovação PDP (Hotmart)',
+    url: 'https://pay.hotmart.com/F79474514K?off=5bgwg9qj',
+    esperado: /R\$\s*997,00/,
+    descricaoEsperada: 'R$ 997',
   },
   // A página de upgrade não tem boleto, por decisão do Rodrigo em 23/09/2026:
   // para esse público não faz falta. Se um dia voltar, é só reativar isto aqui
@@ -114,7 +127,15 @@ async function checar(c) {
     return { ...c, ok: false, motivo: 'a página abre, mas diz que a oferta está indisponível' };
   }
 
-  if (!c.esperado.test(html)) {
+  // O valor é procurado no HTML bruto e também no texto sem as tags: se a
+  // Hotmart passar a quebrar "12x de R$ 197,00" em <span>s diferentes, o preço
+  // continua certo na tela e o script não pode dar falso alarme.
+  const texto = html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;|&#160;/g, ' ')
+    .replace(/\s+/g, ' ');
+
+  if (!c.esperado.test(html) && !c.esperado.test(texto)) {
     return { ...c, ok: false, motivo: `não encontrei ${c.descricaoEsperada} na página` };
   }
 

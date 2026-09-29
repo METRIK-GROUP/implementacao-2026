@@ -1281,8 +1281,102 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     #preco .pr-btn-row{grid-template-columns:1fr}
     #preco .pr-btn.ghost{padding:16px 22px;font-size:14px;font-weight:700}
   </style>
-  <div class="pr-card gs">
-    <div class="pr-ribbon">EXCLUSIVO PARA ALUNO PDP</div>
+
+  <style>
+    /* O .sec é flex em linha; o invólucro ocupa a largura toda. */
+    #preco .pr-escolha{width:100%;max-width:1060px;margin:0 auto}
+    #preco .pr-escolha-head{text-align:center;margin-bottom:52px}
+    #preco .pr-escolha-title{font-family:'Maven Pro',sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);
+      line-height:1.1;color:var(--black);margin-top:18px;text-wrap:balance}
+    #preco .pr-escolha-sub{font-size:16px;color:var(--g500);line-height:1.55;max-width:540px;margin:12px auto 0;text-wrap:balance}
+
+    #preco .pr-duo{display:grid;grid-template-columns:minmax(0,1fr);gap:44px;align-items:start}
+    #preco .pr-duo > .pr-card{width:100%}
+    #preco .pr-upgrade{order:-1}
+    @media (min-width:960px){
+      #preco .pr-duo{grid-template-columns:minmax(0,420px) minmax(0,560px);justify-content:center;gap:28px}
+      #preco .pr-duo > .pr-card{max-width:none;margin:0}
+      #preco .pr-upgrade{order:0}
+    }
+
+    /* Upgrade: o card principal. Borda escura para ser lido como a escolha
+       recomendada mesmo antes de ler o selo. */
+    #preco .pr-upgrade{border:1.5px solid var(--black);
+      box-shadow:0 30px 70px rgba(0,0,0,0.09),0 4px 12px rgba(0,0,0,0.04)}
+
+    /* Renovação: mesma estrutura, peso visual menor. */
+    #preco .pr-renov{background:rgba(255,255,255,0.5);box-shadow:none}
+    #preco .pr-renov-val{font-weight:800;font-size:clamp(40px,5vw,52px);color:var(--graphite);line-height:1;letter-spacing:-0.02em}
+    #preco .pr-renov .pr-intro{margin-bottom:12px}
+    #preco .pr-renov .pr-meta{margin-top:10px}
+    #preco .pr-renov .pr-btn{margin-top:28px}
+
+    #preco .pr-plano{font-family:'Maven Pro',sans-serif;font-weight:800;font-size:22px;line-height:1.2;color:var(--black)}
+    #preco .pr-plano-sub{font-size:14px;color:var(--g500);line-height:1.5;margin-top:6px}
+
+    #preco .pr-cmp{list-style:none;margin:24px 0 36px;padding:24px 0 0;border-top:1px solid var(--g100);
+      display:flex;flex-direction:column;gap:13px;text-align:left}
+    #preco .pr-cmp li{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.45;color:var(--graphite)}
+    #preco .pr-cmp li.destaque strong{font-weight:700;color:var(--black)}
+    #preco .pr-cmp li.fora{color:var(--g300)}
+    #preco .pr-cmp-ic{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    #preco .pr-cmp-ic svg{width:11px;height:11px;fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+    #preco .pr-cmp-ic.sim{background:var(--black)}
+    #preco .pr-cmp-ic.sim svg{stroke:#fff}
+    #preco .pr-renov .pr-cmp-ic.sim{background:var(--g500)}
+    #preco .pr-cmp-ic.nao{border:1.5px solid var(--g100)}
+    #preco .pr-cmp-ic.nao svg{stroke:var(--g300);width:9px;height:9px}
+
+    #preco .pr-vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    @media (max-width:540px){
+      #preco .pr-escolha-head{margin-bottom:40px}
+      #preco .pr-cmp li{font-size:14.5px}
+    }
+  </style>
+
+  <div class="pr-escolha">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <symbol id="up-i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    </svg>
+    <div class="pr-escolha-head gs">
+      <p class="label tc">Exclusivo para aluno PDP</p>
+      <h2 class="pr-escolha-title">Renovar ou fazer o upgrade?</h2>
+      <p class="pr-escolha-sub">As duas opções renovam seu acesso ao PDP por mais um ano. A diferença é o que vem junto.</p>
+    </div>
+
+    <div class="pr-duo">
+
+    <article class="pr-card pr-renov gs" aria-labelledby="pr-renov-titulo">
+      <h3 class="pr-plano" id="pr-renov-titulo">Renovação PDP</h3>
+      <p class="pr-plano-sub">Mais um ano de acesso ao PDP.</p>
+      <ul class="pr-cmp">
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>Renovação do PDP</span></li>
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>1 ano de acesso</span></li>
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>Suporte no WhatsApp</span></li>
+        <li class="fora"><span class="pr-cmp-ic nao" aria-hidden="true"><svg><use href="#up-i-x"/></svg></span><span><span class="pr-vh">Não inclui: </span>Curso completo IA de Primeira</span></li>
+        <li class="fora"><span class="pr-cmp-ic nao" aria-hidden="true"><svg><use href="#up-i-x"/></svg></span><span><span class="pr-vh">Não inclui: </span>Desafio de Implementação por 1 ano</span></li>
+        <li class="fora"><span class="pr-cmp-ic nao" aria-hidden="true"><svg><use href="#up-i-x"/></svg></span><span><span class="pr-vh">Não inclui: </span>Dúvidas com o Rodrigo direto no WhatsApp</span></li>
+      </ul>
+      <p class="pr-intro">Valor da renovação</p>
+      <p class="pr-renov-val fm">R$ 997</p>
+      <p class="pr-meta">à vista, ou em até 12x no cartão (com juros)</p>
+      <a href="https://pay.hotmart.com/F79474514K?off=5bgwg9qj" target="_blank" rel="noopener" class="pr-btn ghost">Renovar só o PDP</a>
+    </article>
+
+  <article class="pr-card pr-upgrade gs" aria-labelledby="pr-upgrade-titulo">
+    <div class="pr-ribbon">MELHOR ESCOLHA</div>
+
+    <h3 class="pr-plano" id="pr-upgrade-titulo">Upgrade para a Implementação</h3>
+    <p class="pr-plano-sub">Tudo da renovação, mais a Implementação completa.</p>
+    <ul class="pr-cmp">
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>Renovação do PDP</span></li>
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>1 ano de acesso</span></li>
+        <li><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><span>Suporte no WhatsApp</span></li>
+        <li class="destaque"><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><strong>Curso completo IA de Primeira</strong></li>
+        <li class="destaque"><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><strong>Desafio de Implementação por 1 ano</strong></li>
+        <li class="destaque"><span class="pr-cmp-ic sim" aria-hidden="true"><svg><use href="#i-check"/></svg></span><strong>Dúvidas com o Rodrigo direto no WhatsApp</strong></li>
+    </ul>
 
     <style>
       /* O preço de não-aluno precisa ser legível para servir de comparação, mas
@@ -1338,6 +1432,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p class="pr-note">Essa condição é exclusiva para aluno da Certificação Projeto de Primeira.</p>
     <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->
+  </article>
+    </div>
   </div>
 </section>
 <!-- ============================== -->
