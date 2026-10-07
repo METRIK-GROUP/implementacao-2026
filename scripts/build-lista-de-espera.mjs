@@ -23,6 +23,9 @@ const TARGET = join(ROOT, 'lista-de-espera', 'index.html');
 
 const applied = [];
 
+// Seletor de país do WhatsApp (o mesmo trecho vai no site do IA de Primeira).
+const WHATSAPP_PAIS_JS = readFileSync(join(ROOT, 'scripts', 'partials', 'whatsapp-pais.js'), 'utf8').replace(/\r\n/g, '\n');
+
 /** Substituição exata e obrigatória. Falha se `from` não existir (ou aparecer mais de uma vez). */
 function replaceOnce(html, label, from, to) {
   const first = html.indexOf(from);
@@ -193,6 +196,15 @@ const WAITLIST_SECTION = `<section class="sec bg-o" id="preco" aria-label="Lista
     #preco .wl-input:focus{outline:none;background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
     #preco .wl-input.is-invalid{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.12)}
     #preco .wl-error{font-size:12.5px;color:#C0392B;line-height:1.4}
+    #preco .wl-phone{display:flex;gap:8px}
+    #preco .wl-phone .wl-input{flex:1;min-width:0}
+    #preco .wl-ddi{position:relative;flex:0 0 auto;display:flex;align-items:center;min-width:96px;padding:0 30px 0 13px;
+      font-family:'Inter',sans-serif;font-size:15px;color:var(--black);white-space:nowrap;
+      background:var(--offwhite);border:1px solid #E4E2DA;border-radius:11px;transition:border-color .2s,box-shadow .2s,background .2s}
+    #preco .wl-ddi::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;margin-top:-5px;
+      border-right:2px solid var(--g500);border-bottom:2px solid var(--g500);transform:rotate(45deg);pointer-events:none}
+    #preco .wl-ddi select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
+    #preco .wl-ddi:focus-within{background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
     #preco .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
     #preco .wl-submit{width:100%;margin-top:4px}
     #preco .wl-spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:wlspin .7s linear infinite}
@@ -228,7 +240,15 @@ const WAITLIST_SECTION = `<section class="sec bg-o" id="preco" aria-label="Lista
       </div>
       <div class="wl-field">
         <label for="wl-whatsapp">WhatsApp</label>
-        <input class="wl-input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required>
+        <div class="wl-phone">
+          <div class="wl-ddi">
+            <span id="wl-ddi-view" aria-hidden="true">🇧🇷 +55</span>
+            <select id="wl-pais" name="pais" autocomplete="country" aria-label="País do seu WhatsApp">
+              <option value="BR" selected>🇧🇷 Brasil (+55)</option>
+            </select>
+          </div>
+          <input class="wl-input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel-national" inputmode="tel" placeholder="(11) 99999-9999" required aria-required="true">
+        </div>
       </div>
 
       <div class="wl-hp" aria-hidden="true">
@@ -267,6 +287,7 @@ html = cutBlock(
 // 7. JS do formulário
 // ---------------------------------------------------------------------------
 const WAITLIST_JS = `
+${WHATSAPP_PAIS_JS}
 // ===== LISTA DE ESPERA: formulário (countdown desativado — sem data da próxima turma) =====
 (function(){
   var ENDPOINT='https://dashboard.rodrigorosar.com.br/api/public/waitlist';
@@ -280,6 +301,7 @@ const WAITLIST_JS = `
   var email=document.getElementById('wl-email');
   var wa=document.getElementById('wl-whatsapp');
   var hp=document.getElementById('wl-website');
+  var telefone=wlWhatsappPais(document.getElementById('wl-pais'),document.getElementById('wl-ddi-view'),wa);
 
   function showError(msg,field){
     errEl.textContent=msg||'';
@@ -292,26 +314,19 @@ const WAITLIST_JS = `
     if(on){lblEl.innerHTML='<span class="wl-spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
     else{lblEl.textContent=SUBMIT_LABEL;btn.removeAttribute('aria-busy');}
   }
-  wa.addEventListener('input',function(){
-    var v=wa.value.replace(/\\D/g,'').slice(0,11);
-    if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
-    else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);
-    else if(v.length>0)v='('+v;
-    wa.value=v;
-  });
   var EMAIL_RE=/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var vNome=nome.value.trim(),vEmail=email.value.trim().toLowerCase(),vWa=wa.value.replace(/\\D/g,'');
+    var vNome=nome.value.trim(),vEmail=email.value.trim().toLowerCase(),erroWa=telefone.validar();
     if(!vNome){return showError('Informe seu nome.',nome);}
     if(!EMAIL_RE.test(vEmail)){return showError('Informe um e-mail válido.',email);}
-    if(vWa.length<10){return showError('Informe um WhatsApp válido com DDD.',wa);}
+    if(erroWa){return showError(erroWa,wa);}
     showError('');loading(true);
     var utm={};
     new URLSearchParams(location.search).forEach(function(val,key){if(key.indexOf('utm_')===0)utm[key]=val;});
     fetch(ENDPOINT,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:vWa,consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
+      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:telefone.valor(),pais:telefone.pais(),consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
     })
     .then(function(r){
       if(r.ok){
