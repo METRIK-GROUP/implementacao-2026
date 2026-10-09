@@ -23,7 +23,8 @@ const contexto = vm.createContext({ URL, URLSearchParams });
 vm.runInContext(`${codigo};this.PreCheckout=PreCheckout;`, contexto);
 const { meioDoLink, linkFinal, utmDa } = contexto.PreCheckout;
 
-const DADOS = { nome: 'Ana Paula', email: 'ana@exemplo.com', whatsapp: '11987654321', pais: 'BR' };
+// A janela pede só nome e WhatsApp (09/10/2026).
+const DADOS = { nome: 'Ana Paula', whatsapp: '11987654321', pais: 'BR' };
 
 test('cada checkout vira a sua forma de pagamento', () => {
   assert.equal(meioDoLink('https://www.asaas.com/c/2x3ccx7lhp4q23up'), 'pix');
@@ -38,11 +39,11 @@ test('link que não é de checkout não abre a janela', () => {
   assert.equal(meioDoLink('https://pay.hotmart.com.evil.com/U1'), null);
 });
 
-test('Hotmart: nome, e-mail, DDD e número no link, sem perder a oferta', () => {
+test('Hotmart: nome, DDD e número no link, sem perder a oferta (e sem e-mail)', () => {
   const u = new URL(linkFinal('https://pay.hotmart.com/U104887798W?off=abc', DADOS, ''));
   assert.equal(u.searchParams.get('off'), 'abc');
   assert.equal(u.searchParams.get('name'), 'Ana Paula');
-  assert.equal(u.searchParams.get('email'), 'ana@exemplo.com');
+  assert.equal(u.searchParams.has('email'), false);
   assert.equal(u.searchParams.get('phoneac'), '11');
   assert.equal(u.searchParams.get('phonenumber'), '987654321');
 });
@@ -50,7 +51,7 @@ test('Hotmart: nome, e-mail, DDD e número no link, sem perder a oferta', () => 
 test('Hotmart com WhatsApp de fora do Brasil: sem telefone no link', () => {
   const u = new URL(linkFinal('https://pay.hotmart.com/U1', { ...DADOS, whatsapp: '+351 912 345 678', pais: 'PT' }, ''));
   assert.equal(u.searchParams.get('phoneac'), null);
-  assert.equal(u.searchParams.get('email'), 'ana@exemplo.com');
+  assert.equal(u.searchParams.get('name'), 'Ana Paula');
 });
 
 test('Asaas e TMB não recebem dados pessoais no link', () => {

@@ -1,4 +1,6 @@
-// ===== PRÉ-CHECKOUT: nome, e-mail e WhatsApp antes do pagamento =====
+// ===== PRÉ-CHECKOUT: nome e WhatsApp antes do pagamento =====
+// Só nome e WhatsApp, para facilitar (sugestão do Rodrigo, 09/10/2026): o
+// painel identifica a pessoa e acha a compra pelo WhatsApp.
 // Clique em qualquer botão que leva ao Asaas (PIX), à Hotmart (cartão) ou à
 // TMB (boleto) abre esta janela. Os dados vão para o painel (launch-dashboard,
 // /api/public/pre-checkout) e a pessoa segue para o pagamento. Quem passar
@@ -8,7 +10,7 @@
 // 1. A venda nunca espera o painel. O envio sai por sendBeacon (ou fetch com
 //    keepalive), sem aguardar resposta, e o checkout abre na hora. Painel fora
 //    do ar = lead perdido, nunca venda perdida.
-// 2. Só a Hotmart aceita dados pelo link (name, email, phoneac, phonenumber;
+// 2. Só a Hotmart aceita dados pelo link (name, phoneac, phonenumber;
 //    conferido em 09/10/2026). Asaas e TMB ignoram: a pessoa digita de novo lá.
 // 3. Sem JavaScript o botão é um link comum para o checkout, como sempre foi.
 //    Link com data-sem-pre-checkout não abre a janela.
@@ -19,7 +21,6 @@ var PreCheckout=(function(){
   var ROTULOS={pix:'Pagamento no PIX',cartao:'Cartão de crédito',boleto:'Boleto parcelado'};
   // Rastreio da página que segue para o checkout (a Hotmart lê src, sck e utm_*).
   var REPASSAR=/^(utm_[a-z]+|src|sck)$/;
-  var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   /** 'pix' | 'cartao' | 'boleto' para os três checkouts; null para qualquer outro link. */
   function meioDoLink(href){
@@ -32,7 +33,7 @@ var PreCheckout=(function(){
     new URLSearchParams(busca||'').forEach(function(v,k){if(REPASSAR.test(k)&&!u.searchParams.has(k))u.searchParams.set(k,v);});
     if(u.hostname==='pay.hotmart.com'){
       u.searchParams.set('name',dados.nome);
-      u.searchParams.set('email',dados.email);
+      if(dados.email)u.searchParams.set('email',dados.email);
       var d=String(dados.whatsapp||'').replace(/\D/g,'');
       if(dados.pais==='BR'&&(d.length===10||d.length===11)){
         u.searchParams.set('phoneac',d.slice(0,2));
@@ -61,7 +62,7 @@ var PreCheckout=(function(){
   }
 
   function lerLocal(){try{return JSON.parse(localStorage.getItem(CHAVE_LOCAL)||'null')||{};}catch(e){return {};}}
-  function gravarLocal(d){try{localStorage.setItem(CHAVE_LOCAL,JSON.stringify({nome:d.nome,email:d.email}));}catch(e){}}
+  function gravarLocal(d){try{localStorage.setItem(CHAVE_LOCAL,JSON.stringify({nome:d.nome}));}catch(e){}}
 
   var CSS=''+
     // margin:auto e inset:0 de volta: o reset do site (*{margin:0}) tira a centralização nativa do <dialog>.
@@ -105,8 +106,6 @@ var PreCheckout=(function(){
       '<form id="pck-form" novalidate>'+
         '<div class="pck-f"><label for="pck-nome">Nome completo</label>'+
           '<input class="pck-i" id="pck-nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" maxlength="120" required></div>'+
-        '<div class="pck-f"><label for="pck-email">E-mail</label>'+
-          '<input class="pck-i" id="pck-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="voce@exemplo.com" maxlength="254" required></div>'+
         '<div class="pck-f"><label for="pck-whatsapp">WhatsApp</label>'+
           '<div class="pck-tel"><div class="pck-ddi"><span id="pck-ddi-view" aria-hidden="true">🇧🇷 +55</span>'+
             '<select id="pck-pais" name="pais" autocomplete="country" aria-label="País do seu WhatsApp"><option value="BR" selected>🇧🇷 Brasil (+55)</option></select></div>'+
@@ -116,7 +115,7 @@ var PreCheckout=(function(){
         '<p class="pck-err" id="pck-err" role="alert" aria-live="assertive"></p>'+
         '<button class="pr-btn primary pck-go" type="submit">Continuar para o pagamento</button>'+
       '</form>'+
-      '<p class="pck-note">Seus dados são usados só para falar com você sobre a sua inscrição, por e-mail e WhatsApp.</p>'+
+      '<p class="pck-note">Seus dados são usados só para falar com você sobre a sua inscrição, pelo WhatsApp.</p>'+
     '</div>';
 
   function iniciar(doc){
@@ -150,14 +149,14 @@ var PreCheckout=(function(){
     }
 
     function prepararCampos(caixa){
-      campos={nome:doc.getElementById('pck-nome'),email:doc.getElementById('pck-email'),wa:doc.getElementById('pck-whatsapp'),
+      campos={nome:doc.getElementById('pck-nome'),wa:doc.getElementById('pck-whatsapp'),
         hp:doc.getElementById('pck-website'),err:doc.getElementById('pck-err')};
       telefone=wlWhatsappPais(doc.getElementById('pck-pais'),doc.getElementById('pck-ddi-view'),campos.wa);
       caixa.querySelector('[data-pck-fechar]').addEventListener('click',function(){caixa.close();});
       // Clique fora da caixa (no fundo escuro) fecha.
       caixa.addEventListener('click',function(e){if(e.target===caixa)caixa.close();});
       caixa.addEventListener('close',function(){if(origemFoco&&origemFoco.focus)origemFoco.focus();});
-      [campos.nome,campos.email,campos.wa].forEach(function(c){c.addEventListener('input',function(){c.removeAttribute('aria-invalid');});});
+      [campos.nome,campos.wa].forEach(function(c){c.addEventListener('input',function(){c.removeAttribute('aria-invalid');});});
       doc.getElementById('pck-form').addEventListener('submit',aoEnviar);
     }
 
@@ -169,7 +168,7 @@ var PreCheckout=(function(){
 
     function erro(msg,campo){
       campos.err.textContent=msg||'';
-      [campos.nome,campos.email,campos.wa].forEach(function(c){c.removeAttribute('aria-invalid');});
+      [campos.nome,campos.wa].forEach(function(c){c.removeAttribute('aria-invalid');});
       if(campo){campo.setAttribute('aria-invalid','true');campo.focus();}
     }
 
@@ -178,14 +177,13 @@ var PreCheckout=(function(){
       origemFoco=link;
       doc.getElementById('pck-meio').textContent=ROTULOS[atual.meio];
       doc.getElementById('pck-sub').textContent=atual.meio==='cartao'
-        ?'Preencha para seguir ao pagamento seguro na Hotmart. Seus dados já chegam preenchidos lá.'
+        ?'Preencha para seguir ao pagamento seguro na Hotmart. Seu nome e celular já chegam preenchidos lá.'
         :'Preencha para seguir ao pagamento seguro. Se algo travar no caminho, nossa equipe te chama no WhatsApp para ajudar.';
       var salvo=lerLocal();
       if(!campos.nome.value&&salvo.nome)campos.nome.value=salvo.nome;
-      if(!campos.email.value&&salvo.email)campos.email.value=salvo.email;
       erro('');
       dlg.showModal();
-      var vazio=[campos.nome,campos.email,campos.wa].filter(function(c){return !c.value.trim();})[0];
+      var vazio=[campos.nome,campos.wa].filter(function(c){return !c.value.trim();})[0];
       (vazio||campos.nome).focus();
     }
 
@@ -200,15 +198,14 @@ var PreCheckout=(function(){
     }
 
     function processar(){
-      var nome=campos.nome.value.trim().replace(/\s+/g,' '),email=campos.email.value.trim().toLowerCase(),erroWa=telefone.validar();
+      var nome=campos.nome.value.trim().replace(/\s+/g,' '),erroWa=telefone.validar();
       if(!nome)return erro('Informe seu nome.',campos.nome);
-      if(!EMAIL_RE.test(email))return erro('Informe um e-mail válido.',campos.email);
       if(erroWa)return erro(erroWa,campos.wa);
       erro('');
-      var dados={nome:nome,email:email,whatsapp:telefone.valor(),pais:telefone.pais()};
+      var dados={nome:nome,whatsapp:telefone.valor(),pais:telefone.pais()};
       var destino=linkFinal(atual.href,dados,location.search);
       if(!campos.hp.value){
-        enviar({nome:nome,email:email,whatsapp:dados.whatsapp,pais:dados.pais,meio:atual.meio,checkout:atual.href,
+        enviar({nome:nome,whatsapp:dados.whatsapp,pais:dados.pais,meio:atual.meio,checkout:atual.href,
           website:'',utm:utmDa(location.search)});
         gravarLocal(dados);
         // Sem dado pessoal no GTM: só o evento e a forma de pagamento.
