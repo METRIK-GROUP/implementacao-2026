@@ -650,6 +650,13 @@ const JS_UPGRADE = `
 
 t.replaceOnce('js do upgrade', `\n}); // end DOMContentLoaded`, `${JS_UPGRADE}}); // end DOMContentLoaded`);
 
+// A janela de pré-checkout (nome, e-mail e WhatsApp) é só da página de vendas
+// (decisão de 09/10/2026). Aqui os botões já abrem a confirmação de e-mail de
+// aluno; as duas janelas juntas brigariam pelo mesmo clique.
+t.replaceOnce('pré-checkout: fora', `<!-- Janela de pré-checkout (nome, e-mail e WhatsApp antes do pagamento). Gerado por scripts/build-pre-checkout.mjs. -->
+<script defer src="/assets/pre-checkout.js"></script>
+`, '');
+
 // ---------------------------------------------------------------------------
 // Guardas: o que não pode sobreviver nesta página
 // ---------------------------------------------------------------------------
@@ -690,6 +697,7 @@ t.guard([
   // essa classe e o botão do PIX herdou tudo isso: ficou achatado, com a borda
   // de baixo pontilhada. O card agora é `.pr-card-upgrade`; isto impede a volta.
   ['classe pr-upgrade (estilo de link do vendas.html, achata os botões)', /class="[^"]*\bpr-upgrade\b/],
+  ['janela de pré-checkout (só da página de vendas)', /pre-checkout\.js/],
 ]);
 
 // Casa `trecho` literalmente, mas só dentro do card cujo título tem `idTitulo`

@@ -30,9 +30,9 @@ if ! node scripts/build.mjs; then
 fi
 
 # O que o build gerou entra neste mesmo commit.
-git add lista-de-espera upgrade
+git add lista-de-espera upgrade assets/pre-checkout.js
 
-if git diff --cached --quiet --exit-code lista-de-espera upgrade; then
+if git diff --cached --quiet --exit-code lista-de-espera upgrade assets/pre-checkout.js; then
   echo "pre-commit: variantes já estavam em dia."
 else
   echo "pre-commit: variantes atualizadas e incluídas no commit."

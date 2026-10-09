@@ -41,6 +41,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Testar a janela de pré-checkout
+        run: node --test scripts/testar-pre-checkout.mjs
+
       - name: Gerar variantes a partir de vendas.html
         run: node scripts/build.mjs
 
@@ -48,13 +51,13 @@ jobs:
         env:
           EVENTO: ${{ github.event_name }}
         run: |
-          if [ -z "$(git status --porcelain lista-de-espera upgrade)" ]; then
+          if [ -z "$(git status --porcelain lista-de-espera upgrade assets/pre-checkout.js)" ]; then
             echo "Variantes em dia com o vendas.html."
             exit 0
           fi
 
           echo "As variantes estavam atrasadas. Arquivos afetados:"
-          git status --porcelain lista-de-espera upgrade
+          git status --porcelain lista-de-espera upgrade assets/pre-checkout.js
 
           # Em pull request não dá para commitar no branch de origem; aqui o
           # papel é só avisar que o merge levaria páginas desatualizadas.
@@ -65,7 +68,7 @@ jobs:
 
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lista-de-espera upgrade
+          git add lista-de-espera upgrade assets/pre-checkout.js
           git commit -m "chore: regenera variantes a partir de vendas.html"
 
           if git push; then
@@ -81,7 +84,7 @@ jobs:
           echo ""
           echo "Para resolver agora, no computador onde o site é editado:"
           echo "  node scripts/build.mjs"
-          echo "  git add lista-de-espera upgrade && git commit && git push"
+          echo "  git add lista-de-espera upgrade assets/pre-checkout.js && git commit && git push"
           echo ""
           echo "Para nunca mais precisar fazer isso à mão, uma vez só:"
           echo "  git config core.hooksPath .githooks"
