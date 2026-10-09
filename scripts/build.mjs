@@ -20,6 +20,7 @@ const SCRIPTS = dirname(fileURLToPath(import.meta.url));
 const VARIANTES = [
   { nome: 'lista-de-espera', arquivo: 'build-lista-de-espera.mjs' },
   { nome: 'upgrade', arquivo: 'build-upgrade.mjs' },
+  { nome: 'pre-checkout', arquivo: 'build-pre-checkout.mjs' },
 ];
 
 let falhou = false;

@@ -381,6 +381,13 @@ html = cutBlock(
 );
 
 // ---------------------------------------------------------------------------
+// 9. Janela de pré-checkout: só existe na página de vendas (sem checkout aqui)
+// ---------------------------------------------------------------------------
+html = replaceOnce(html, 'pré-checkout: fora', `<!-- Janela de pré-checkout (nome, e-mail e WhatsApp antes do pagamento). Gerado por scripts/build-pre-checkout.mjs. -->
+<script defer src="/assets/pre-checkout.js"></script>
+`, '');
+
+// ---------------------------------------------------------------------------
 // Guarda final: nada de checkout pode sobreviver na lista de espera.
 // ---------------------------------------------------------------------------
 const FORBIDDEN = [
@@ -393,6 +400,7 @@ const FORBIDDEN = [
   ['id de preço no markup', /id="(big-price|pr-actions|pr-countdown)"/],
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
   ['pill de aviso no hero (removida: repetia o botão)', /hero-date-note|h-date-note/],
+  ['janela de pré-checkout', /pre-checkout\.js/],
 ];
 for (const [label, re] of FORBIDDEN) {
   if (re.test(html)) throw new Error(`Guarda falhou: ${label} ainda presente no HTML gerado (${re})`);
