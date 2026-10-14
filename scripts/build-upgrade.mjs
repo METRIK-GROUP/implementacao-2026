@@ -33,6 +33,7 @@
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createTransform, absolutizeAssets } from './lib/html-transform.mjs';
+import { semVirada, OFERTA_EVENTO, OFERTA_CHEIA } from './lib/oferta.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = join(ROOT, 'vendas.html');
@@ -60,6 +61,17 @@ const PRECO_RENOVACAO = 'R$ 997';
 const ENDPOINT_VERIFICACAO = 'https://kaktarlhwpezebhercll.supabase.co/functions/v1/verificar-aluno';
 
 const t = createTransform(SOURCE);
+
+// ---------------------------------------------------------------------------
+// 0. A virada de preço é só da página de vendas.
+// Desde 14/10/2026 o vendas.html carrega dois valores: o do evento (até dom
+// 18/10 às 19h) e o cheio, em data-cheio / data-href-cheio, mais um script que
+// troca na hora. O upgrade tem preço próprio, então isso sai daqui, e o que
+// sobra é o valor da fase atual do vendas.html — é com ele que as âncoras
+// abaixo precisam casar, antes e depois de o robô gravar o valor cheio.
+// Os valores moram em scripts/lib/oferta.mjs.
+// ---------------------------------------------------------------------------
+const OFERTA = semVirada(t);
 
 // ---------------------------------------------------------------------------
 // 1. Caminhos absolutos: a página vive em /upgrade/, então img/ e video/
@@ -99,7 +111,7 @@ t.replaceOnce(
 // ---------------------------------------------------------------------------
 t.replaceOnce(
   'schema: preço da oferta',
-  `        "price": "3997.00",`,
+  `        "price": "${OFERTA.schema}",`,
   `        "price": "1997.00",`
 );
 
@@ -338,13 +350,13 @@ ${LISTA_UPGRADE}
 // ---------------------------------------------------------------------------
 t.replaceOnce(
   'preço: parcela do cartão',
-  `      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">390</span>`,
+  `      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">${OFERTA.parcela}</span>`,
   `      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">197</span>`
 );
 
 t.replaceOnce(
   'preço: valor no PIX',
-  `      <p class="pr-pix-val fm">R$ 3.997</p>`,
+  `      <p class="pr-pix-val fm">${OFERTA.pix}</p>`,
   `      <p class="pr-pix-val fm">R$ 1.997</p>`
 );
 
@@ -354,13 +366,13 @@ t.replaceOnce(
 // ---------------------------------------------------------------------------
 t.replaceOnce(
   'checkout: PIX',
-  `      <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" target="_blank" class="pr-btn primary">`,
+  `      <a href="${OFERTA.asaas}" target="_blank" class="pr-btn primary">`,
   `      <a href="${CHECKOUT_PIX}" target="_blank" class="pr-btn primary" data-upgrade-checkout>`
 );
 
 t.replaceOnce(
   'checkout: cartão',
-  `        <a href="https://pay.hotmart.com/U104887798W?bid=1774198329832" target="_blank" class="pr-btn ghost">`,
+  `        <a href="${OFERTA.hotmart}" target="_blank" class="pr-btn ghost">`,
   `        <a href="${CHECKOUT_CARTAO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
 );
 
@@ -380,7 +392,7 @@ t.replaceOnce(
 //
 // t.replaceOnce(
 //   'checkout: boleto',
-//   `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
+//   `        <a href="${OFERTA.tmb}" target="_blank" class="pr-btn ghost">`,
 //   `        <a href="${CHECKOUT_BOLETO}" target="_blank" class="pr-btn ghost" data-upgrade-checkout>`
 // );
 // Com dois meios de pagamento em vez de três, a linha de baixo precisa de
@@ -408,7 +420,7 @@ t.replaceOnce(
 
 t.cutBlock(
   'checkout: boleto removido (oferta TMB indisponível)',
-  `        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" target="_blank" class="pr-btn ghost">`,
+  `        <a href="${OFERTA.tmb}" target="_blank" class="pr-btn ghost">`,
   `</a>
 `,
   `        <!-- Botão de boleto parcelado removido: a oferta da TMB está indisponível desde 23/09/2026. -->
@@ -690,17 +702,25 @@ t.guardVisible([
   ['oferta amarrada a uma turma', /DESTA TURMA|desta janela|janela de inscri[çc][ãa]o/i],
   ['contagem regressiva', /id="pr-countdown"/],
   ['selo de garantia no bloco de compra', /class="pr-trust">(?:(?!<\/div>)[\s\S])*Garantia/],
+  // Depois da virada de 18/10 o vendas.html mostra o valor cheio; o upgrade
+  // continua em R$ 1.997. (Só o visível: a seção 20, comentada, guarda o valor.)
+  ['valor cheio da página de vendas', /R\$ 4\.997|pr-val">490</],
 ]);
 
 t.guard([
-  ['checkout da oferta cheia (Asaas)', /asaas\.com\/c\/2x3ccx7lhp4q23up/],
-  ['checkout da oferta cheia (Hotmart)', /pay\.hotmart\.com\/U104887798W\?bid=/],
-  ['checkout da oferta cheia (TMB)', /pay\.tmb\.com\.br\/RodrigoRosar\/M4E188885X5/],
+  // Nenhum checkout da página de vendas, nem do evento nem da oferta cheia.
+  ['checkout do evento (Asaas)', new RegExp(literal(OFERTA_EVENTO.asaas))],
+  ['checkout do evento (Hotmart)', new RegExp(literal(OFERTA_EVENTO.hotmart))],
+  ['checkout do evento (TMB)', new RegExp(literal(OFERTA_EVENTO.tmb))],
+  ['checkout da oferta cheia (Asaas)', new RegExp(literal(OFERTA_CHEIA.asaas))],
+  ['checkout da oferta cheia (Hotmart)', new RegExp(literal(OFERTA_CHEIA.hotmart))],
+  ['checkout da oferta cheia (TMB)', new RegExp(literal(OFERTA_CHEIA.tmb))],
+  ['virada de preço (só da página de vendas)', /data-cheio=|data-href-cheio=|VIRADA PRECO CHEIO/],
   ['checkout na TMB (oferta indisponível desde 23/09/2026)', /pay\.tmb\.com\.br/],
   ['link "Já é PDP?" (o visitante já está na oferta de upgrade)', /J%C3%A1%20sou%20PDP/],
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
   ['indexação no Google', /<meta name="robots" content="index/],
-  ['preço de 3997 no schema', /"price": "3997\.00"/],
+  ['preço da página de vendas no schema', /"price": "(3997|4997)\.00"/],
   // `.pr-upgrade` é o estilo do antigo link "Já é PDP? faça upgrade" no
   // vendas.html: fonte 12,5px, 1px de respiro embaixo e sublinhado tracejado
   // em todo <a> de dentro. Em 29/09/2026 o card do upgrade foi publicado com
@@ -709,6 +729,10 @@ t.guard([
   ['classe pr-upgrade (estilo de link do vendas.html, achata os botões)', /class="[^"]*\bpr-upgrade\b/],
   ['janela de pré-checkout (só da página de vendas)', /pre-checkout\.js/],
 ]);
+
+function literal(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 // Casa `trecho` literalmente, mas só dentro do card cujo título tem `idTitulo`
 // (entre o título e o </article> que fecha aquele card). Assim uma lista trocada
