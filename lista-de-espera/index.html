@@ -1320,6 +1320,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       border-right:2px solid var(--g500);border-bottom:2px solid var(--g500);transform:rotate(45deg);pointer-events:none}
     #preco .wl-ddi select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
     #preco .wl-ddi:focus-within{background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
+    #preco .wl-select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px}
+    /* :focus junto: o foco do .wl-input usa o atalho background e apagaria a seta. */
+    #preco .wl-select,#preco .wl-select:focus{
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%237A776E' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 15px center;background-size:12px 8px}
+    #preco .wl-select:invalid{color:#A8A59C}
+    #preco .wl-select option{color:var(--black)}
     #preco .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
     #preco .wl-submit{width:100%;margin-top:4px}
     #preco .wl-spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:wlspin .7s linear infinite}
@@ -1364,6 +1371,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <input class="wl-input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel-national" inputmode="tel" placeholder="(11) 99999-9999" required aria-required="true">
         </div>
+      </div>
+      <div class="wl-field">
+        <label for="wl-tamanho">Tamanho do escritório</label>
+        <select class="wl-input wl-select" id="wl-tamanho" name="tamanho_escritorio" required aria-required="true">
+          <option value="" disabled selected>Contando você, sem freelas</option>
+          <option value="Ainda não atuo">Ainda não atuo</option>
+          <option value="Trabalho em outro escritório">Trabalho em outro escritório</option>
+          <option value="Trabalho sozinho(a)">Trabalho sozinho(a)</option>
+          <option value="2 pessoas">2 pessoas</option>
+          <option value="3 pessoas">3 pessoas</option>
+          <option value="4 pessoas">4 pessoas</option>
+          <option value="5 - 7 pessoas">5 - 7 pessoas</option>
+          <option value="8 - 10 pessoas">8 - 10 pessoas</option>
+          <option value="10+ pessoas">10+ pessoas</option>
+        </select>
+      </div>
+      <div class="wl-field">
+        <label for="wl-faturamento">Faixa de faturamento</label>
+        <select class="wl-input wl-select" id="wl-faturamento" name="faixa_faturamento" required aria-required="true">
+          <option value="" disabled selected>Média mensal com projetos</option>
+          <option value="Tenho salário fixo">Tenho salário fixo</option>
+          <option value="Ainda não faturo com projetos">Ainda não faturo com projetos</option>
+          <option value="Até R$5.000">Até R$5.000</option>
+          <option value="R$5.001 a R$10.000">R$5.001 a R$10.000</option>
+          <option value="R$10.001 a R$30.000">R$10.001 a R$30.000</option>
+          <option value="R$30.001 a R$60.000">R$30.001 a R$60.000</option>
+          <option value="Acima de R$60.000">Acima de R$60.000</option>
+        </select>
       </div>
 
       <div class="wl-hp" aria-hidden="true">
@@ -2270,15 +2305,25 @@ function wlWhatsappPais(sel,view,wa){
   var nome=document.getElementById('wl-nome');
   var email=document.getElementById('wl-email');
   var wa=document.getElementById('wl-whatsapp');
+  var tamanho=document.getElementById('wl-tamanho');
+  var faixa=document.getElementById('wl-faturamento');
   var hp=document.getElementById('wl-website');
   var telefone=wlWhatsappPais(document.getElementById('wl-pais'),document.getElementById('wl-ddi-view'),wa);
+  var campos=[nome,email,wa,tamanho,faixa];
 
   function showError(msg,field){
     errEl.textContent=msg||'';
-    [nome,email,wa].forEach(function(f){f.classList.remove('is-invalid');});
+    campos.forEach(function(f){f.classList.remove('is-invalid');});
     if(field){field.classList.add('is-invalid');field.focus();}
   }
-  [nome,email,wa].forEach(function(f){f.addEventListener('input',function(){this.classList.remove('is-invalid');});});
+  // Corrigiu o campo apontado: some o contorno vermelho e a mensagem dele.
+  function limpar(){
+    if(this.classList.contains('is-invalid')){this.classList.remove('is-invalid');errEl.textContent='';}
+  }
+  campos.forEach(function(f){
+    f.addEventListener('input',limpar);
+    f.addEventListener('change',limpar);
+  });
   function loading(on){
     btn.disabled=on;
     if(on){lblEl.innerHTML='<span class="wl-spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
@@ -2291,12 +2336,14 @@ function wlWhatsappPais(sel,view,wa){
     if(!vNome){return showError('Informe seu nome.',nome);}
     if(!EMAIL_RE.test(vEmail)){return showError('Informe um e-mail válido.',email);}
     if(erroWa){return showError(erroWa,wa);}
+    if(!tamanho.value){return showError('Escolha o tamanho do seu escritório.',tamanho);}
+    if(!faixa.value){return showError('Escolha a faixa de faturamento.',faixa);}
     showError('');loading(true);
     var utm={};
     new URLSearchParams(location.search).forEach(function(val,key){if(key.indexOf('utm_')===0)utm[key]=val;});
     fetch(ENDPOINT,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:telefone.valor(),pais:telefone.pais(),consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
+      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:telefone.valor(),pais:telefone.pais(),tamanho_escritorio:tamanho.value,faixa_faturamento:faixa.value,consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
     })
     .then(function(r){
       if(r.ok){
