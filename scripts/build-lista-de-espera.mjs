@@ -453,7 +453,8 @@ html = replaceOnce(html, 'pré-checkout: fora', `<!-- Janela de pré-checkout (n
 // Guarda final: nada de checkout pode sobreviver na lista de espera.
 // ---------------------------------------------------------------------------
 const FORBIDDEN = [
-  ['link de checkout Asaas', /asaas\.com\/c\//],
+  // O link novo do Asaas tem /000/ antes do /c/ (oferta cheia, 14/10/2026).
+  ['link de checkout Asaas', /asaas\.com\/(?:\d+\/)?c\//],
   ['link de checkout Hotmart', /pay\.hotmart\.com/],
   ['link de checkout TMB', /pay\.tmb\.com\.br/],
   ['botão de compra', /class="pr-btn (primary|ghost)"/],
@@ -463,6 +464,7 @@ const FORBIDDEN = [
   ['caminho relativo de imagem', /(?<!\/)(["'])img\//],
   ['pill de aviso no hero (removida: repetia o botão)', /hero-date-note|h-date-note/],
   ['janela de pré-checkout', /pre-checkout\.js/],
+  ['virada de preço (só da página de vendas)', /data-cheio=|data-href-cheio=|VIRADA PRECO CHEIO/],
 ];
 for (const [label, re] of FORBIDDEN) {
   if (re.test(html)) throw new Error(`Guarda falhou: ${label} ainda presente no HTML gerado (${re})`);
