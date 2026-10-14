@@ -125,7 +125,7 @@ t.replaceAll('schema: urls do site', /"https:\/\/implementacao\.rodrigorosar\.co
 t.cutBlock(
   'barra de urgência removida',
   '<!-- STICKY URGENCY BAR -->',
-  `<script>document.body.classList.add('bar-on');</script>\n`,
+  '<!-- /STICKY URGENCY BAR -->\n',
   '<!-- Barra de urgência removida na página de upgrade: o aluno pode fazer upgrade a qualquer momento. -->\n'
 );
 
@@ -413,6 +413,16 @@ t.cutBlock(
 `,
   `        <!-- Botão de boleto parcelado removido: a oferta da TMB está indisponível desde 23/09/2026. -->
 `
+);
+
+// A contagem regressiva da abertura do carrinho é da página de vendas. No upgrade
+// o aluno compra quando quiser: sai o contador e os botões ficam sempre visíveis
+// (no vendas.html eles nascem com `hidden` e o contador libera na hora marcada).
+t.cutBlock(
+  'contagem regressiva removida, botões sempre visíveis',
+  `    <div class="pr-countdown" id="pr-countdown">`,
+  `    <div class="pr-actions" id="pr-actions" hidden>`,
+  `    <div class="pr-actions" id="pr-actions">`
 );
 
 // O selo "Garantia 97 dias" sai da linha de selos do bloco de compra. Pedido do

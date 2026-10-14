@@ -207,16 +207,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   @media (prefers-reduced-motion:reduce){.sticky-bar{transition:none}.sticky-bar-dot{animation:none}}
 </style>
-<div class="sticky-bar always" id="stickyBar" role="region" aria-label="Aviso: prazo de matrículas">
+<div class="sticky-bar always" id="stickyBar" role="region" aria-label="Aviso: prazo de matrículas" hidden>
   <div class="sticky-bar-inner">
     <div class="sticky-bar-left">
       <span class="sticky-bar-dot" aria-hidden="true"></span>
-      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1"><span class="sticky-bar-lg">Matrículas abertas somente esta semana</span><span class="sticky-bar-sm">Matrículas só esta semana</span></span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2"><span class="sticky-bar-lg">A turma começa segunda, 24/08</span><span class="sticky-bar-sm">Começa segunda, 24/08</span></span></span>
+      <span class="sticky-bar-msg"><span class="sticky-bar-piece-1"><span class="sticky-bar-lg">Matrículas abertas somente esta semana</span><span class="sticky-bar-sm">Matrículas só esta semana</span></span><span class="sticky-bar-sep">·</span><span class="sticky-bar-piece-2"><span class="sticky-bar-lg">A turma começa terça, 03/11</span><span class="sticky-bar-sm">Começa terça, 03/11</span></span></span>
     </div>
     <a href="#preco" class="sticky-bar-cta"><span class="sticky-bar-lg">Garantir minha vaga</span><span class="sticky-bar-sm">Quero minha vaga</span></a>
   </div>
 </div>
-<script>document.body.classList.add('bar-on');</script>
+<script>
+// A barra de prazo só aparece na última semana do carrinho (seg 26/10 a sex 30/10).
+// Antes disso ela fica escondida: o carrinho abre em 18/10 e ainda faltam duas
+// semanas, então "somente esta semana" seria falso.
+// Roda antes da primeira pintura, então a página não pula. ?bar=on mostra antes da data.
+(function(){
+  var BARRA_A_PARTIR_DE = Date.UTC(2026, 9, 26, 3, 0, 0); // 26/10 00:00 BRT = 03:00 UTC
+  var bar = document.getElementById('stickyBar');
+  if (!bar) return;
+  if (Date.now() >= BARRA_A_PARTIR_DE || /[?&]bar=on\b/.test(location.search)) {
+    bar.hidden = false;
+    document.body.classList.add('bar-on');
+  }
+})();
+</script>
+<!-- /STICKY URGENCY BAR -->
 
 <main>
 <!-- ============================== -->
@@ -1323,7 +1338,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <noscript><style>#pr-countdown{display:none!important}#pr-actions{display:flex!important}.tc-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}</style></noscript>
 
-    <div class="pr-actions" id="pr-actions">
+    <div class="pr-countdown" id="pr-countdown">
+      <p class="pr-cd-msg">As inscrições para Implementação abrem às 15h</p>
+      <div class="pr-cd-grid" aria-live="polite">
+        <div class="pr-cd-cell"><span class="pr-cd-num" id="cd-h">00</span><span class="pr-cd-lbl">Horas</span></div>
+        <span class="pr-cd-sep">:</span>
+        <div class="pr-cd-cell"><span class="pr-cd-num" id="cd-m">00</span><span class="pr-cd-lbl">Min</span></div>
+        <span class="pr-cd-sep">:</span>
+        <div class="pr-cd-cell"><span class="pr-cd-num" id="cd-s">00</span><span class="pr-cd-lbl">Seg</span></div>
+      </div>
+      <p class="pr-cd-sub">Domingo · 15h00 (horário de Brasília)</p>
+    </div>
+
+    <div class="pr-actions" id="pr-actions" hidden>
       <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" target="_blank" class="pr-btn primary">
         <span>Pagar no PIX</span>
         <span class="pr-btn-tag">15% OFF</span>
@@ -1837,7 +1864,7 @@ if (stickyBar) {
     },
     c: {
       p1: ['Matrículas encerram domingo', 'Encerram domingo'],
-      p2: ['A turma começa segunda, 24/08', 'Começa segunda, 24/08'],
+      p2: ['A turma começa terça, 03/11', 'Começa terça, 03/11'],
       cta: ['Entrar nesta turma', 'Entrar na turma']
     }
   };
@@ -2103,8 +2130,8 @@ document.querySelectorAll('.fdep-player').forEach(function(wrap){
 // COUNTDOWN inscrições.countdown até 15h00 BRT.botões liberam às 14h45 BRT (folga 15min)
 (function(){
   try {
-    var TARGET = Date.UTC(2026, 7, 16, 18, 0, 0); // 16/08 15:00 BRT = 18:00 UTC
-    var REVEAL = Date.UTC(2026, 7, 16, 17, 45, 0); // 16/08 14:45 BRT = 17:45 UTC
+    var TARGET = Date.UTC(2026, 9, 18, 18, 0, 0); // 18/10 15:00 BRT = 18:00 UTC
+    var REVEAL = Date.UTC(2026, 9, 18, 17, 45, 0); // 18/10 14:45 BRT = 17:45 UTC
     var countdown = document.getElementById('pr-countdown');
     var actions = document.getElementById('pr-actions');
     var hEl = document.getElementById('cd-h');

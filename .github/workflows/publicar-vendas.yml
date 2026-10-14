@@ -1,0 +1,60 @@
+name: Publicar pagina de vendas
+
+# Abertura do carrinho da Implementação Ed.8.
+#
+# Sábado 17/10 às 23h00 (Brasília) a página inicial deixa de redirecionar para a
+# lista de espera e passa a ser a página de vendas: copia o vendas.html da main
+# para o index.html, como em agosto. O contador da própria página segura os
+# botões de compra até domingo 18/10: aparecem às 14h45 e o carrinho abre às 15h.
+#
+# Copiar na hora (em vez de juntar uma branch preparada antes) garante que entra
+# no ar o vendas.html mais recente, com tudo o que for mergeado até sábado.
+#
+# O agendamento do GitHub atrasa: em agosto rodou 56 min depois do horário.
+# Se no domingo de manhã a raiz ainda mostrar a lista de espera, dispare à mão
+# na aba Actions (Run workflow). Depois de rodar, o próprio workflow se apaga.
+
+on:
+  schedule:
+    - cron: '0 2 18 10 *' # 18/10 02:00 UTC = 17/10 23:00 em Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-variantes
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Conferir que o vendas.html está pronto para 18/10
+        run: |
+          # Sem estas marcas, publicar abriria a página com o contador errado
+          # ou com os botões à mostra antes da hora. Melhor falhar e avisar.
+          grep -q 'Date.UTC(2026, 9, 18, 18, 0, 0)' vendas.html || { echo "::error::O contador do vendas.html não aponta para 18/10 15h."; exit 1; }
+          grep -q 'id="pr-countdown"' vendas.html || { echo "::error::O vendas.html está sem o bloco do contador."; exit 1; }
+          grep -q 'id="pr-actions" hidden' vendas.html || { echo "::error::Os botões de compra do vendas.html não nascem escondidos."; exit 1; }
+
+      - name: Página de vendas vira a página inicial
+        run: |
+          cp vendas.html index.html
+          # O verificador de checkouts passa a cobrar as três ofertas de pé.
+          sed -i 's/^const INSCRICOES_ABERTAS = false;/const INSCRICOES_ABERTAS = true;/' scripts/checar-checkouts.mjs
+
+      - name: Remover este workflow (publicação é única)
+        run: git rm -q .github/workflows/publicar-vendas.yml
+
+      - name: Commit e push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html scripts/checar-checkouts.mjs
+          git commit -m "feat: página de vendas vira a página inicial (carrinho abre 18/10 às 15h)"
+          git push origin main
