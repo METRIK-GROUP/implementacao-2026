@@ -172,6 +172,48 @@ html = replaceOnce(
 // ---------------------------------------------------------------------------
 // 6. Seção de preço -> formulário da lista de espera
 // ---------------------------------------------------------------------------
+// Perfil do escritório: as opções são as MESMAS do credenciamento (perguntas
+// time_atual e faturamento). O painel só grava texto idêntico a uma opção de
+// lá (launch-dashboard, src/lib/waitlist/perfil.ts); mudar um texto aqui sem
+// mudar lá faz a resposta ser descartada em silêncio.
+const TAMANHOS_ESCRITORIO = [
+  'Ainda não atuo',
+  'Trabalho em outro escritório',
+  'Trabalho sozinho(a)',
+  '2 pessoas',
+  '3 pessoas',
+  '4 pessoas',
+  '5 - 7 pessoas',
+  '8 - 10 pessoas',
+  '10+ pessoas',
+];
+const FAIXAS_FATURAMENTO = [
+  'Tenho salário fixo',
+  'Ainda não faturo com projetos',
+  'Até R$5.000',
+  'R$5.001 a R$10.000',
+  'R$10.001 a R$30.000',
+  'R$30.001 a R$60.000',
+  'Acima de R$60.000',
+];
+
+/** <select> obrigatório com a primeira linha como dica (some ao escolher). */
+function selectPerfil(id, name, label, dica, opcoes) {
+  const itens = opcoes.map((o) => `          <option value="${o}">${o}</option>`).join('\n');
+  return `      <div class="wl-field">
+        <label for="${id}">${label}</label>
+        <select class="wl-input wl-select" id="${id}" name="${name}" required aria-required="true">
+          <option value="" disabled selected>${dica}</option>
+${itens}
+        </select>
+      </div>`;
+}
+
+const PERFIL_FIELDS = [
+  selectPerfil('wl-tamanho', 'tamanho_escritorio', 'Tamanho do escritório', 'Contando você, sem freelas', TAMANHOS_ESCRITORIO),
+  selectPerfil('wl-faturamento', 'faixa_faturamento', 'Faixa de faturamento', 'Média mensal com projetos', FAIXAS_FATURAMENTO),
+].join('\n');
+
 const WAITLIST_SECTION = `<section class="sec bg-o" id="preco" aria-label="Lista de espera">
   <style>
     #preco .wl-card{max-width:480px;margin:0 auto;background:var(--white);border-radius:22px;
@@ -205,6 +247,13 @@ const WAITLIST_SECTION = `<section class="sec bg-o" id="preco" aria-label="Lista
       border-right:2px solid var(--g500);border-bottom:2px solid var(--g500);transform:rotate(45deg);pointer-events:none}
     #preco .wl-ddi select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
     #preco .wl-ddi:focus-within{background:#fff;border-color:var(--black);box-shadow:0 0 0 3px rgba(30,30,30,0.1)}
+    #preco .wl-select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px}
+    /* :focus junto: o foco do .wl-input usa o atalho background e apagaria a seta. */
+    #preco .wl-select,#preco .wl-select:focus{
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%237A776E' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 15px center;background-size:12px 8px}
+    #preco .wl-select:invalid{color:#A8A59C}
+    #preco .wl-select option{color:var(--black)}
     #preco .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
     #preco .wl-submit{width:100%;margin-top:4px}
     #preco .wl-spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:wlspin .7s linear infinite}
@@ -250,6 +299,7 @@ const WAITLIST_SECTION = `<section class="sec bg-o" id="preco" aria-label="Lista
           <input class="wl-input" type="tel" id="wl-whatsapp" name="whatsapp" autocomplete="tel-national" inputmode="tel" placeholder="(11) 99999-9999" required aria-required="true">
         </div>
       </div>
+${PERFIL_FIELDS}
 
       <div class="wl-hp" aria-hidden="true">
         <label for="wl-website">Não preencha</label>
@@ -300,15 +350,25 @@ ${WHATSAPP_PAIS_JS}
   var nome=document.getElementById('wl-nome');
   var email=document.getElementById('wl-email');
   var wa=document.getElementById('wl-whatsapp');
+  var tamanho=document.getElementById('wl-tamanho');
+  var faixa=document.getElementById('wl-faturamento');
   var hp=document.getElementById('wl-website');
   var telefone=wlWhatsappPais(document.getElementById('wl-pais'),document.getElementById('wl-ddi-view'),wa);
+  var campos=[nome,email,wa,tamanho,faixa];
 
   function showError(msg,field){
     errEl.textContent=msg||'';
-    [nome,email,wa].forEach(function(f){f.classList.remove('is-invalid');});
+    campos.forEach(function(f){f.classList.remove('is-invalid');});
     if(field){field.classList.add('is-invalid');field.focus();}
   }
-  [nome,email,wa].forEach(function(f){f.addEventListener('input',function(){this.classList.remove('is-invalid');});});
+  // Corrigiu o campo apontado: some o contorno vermelho e a mensagem dele.
+  function limpar(){
+    if(this.classList.contains('is-invalid')){this.classList.remove('is-invalid');errEl.textContent='';}
+  }
+  campos.forEach(function(f){
+    f.addEventListener('input',limpar);
+    f.addEventListener('change',limpar);
+  });
   function loading(on){
     btn.disabled=on;
     if(on){lblEl.innerHTML='<span class="wl-spinner" aria-hidden="true"></span>';btn.setAttribute('aria-busy','true');}
@@ -321,12 +381,14 @@ ${WHATSAPP_PAIS_JS}
     if(!vNome){return showError('Informe seu nome.',nome);}
     if(!EMAIL_RE.test(vEmail)){return showError('Informe um e-mail válido.',email);}
     if(erroWa){return showError(erroWa,wa);}
+    if(!tamanho.value){return showError('Escolha o tamanho do seu escritório.',tamanho);}
+    if(!faixa.value){return showError('Escolha a faixa de faturamento.',faixa);}
     showError('');loading(true);
     var utm={};
     new URLSearchParams(location.search).forEach(function(val,key){if(key.indexOf('utm_')===0)utm[key]=val;});
     fetch(ENDPOINT,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:telefone.valor(),pais:telefone.pais(),consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
+      body:JSON.stringify({nome:vNome,email:vEmail,whatsapp:telefone.valor(),pais:telefone.pais(),tamanho_escritorio:tamanho.value,faixa_faturamento:faixa.value,consent:true,campanha:'implementacao',website:hp?hp.value:'',utm:utm})
     })
     .then(function(r){
       if(r.ok){
