@@ -121,7 +121,7 @@ html = cutBlock(
   html,
   'sticky bar',
   '<!-- STICKY URGENCY BAR -->',
-  `<script>document.body.classList.add('bar-on');</script>\n`,
+  '<!-- /STICKY URGENCY BAR -->\n',
   '<!-- Barra fixa de urgência removida na lista de espera: não há matrícula aberta. -->\n'
 );
 
