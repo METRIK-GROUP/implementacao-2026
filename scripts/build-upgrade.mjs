@@ -65,7 +65,7 @@ const t = createTransform(SOURCE);
 // ---------------------------------------------------------------------------
 // 0. A virada de preço é só da página de vendas.
 // Desde 14/10/2026 o vendas.html carrega dois valores: o do evento (até dom
-// 18/10 às 19h) e o cheio, em data-cheio / data-href-cheio, mais um script que
+// 18/10 às 23h59) e o cheio, em data-cheio / data-href-cheio, mais um script que
 // troca na hora. O upgrade tem preço próprio, então isso sai daqui, e o que
 // sobra é o valor da fase atual do vendas.html — é com ele que as âncoras
 // abaixo precisam casar, antes e depois de o robô gravar o valor cheio.

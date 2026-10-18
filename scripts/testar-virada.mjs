@@ -1,6 +1,6 @@
 /**
- * Testes da virada de preço (dom 18/10 às 19h): vendas.html, o script que grava
- * o valor cheio e os builds das variantes precisam concordar entre si, antes e
+ * Testes da virada de preço (desconto até dom 18/10 às 23h59; valor cheio à 0h
+ * de 19/10): vendas.html, o script que grava o valor cheio e os builds das variantes precisam concordar entre si, antes e
  * depois da virada.
  *
  * Uso:  node --test scripts/testar-virada.mjs
@@ -24,6 +24,8 @@ import {
   VIRADA_UTC,
   MARCA_INICIO,
   MARCA_FIM,
+  MARCA_DESCONTO_INICIO,
+  MARCA_DESCONTO_FIM,
   COMENTARIO_POS_VIRADA,
   faseDoHtml,
 } from './lib/oferta.mjs';
@@ -53,9 +55,9 @@ test('vendas.html está na fase do evento, com a virada programada', () => {
   assert.equal(faseDoHtml(vendas), 'evento');
 });
 
-test('a hora da virada no vendas.html é a mesma de oferta.mjs (18/10 19h BRT)', () => {
+test('a hora da virada no vendas.html é a mesma de oferta.mjs (19/10 0h BRT)', () => {
   assert.ok(SCRIPT_VIRADA.includes(`var VIRADA = ${VIRADA_EXPR};`), 'VIRADA diferente no script da página');
-  assert.equal(new Date(VIRADA_UTC).toISOString(), '2026-10-18T22:00:00.000Z');
+  assert.equal(new Date(VIRADA_UTC).toISOString(), '2026-10-19T03:00:00.000Z');
 });
 
 test('o bloco de compra mostra o valor do evento e guarda o valor cheio', () => {
@@ -85,7 +87,7 @@ test('os links da oferta cheia são checkouts válidos (https, hosts conhecidos)
 });
 
 test('o robô "Publicar pagina de vendas" continua reconhecendo o vendas.html', () => {
-  assert.ok(vendas.includes('Date.UTC(2026, 9, 18, 18, 0, 0)'));
+  assert.ok(vendas.includes('Date.UTC(2026, 9, 18, 14, 30, 0)'));
   assert.ok(vendas.includes('id="pr-countdown"'));
   assert.ok(vendas.includes('id="pr-actions" hidden'));
 });
@@ -282,6 +284,149 @@ test('virar-preco-cheio.mjs grava o valor cheio, é idempotente, e o build passa
     const visivel = upgrade.replace(/<!--[\s\S]*?-->/g, '');
     assert.ok(!visivel.includes('4.997') && !upgrade.includes(C.asaas) && !upgrade.includes(C.hotmart));
     assert.ok(existsSync(join(dir, 'lista-de-espera', 'index.html')));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 4. Prazo do desconto de domingo (barra do topo + aviso abaixo dos botões)
+// ---------------------------------------------------------------------------
+const ABRE_EXPR = 'Date.UTC(2026, 9, 18, 14, 25, 0)'; // 11h25 BRT, quando os botões aparecem
+const ABRE_UTC = Date.UTC(2026, 9, 18, 14, 25, 0);
+
+function scriptsDoBloco(inicio, fim) {
+  const a = vendas.indexOf(inicio);
+  const b = vendas.indexOf(fim, a);
+  assert.ok(a > 0 && b > a, `bloco ${inicio} não encontrado no vendas.html`);
+  return [...vendas.slice(a, b).matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+}
+const SCRIPT_BARRA = scriptsDoBloco(MARCA_DESCONTO_INICIO, MARCA_DESCONTO_FIM)[0];
+const SCRIPT_AVISO = scriptsDoBloco(MARCA_INICIO, MARCA_FIM)[1];
+
+test('o prazo do desconto começa com os botões e termina na virada', () => {
+  assert.ok(vendas.includes(`var REVEAL = ${ABRE_EXPR};`), 'os botões não aparecem às 11h25');
+  for (const [nome, js] of [['barra', SCRIPT_BARRA], ['aviso', SCRIPT_AVISO]]) {
+    assert.ok(js, `script do ${nome} não encontrado`);
+    assert.ok(js.includes(`var ABRE = ${ABRE_EXPR};`), `${nome}: início diferente dos botões`);
+    assert.ok(js.includes(`var FIM = ${VIRADA_EXPR};`), `${nome}: fim diferente da virada`);
+  }
+});
+
+test('o aviso fala do desconto e do valor cheio que vem depois, com os números de oferta.mjs', () => {
+  const desconto = Number(C.pix.replace(/\D/g, '')) - Number(E.pix.replace(/\D/g, ''));
+  assert.equal(desconto, 1000);
+  assert.ok(BLOCO_PRECO.includes('<strong>R$ 1.000 de desconto</strong> só até hoje, às 23h59'));
+  assert.ok(BLOCO_PRECO.includes(`12x de R$ ${C.parcela} ou ${C.pix} no PIX`));
+  assert.ok(SCRIPT_BARRA.includes('R$ 1.000 de desconto só até hoje, às 23h59'));
+});
+
+function avisoFalso(agoraMs, busca = '') {
+  const relogio = { agora: agoraMs };
+  const caixa = { hidden: true };
+  const tempo = { textContent: '--:--:--' };
+  const intervalos = [];
+  vm.runInNewContext(SCRIPT_AVISO, {
+    Date: { UTC: Date.UTC, now: () => relogio.agora },
+    Math,
+    document: { getElementById: (id) => ({ 'pr-urg': caixa, 'urg-t': tempo })[id] ?? null },
+    location: { search: busca },
+    setInterval(fn) { intervalos.push(fn); return intervalos.length; },
+    clearInterval() {},
+  });
+  return { caixa, tempo, intervalos, relogio };
+}
+
+test('aviso abaixo dos botões: escondido antes das 11h25, conta até 23h59:59, some à 0h', () => {
+  const antes = avisoFalso(ABRE_UTC - 60 * 1000);
+  assert.equal(antes.caixa.hidden, true);
+  assert.equal(antes.intervalos.length, 1, 'fica esperando a hora');
+  antes.relogio.agora = ABRE_UTC;
+  antes.intervalos[0]();
+  assert.equal(antes.caixa.hidden, false);
+  assert.equal(antes.tempo.textContent, '12:35:00');
+
+  const quase = avisoFalso(VIRADA_UTC - 1000);
+  assert.equal(quase.caixa.hidden, false);
+  assert.equal(quase.tempo.textContent, '00:00:01');
+  quase.relogio.agora = VIRADA_UTC;
+  quase.intervalos[0]();
+  assert.equal(quase.caixa.hidden, true);
+
+  const depois = avisoFalso(VIRADA_UTC + 1);
+  assert.equal(depois.caixa.hidden, true);
+  assert.equal(depois.intervalos.length, 0);
+});
+
+test('aviso: ?desconto=on mostra antes da hora; ?preco=cheio nunca mostra', () => {
+  assert.equal(avisoFalso(ABRE_UTC - 3600 * 1000, '?desconto=on').caixa.hidden, false);
+  const cheio = avisoFalso(ABRE_UTC + 1000, '?preco=cheio');
+  assert.equal(cheio.caixa.hidden, true);
+  assert.equal(cheio.intervalos.length, 0);
+});
+
+function barraFalsa(agoraMs, busca = '') {
+  const relogio = { agora: agoraMs };
+  const classes = new Set();
+  const tempo = { textContent: '' };
+  const msg = { innerHTML: 'ORIGINAL', querySelector: () => tempo };
+  const cta = { innerHTML: 'CTA ORIGINAL' };
+  const bar = { hidden: true, querySelector: (sel) => (sel === '.sticky-bar-msg' ? msg : cta) };
+  const intervalos = [];
+  vm.runInNewContext(SCRIPT_BARRA, {
+    Date: { UTC: Date.UTC, now: () => relogio.agora },
+    Math,
+    document: {
+      getElementById: (id) => (id === 'stickyBar' ? bar : null),
+      body: { classList: { add: (c) => classes.add(c), remove: (c) => classes.delete(c) } },
+    },
+    location: { search: busca },
+    setInterval(fn) { intervalos.push(fn); return intervalos.length; },
+    clearInterval() {},
+  });
+  return { bar, msg, cta, tempo, classes, intervalos, relogio };
+}
+
+test('barra do topo: liga às 11h25 com o relógio e volta ao normal à 0h', () => {
+  const p = barraFalsa(ABRE_UTC - 1000);
+  assert.equal(p.bar.hidden, true);
+  assert.equal(p.msg.innerHTML, 'ORIGINAL');
+  p.relogio.agora = ABRE_UTC + 1000;
+  p.intervalos[0]();
+  assert.equal(p.bar.hidden, false);
+  assert.ok(p.classes.has('bar-on'));
+  assert.ok(p.msg.innerHTML.includes('R$ 1.000'));
+  assert.ok(p.cta.innerHTML.includes('Garantir meu desconto'));
+  assert.equal(p.tempo.textContent, '12:34:59');
+  p.relogio.agora = VIRADA_UTC;
+  p.intervalos[0]();
+  assert.equal(p.bar.hidden, true);
+  assert.ok(!p.classes.has('bar-on'));
+  assert.equal(p.msg.innerHTML, 'ORIGINAL');
+  assert.equal(p.cta.innerHTML, 'CTA ORIGINAL');
+
+  const depois = barraFalsa(VIRADA_UTC + 1);
+  assert.equal(depois.bar.hidden, true);
+  assert.equal(depois.intervalos.length, 0);
+  assert.equal(barraFalsa(ABRE_UTC + 1, '?preco=cheio').bar.hidden, true);
+  assert.equal(barraFalsa(ABRE_UTC - 3600 * 1000, '?desconto=on').bar.hidden, false);
+});
+
+test('o aviso do desconto não vaza para as variantes e sai com a virada', () => {
+  const dir = copiaDoRepo();
+  try {
+    const r = rodar(dir, 'build.mjs');
+    assert.equal(r.codigo, 0, r.saida);
+    for (const pagina of ['upgrade', 'lista-de-espera']) {
+      const html = readFileSync(join(dir, pagina, 'index.html'), 'utf8');
+      assert.ok(!/DESCONTO EVENTO|pr-urg|R\$ 1\.000 de desconto/.test(html), `vazou para ${pagina}`);
+    }
+    const v = rodar(dir, 'virar-preco-cheio.mjs');
+    assert.equal(v.codigo, 0, v.saida);
+    const depois = readFileSync(join(dir, 'vendas.html'), 'utf8');
+    assert.ok(!/DESCONTO EVENTO|pr-urg|R\$ 1\.000 de desconto|desconto=on/.test(depois));
+    assert.ok(depois.includes('<!-- /STICKY URGENCY BAR -->'), 'barra normal (26/10) intacta');
+    assert.ok(depois.includes('BARRA_A_PARTIR_DE'));
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

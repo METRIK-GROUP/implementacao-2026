@@ -75,11 +75,11 @@ páginas precisam ser diferentes. Se o `vendas.html` mudar ali, alguém precisa
 decidir o que o upgrade passa a mostrar — e enquanto ninguém decide, o build
 recusa publicar um preço adivinhado.
 
-## A virada de preço de 18/10 às 19h
+## A virada de preço de 18/10 às 23h59
 
-Decisão do Rodrigo em 14/10/2026: o valor do evento (12x de R$ 390 ou R$ 3.997
-no PIX) vale só durante o evento ao vivo. A partir de **domingo 18/10 às 19h00
-(Brasília)** entra o valor cheio: **12x de R$ 490** (total R$ 5.880) ou
+Decisão do Rodrigo em 14/10/2026, ajustada em 18/10: o valor do evento (12x de
+R$ 390 ou R$ 3.997 no PIX, R$ 1.000 a menos) vale até **domingo 18/10 às 23h59
+(Brasília)**. À 0h de segunda 19/10 entra o valor cheio: **12x de R$ 490** (total R$ 5.880) ou
 **R$ 4.997 no PIX**, com checkouts próprios na Asaas, Hotmart e TMB.
 
 Os dois conjuntos de valores e links moram em `scripts/lib/oferta.mjs`. É o
@@ -90,9 +90,15 @@ Como a troca acontece, em duas camadas:
 | Camada | O que faz | Quando |
 |---|---|---|
 | Script dentro do `vendas.html` | Troca os textos e os links do bloco de compra na tela, lendo `data-cheio` e `data-href-cheio` | Na hora exata, no relógio de quem está olhando, mesmo com a página já aberta |
-| Robô `.github/workflows/virar-preco-cheio.yml` | Roda `node scripts/virar-preco-cheio.mjs`, que grava o valor cheio no HTML (inclusive no schema.org), regenera as variantes e republica o `index.html`. Depois se apaga. | Cron de 18/10 às 22:00 UTC (19h em Brasília). O GitHub costuma atrasar; não faz diferença, a página já virou sozinha |
+| Robô `.github/workflows/virar-preco-cheio.yml` | Roda `node scripts/virar-preco-cheio.mjs`, que grava o valor cheio no HTML (inclusive no schema.org), regenera as variantes e republica o `index.html`. Depois se apaga. | Cron de 19/10 às 03:00 UTC (0h em Brasília). O GitHub costuma atrasar; não faz diferença, a página já virou sozinha |
 
 Para ver o valor cheio antes da hora: abra a página com `?preco=cheio`.
+
+No domingo, das 11h25 (quando os botões de compra aparecem) até 23h59, a página
+mostra o prazo do desconto de R$ 1.000 com um relógio em dois lugares: na barra
+do topo (bloco `<!-- DESCONTO EVENTO -->`) e logo abaixo dos botões (dentro do
+bloco da virada). Para ver antes da hora: `?desconto=on`. O robô da virada
+apaga os dois.
 
 Se na segunda 19/10 de manhã o `vendas.html` da main ainda tiver
 `data-href-cheio`, o robô não rodou: Actions → "Virar para o preco cheio" →
@@ -131,7 +137,7 @@ três checkouts do site principal estejam de pé — serve como checklist do dia
 (O robô de 17/10 às 23h faz isso sozinho ao publicar a página de vendas.)
 
 A segunda chave, `FASE`, diz qual oferta da página de vendas está valendo:
-`'evento'` até 18/10 às 19h, `'cheia'` depois (o robô da virada troca). Com
+`'evento'` até 18/10 às 23h59, `'cheia'` depois (o robô da virada troca). Com
 `FASE = 'cheia'`, o script cobra os três checkouts da oferta cheia e **acusa
 falha se algum checkout do evento continuar aberto**, porque aí alguém com o
 link antigo ainda pagaria R$ 3.997.

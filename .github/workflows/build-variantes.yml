@@ -44,7 +44,7 @@ jobs:
       - name: Testar a janela de pré-checkout
         run: node --test scripts/testar-pre-checkout.mjs
 
-      - name: Testar a virada de preço (18/10 às 19h)
+      - name: Testar a virada de preço (18/10 às 23h59)
         run: node --test scripts/testar-virada.mjs
 
       - name: Gerar variantes a partir de vendas.html

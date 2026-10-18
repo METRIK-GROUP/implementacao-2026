@@ -19,7 +19,7 @@
  * script cobra que os checkouts da página de vendas estejam de pé.
  *
  * FASE — qual oferta da página de vendas está valendo: 'evento' até domingo
- * 18/10 às 19h (12x de R$ 390 ou R$ 3.997 no PIX) e 'cheia' depois (12x de
+ * 18/10 às 23h59 (12x de R$ 390 ou R$ 3.997 no PIX) e 'cheia' depois (12x de
  * R$ 490 ou R$ 4.997 no PIX). O robô "Virar para o preco cheio" troca para
  * 'cheia'. Na fase cheia, um checkout do evento que continue aberto é FALHA:
  * alguém com o link antigo ainda pagaria R$ 3.997.
@@ -35,7 +35,7 @@ import { OFERTA_EVENTO, OFERTA_CHEIA } from './lib/oferta.mjs';
 // Vire para `true` quando as inscrições reabrirem (o robô de 17/10 faz isso).
 const INSCRICOES_ABERTAS = true;
 
-// 'evento' até 18/10 às 19h; 'cheia' depois (o robô da virada troca).
+// 'evento' até 18/10 às 23h59; 'cheia' depois (o robô da virada troca).
 const FASE = 'evento';
 
 const CHECKOUTS = [
@@ -80,9 +80,9 @@ const CHECKOUTS = [
   //   descricaoEsperada: 'R$ 1.997',
   // },
 
-  // --- Página de vendas, oferta do evento (até 18/10 às 19h) ---------------
+  // --- Página de vendas, oferta do evento (até 18/10 às 23h59) ---------------
   {
-    pagina: 'vendas.html · oferta do evento (até 18/10 às 19h)',
+    pagina: 'vendas.html · oferta do evento (até 18/10 às 23h59)',
     sempreAtivo: false,
     fase: 'evento',
     forma: 'PIX (Asaas)',
@@ -91,7 +91,7 @@ const CHECKOUTS = [
     descricaoEsperada: 'R$ 3.997',
   },
   {
-    pagina: 'vendas.html · oferta do evento (até 18/10 às 19h)',
+    pagina: 'vendas.html · oferta do evento (até 18/10 às 23h59)',
     sempreAtivo: false,
     fase: 'evento',
     forma: 'Cartão (Hotmart)',
@@ -100,7 +100,7 @@ const CHECKOUTS = [
     descricaoEsperada: '12x de R$ 390',
   },
   {
-    pagina: 'vendas.html · oferta do evento (até 18/10 às 19h)',
+    pagina: 'vendas.html · oferta do evento (até 18/10 às 23h59)',
     sempreAtivo: false,
     fase: 'evento',
     forma: 'Boleto parcelado (TMB)',
@@ -109,11 +109,11 @@ const CHECKOUTS = [
     descricaoEsperada: 'de pé (valor só aparece depois do CPF; conferir à mão: R$ 3.997)',
   },
 
-  // --- Página de vendas, oferta cheia (a partir de 18/10 às 19h) -----------
+  // --- Página de vendas, oferta cheia (a partir de 19/10 à 0h) -----------
   // Conferidos em 14/10/2026: Asaas R$ 4.997,00; Hotmart 12x de R$ 490,00
   // (1x de R$ 5.880,00).
   {
-    pagina: 'vendas.html · oferta cheia (a partir de 18/10 às 19h)',
+    pagina: 'vendas.html · oferta cheia (a partir de 19/10 à 0h)',
     sempreAtivo: false,
     fase: 'cheia',
     forma: 'PIX (Asaas)',
@@ -122,7 +122,7 @@ const CHECKOUTS = [
     descricaoEsperada: 'R$ 4.997',
   },
   {
-    pagina: 'vendas.html · oferta cheia (a partir de 18/10 às 19h)',
+    pagina: 'vendas.html · oferta cheia (a partir de 19/10 à 0h)',
     sempreAtivo: false,
     fase: 'cheia',
     forma: 'Cartão (Hotmart)',
@@ -131,7 +131,7 @@ const CHECKOUTS = [
     descricaoEsperada: '12x de R$ 490',
   },
   {
-    pagina: 'vendas.html · oferta cheia (a partir de 18/10 às 19h)',
+    pagina: 'vendas.html · oferta cheia (a partir de 19/10 à 0h)',
     sempreAtivo: false,
     fase: 'cheia',
     forma: 'Boleto parcelado (TMB)',
