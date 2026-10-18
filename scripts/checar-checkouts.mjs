@@ -33,7 +33,7 @@
 import { OFERTA_EVENTO, OFERTA_CHEIA } from './lib/oferta.mjs';
 
 // Vire para `true` quando as inscrições reabrirem (o robô de 17/10 faz isso).
-const INSCRICOES_ABERTAS = false;
+const INSCRICOES_ABERTAS = true;
 
 // 'evento' até 18/10 às 19h; 'cheia' depois (o robô da virada troca).
 const FASE = 'evento';
