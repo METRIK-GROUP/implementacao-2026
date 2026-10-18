@@ -235,7 +235,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <style>
   .sticky-bar-relogio{font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:0.02em}
   .sticky-bar-tempo{white-space:nowrap}
-  @media (max-width:720px){.sticky-bar-tempo{display:block}.sticky-bar-msg .sticky-bar-sep{display:none}}
+  /* Modo desconto: vermelho escuro, sólido, com o relógio em destaque. */
+  .sticky-bar.desconto{background:linear-gradient(90deg,#7A1A12 0%,#A8281A 55%,#7A1A12 100%);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 4px 18px rgba(122,26,18,0.35)}
+  .sticky-bar.desconto .sticky-bar-inner{font-size:13.5px;padding:9px 20px}
+  .sticky-bar.desconto .sticky-bar-msg{color:#fff}
+  .sticky-bar.desconto .sticky-bar-msg strong{font-weight:800;letter-spacing:0.02em}
+  .sticky-bar.desconto .sticky-bar-dot{background:#fff;margin-top:0;align-self:center}
+  .sticky-bar.desconto .sticky-bar-sep{color:rgba(255,255,255,0.45)}
+  .sticky-bar.desconto .sticky-bar-relogio{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:6px;background:rgba(0,0,0,0.3);font-size:14.5px;font-weight:800}
+  .sticky-bar.desconto .sticky-bar-cta{background:#fff;color:#7A1A12;border-color:#fff;font-weight:800}
+  .sticky-bar.desconto .sticky-bar-cta:hover{background:#FCEBE8;color:#7A1A12;border-color:#FCEBE8}
+  body.bar-desconto .hero{padding-top:52px}
+  body.bar-desconto #preco{scroll-margin-top:60px}
+  @media (max-width:720px){
+    .sticky-bar-tempo{display:block}
+    .sticky-bar-msg .sticky-bar-sep{display:none}
+    .sticky-bar.desconto .sticky-bar-inner{font-size:12.5px;padding:8px 14px}
+    .sticky-bar.desconto .sticky-bar-tempo{margin-top:3px}
+    .sticky-bar.desconto .sticky-bar-relogio{font-size:13.5px;margin-left:4px}
+    .sticky-bar.desconto .sticky-bar-cta{padding:8px 14px}
+    body.bar-desconto .hero{padding-top:68px}
+    body.bar-desconto #preco{scroll-margin-top:76px}
+  }
 </style>
 <script>
 // Desconto do evento: R$ 1.000 a menos (R$ 3.997 no PIX em vez de R$ 4.997) só no
@@ -259,17 +280,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var relogio = null;
     var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
     var ligar = function(){
-      msg.innerHTML = '<span class="sticky-bar-lg">R$ 1.000 de desconto só até hoje, às 23h59</span>'
-        + '<span class="sticky-bar-sm">R$ 1.000 OFF até 23h59</span>'
-        + '<span class="sticky-bar-sep">·</span><span class="sticky-bar-tempo">Faltam <b class="sticky-bar-relogio">--:--:--</b></span>';
-      cta.innerHTML = '<span class="sticky-bar-lg">Garantir meu desconto</span><span class="sticky-bar-sm">Quero o desconto</span>';
+      msg.innerHTML = '<span class="sticky-bar-lg"><strong>Últimas horas:</strong> R$ 1.000 de desconto só até hoje, às 23h59</span>'
+        + '<span class="sticky-bar-sm"><strong>R$ 1.000 OFF</strong> só até hoje, 23h59</span>'
+        + '<span class="sticky-bar-sep">·</span><span class="sticky-bar-tempo">Acaba em <b class="sticky-bar-relogio">--:--:--</b></span>';
+      cta.innerHTML = '<span class="sticky-bar-lg">Garantir meu desconto</span><span class="sticky-bar-sm">Garantir</span>';
       relogio = msg.querySelector('.sticky-bar-relogio');
+      bar.classList.add('desconto');
       bar.hidden = false;
       document.body.classList.add('bar-on');
+      document.body.classList.add('bar-desconto');
     };
     var desligar = function(){
       msg.innerHTML = original.msg;
       cta.innerHTML = original.cta;
+      bar.classList.remove('desconto');
+      document.body.classList.remove('bar-desconto');
       bar.hidden = original.hidden;
       if (original.hidden) document.body.classList.remove('bar-on');
       relogio = null;
