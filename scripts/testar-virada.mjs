@@ -371,7 +371,12 @@ function barraFalsa(agoraMs, busca = '') {
   const tempo = { textContent: '' };
   const msg = { innerHTML: 'ORIGINAL', querySelector: () => tempo };
   const cta = { innerHTML: 'CTA ORIGINAL' };
-  const bar = { hidden: true, querySelector: (sel) => (sel === '.sticky-bar-msg' ? msg : cta) };
+  const barClasses = new Set();
+  const bar = {
+    hidden: true,
+    classList: { add: (c) => barClasses.add(c), remove: (c) => barClasses.delete(c) },
+    querySelector: (sel) => (sel === '.sticky-bar-msg' ? msg : cta),
+  };
   const intervalos = [];
   vm.runInNewContext(SCRIPT_BARRA, {
     Date: { UTC: Date.UTC, now: () => relogio.agora },
@@ -384,7 +389,7 @@ function barraFalsa(agoraMs, busca = '') {
     setInterval(fn) { intervalos.push(fn); return intervalos.length; },
     clearInterval() {},
   });
-  return { bar, msg, cta, tempo, classes, intervalos, relogio };
+  return { bar, barClasses, msg, cta, tempo, classes, intervalos, relogio };
 }
 
 test('barra do topo: liga às 11h25 com o relógio e volta ao normal à 0h', () => {
@@ -395,6 +400,8 @@ test('barra do topo: liga às 11h25 com o relógio e volta ao normal à 0h', () 
   p.intervalos[0]();
   assert.equal(p.bar.hidden, false);
   assert.ok(p.classes.has('bar-on'));
+  assert.ok(p.classes.has('bar-desconto'));
+  assert.ok(p.barClasses.has('desconto'), 'barra vermelha do desconto');
   assert.ok(p.msg.innerHTML.includes('R$ 1.000'));
   assert.ok(p.cta.innerHTML.includes('Garantir meu desconto'));
   assert.equal(p.tempo.textContent, '12:34:59');
@@ -402,6 +409,8 @@ test('barra do topo: liga às 11h25 com o relógio e volta ao normal à 0h', () 
   p.intervalos[0]();
   assert.equal(p.bar.hidden, true);
   assert.ok(!p.classes.has('bar-on'));
+  assert.ok(!p.classes.has('bar-desconto'));
+  assert.ok(!p.barClasses.has('desconto'));
   assert.equal(p.msg.innerHTML, 'ORIGINAL');
   assert.equal(p.cta.innerHTML, 'CTA ORIGINAL');
 
