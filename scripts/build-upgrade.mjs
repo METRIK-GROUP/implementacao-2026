@@ -456,7 +456,7 @@ t.replaceOnce(
 // ---------------------------------------------------------------------------
 t.cutBlock(
   'link "Já é PDP?" removido',
-  `    <p class="pr-upgrade"><a href="https://api.whatsapp.com/send?phone=5547992360031&text=J%C3%A1%20sou%20PDP`,
+  `    <p class="pr-upgrade"><a href="https://api.whatsapp.com/send?phone=5547936184959&text=J%C3%A1%20sou%20PDP`,
   `</a></p>\n`,
   `    <!-- Link "Já é PDP? faça upgrade" removido: esta página já É a oferta de upgrade. -->\n`
 );
