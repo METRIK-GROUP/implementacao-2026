@@ -2185,11 +2185,11 @@ document.querySelectorAll('.fdep-player').forEach(function(wrap){
   nums.forEach(el => io.observe(el));
 })();
 
-// COUNTDOWN inscrições.countdown até 15h00 BRT.botões liberam às 14h45 BRT (folga 15min)
+// COUNTDOWN inscrições.countdown até 11h30 BRT.botões liberam às 11h25 BRT (folga 5min)
 (function(){
   try {
-    var TARGET = Date.UTC(2026, 9, 18, 18, 0, 0); // 18/10 15:00 BRT = 18:00 UTC
-    var REVEAL = Date.UTC(2026, 9, 18, 17, 45, 0); // 18/10 14:45 BRT = 17:45 UTC
+    var TARGET = Date.UTC(2026, 9, 18, 14, 30, 0); // 18/10 11:30 BRT = 14:30 UTC
+    var REVEAL = Date.UTC(2026, 9, 18, 14, 25, 0); // 18/10 11:25 BRT = 14:25 UTC
     var countdown = document.getElementById('pr-countdown');
     var actions = document.getElementById('pr-actions');
     var hEl = document.getElementById('cd-h');

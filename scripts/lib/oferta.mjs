@@ -1,10 +1,10 @@
 /**
  * As duas ofertas da Implementação Ed.8 e a hora da virada entre elas.
  *
- * Decisão do Rodrigo em 14/10/2026: o valor do evento (12x de R$ 390 ou
- * R$ 3.997 no PIX) vale só durante o evento ao vivo, até domingo 18/10 às 19h
- * (Brasília). Daí em diante vale o valor cheio: 12x de R$ 490 (total R$ 5.880)
- * ou R$ 4.997 no PIX.
+ * Decisão do Rodrigo em 14/10/2026, ajustada em 18/10/2026: o valor do evento
+ * (12x de R$ 390 ou R$ 3.997 no PIX, R$ 1.000 a menos que o cheio) vale até
+ * domingo 18/10 às 23h59 (Brasília). À 0h de segunda 19/10 entra o valor cheio:
+ * 12x de R$ 490 (total R$ 5.880) ou R$ 4.997 no PIX. (Antes a virada era às 19h.)
  *
  * Este arquivo é o ÚNICO lugar que conhece os dois conjuntos de valores e links.
  * Quem lê daqui:
@@ -22,9 +22,13 @@
  */
 
 /** Hora da virada, como está escrita no vendas.html (o teste compara o texto). */
-export const VIRADA_EXPR = 'Date.UTC(2026, 9, 18, 22, 0, 0)';
-export const VIRADA_UTC = Date.UTC(2026, 9, 18, 22, 0, 0); // 18/10 19:00 BRT = 22:00 UTC
-export const VIRADA_LEGIVEL = 'domingo 18/10/2026, 19h00 (Brasília)';
+export const VIRADA_EXPR = 'Date.UTC(2026, 9, 19, 3, 0, 0)';
+export const VIRADA_UTC = Date.UTC(2026, 9, 19, 3, 0, 0); // 19/10 00:00 BRT = 03:00 UTC
+export const VIRADA_LEGIVEL = 'segunda 19/10/2026, 0h00 (Brasília); o desconto vale até domingo 18/10 às 23h59';
+
+/** Bloco da barra do topo com o prazo do desconto. O robô da virada apaga. */
+export const MARCA_DESCONTO_INICIO = '<!-- DESCONTO EVENTO -->';
+export const MARCA_DESCONTO_FIM = '<!-- /DESCONTO EVENTO -->';
 
 export const OFERTA_EVENTO = Object.freeze({
   nome: 'evento',
@@ -52,7 +56,7 @@ export const MARCA_FIM = '<!-- /VIRADA PRECO CHEIO -->';
 
 /** Comentário que fica no lugar do script depois da virada gravada. */
 export const COMENTARIO_POS_VIRADA =
-  '<!-- Preço cheio desde 18/10/2026 às 19h (gravado por scripts/virar-preco-cheio.mjs). -->';
+  '<!-- Preço cheio desde 19/10/2026 à 0h, fim do desconto de domingo (gravado por scripts/virar-preco-cheio.mjs). -->';
 
 /**
  * Em que fase o HTML está:

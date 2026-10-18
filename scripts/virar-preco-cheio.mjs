@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Grava o valor cheio no vendas.html: o que o script da página faz no navegador
- * a partir de domingo 18/10 às 19h, este script faz no arquivo, de uma vez.
+ * a partir de segunda 19/10 à 0h (fim do desconto de domingo), este script faz
+ * no arquivo, de uma vez.
  *
  * Por que os dois existem:
  *   - o script da página vira na hora certa, no relógio de quem está olhando,
@@ -15,7 +16,9 @@
  *   2. os três checkouts passam a apontar para a oferta cheia, tirando o
  *      data-href-cheio;
  *   3. o preço do schema.org (3997.00 -> 4997.00);
- *   4. o script da virada sai, e no lugar fica um comentário dizendo quando virou.
+ *   4. o script da virada (e o aviso do prazo do desconto) sai, e no lugar fica
+ *      um comentário dizendo quando virou;
+ *   5. sai o bloco da barra do topo com o relógio do desconto.
  * E no scripts/checar-checkouts.mjs: FASE 'evento' -> 'cheia'.
  *
  * Roda de novo sem estrago: se o HTML já está no valor cheio, não faz nada.
@@ -33,6 +36,8 @@ import {
   OFERTA_CHEIA,
   MARCA_INICIO,
   MARCA_FIM,
+  MARCA_DESCONTO_INICIO,
+  MARCA_DESCONTO_FIM,
   COMENTARIO_POS_VIRADA,
   faseDoHtml,
 } from './lib/oferta.mjs';
@@ -78,6 +83,7 @@ t.replaceIfPresent(
 );
 
 t.cutBlock('script da virada removido', MARCA_INICIO, `${MARCA_FIM}\n`, `${COMENTARIO_POS_VIRADA}\n`);
+t.cutBlock('barra do prazo do desconto removida', MARCA_DESCONTO_INICIO, `${MARCA_DESCONTO_FIM}\n`, '');
 
 t.guard([
   ['virada ainda programada (data-cheio)', /data-cheio=/],

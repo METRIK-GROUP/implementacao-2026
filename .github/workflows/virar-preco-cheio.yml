@@ -2,8 +2,8 @@ name: Virar para o preco cheio
 
 # Virada de preço da Implementação Ed.8.
 #
-# Domingo 18/10 às 19h00 (Brasília) o valor do evento (12x de R$ 390 ou
-# R$ 3.997 no PIX) acaba e entra o valor cheio (12x de R$ 490 ou R$ 4.997 no
+# Domingo 18/10 às 23h59 (Brasília) acaba o desconto do evento (12x de R$ 390 ou
+# R$ 3.997 no PIX). À 0h de 19/10 entra o valor cheio (12x de R$ 490 ou R$ 4.997 no
 # PIX), com os checkouts da oferta cheia. Decisão do Rodrigo em 14/10/2026.
 #
 # A troca na tela quem faz é o script da própria página, na hora exata, no
@@ -18,11 +18,11 @@ name: Virar para o preco cheio
 # (Run workflow). Depois de rodar, o próprio workflow se apaga.
 #
 # Só roda a partir da main: o pull request com a virada precisa estar mergeado
-# antes de domingo 19h, senão o cron não encontra este arquivo.
+# antes de domingo 23h59, senão o cron não encontra este arquivo.
 
 on:
   schedule:
-    - cron: '0 22 18 10 *' # 18/10 22:00 UTC = 18/10 19:00 em Brasília
+    - cron: '0 3 19 10 *' # 19/10 03:00 UTC = 19/10 00:00 em Brasília (desconto até 18/10 23h59)
   workflow_dispatch:
 
 permissions:
@@ -64,6 +64,7 @@ jobs:
           grep -q 'pr-pix-val fm">R\$ 4.997<' vendas.html || { echo "::error::vendas.html não ficou com R\$ 4.997 no PIX."; exit 1; }
           grep -q 'pr-val">490<' vendas.html || { echo "::error::vendas.html não ficou com 12x de R\$ 490."; exit 1; }
           if grep -q 'data-href-cheio=' vendas.html index.html; then echo "::error::Ainda há virada programada no HTML."; exit 1; fi
+          if grep -q 'DESCONTO EVENTO\|pr-urg' vendas.html index.html; then echo "::error::Ainda há aviso do desconto de domingo no HTML."; exit 1; fi
           if grep -q '2x3ccx7lhp4q23up\|M4E188885X5\|bid=1774198329832' vendas.html index.html; then echo "::error::Ainda há checkout do evento no HTML."; exit 1; fi
           if grep -q 'pr-pix-val fm">R\$ 4.997<\|aqx4edxpcwhpble7\|AE83033554V\|off=i6fqs2yb' upgrade/index.html; then echo "::error::O valor cheio vazou para a página de upgrade."; exit 1; fi
 
@@ -75,5 +76,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "feat: valor cheio da Implementação (12x de R\$ 490 ou R\$ 4.997 no PIX) a partir de 18/10 às 19h"
+          git commit -m "feat: valor cheio da Implementação (12x de R\$ 490 ou R\$ 4.997 no PIX) a partir de 19/10 à 0h (desconto até 18/10 às 23h59)"
           git push origin main
