@@ -33,7 +33,7 @@ test('cada checkout vira a sua forma de pagamento', () => {
 });
 
 test('link que não é de checkout não abre a janela', () => {
-  assert.equal(meioDoLink('https://api.whatsapp.com/send?phone=5547992360031'), null);
+  assert.equal(meioDoLink('https://api.whatsapp.com/send?phone=5547936184959'), null);
   assert.equal(meioDoLink('http://pay.hotmart.com/U1'), null);
   assert.equal(meioDoLink('#preco'), null);
   assert.equal(meioDoLink('https://pay.hotmart.com.evil.com/U1'), null);
