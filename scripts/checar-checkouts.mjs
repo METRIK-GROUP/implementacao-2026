@@ -36,7 +36,7 @@ import { OFERTA_EVENTO, OFERTA_CHEIA } from './lib/oferta.mjs';
 const INSCRICOES_ABERTAS = true;
 
 // 'evento' até 18/10 às 23h59; 'cheia' depois (o robô da virada troca).
-const FASE = 'evento';
+const FASE = 'cheia';
 
 const CHECKOUTS = [
   {

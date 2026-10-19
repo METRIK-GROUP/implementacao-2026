@@ -107,7 +107,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "offers": {
         "@type": "Offer",
         "category": "Educational Course",
-        "price": "3997.00",
+        "price": "4997.00",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://implementacao.rodrigorosar.com.br/#preco"
@@ -231,89 +231,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 })();
 </script>
-<!-- DESCONTO EVENTO -->
-<style>
-  .sticky-bar-relogio{font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:0.02em}
-  .sticky-bar-tempo{white-space:nowrap}
-  /* Modo desconto: vermelho escuro, sólido, com o relógio em destaque. */
-  .sticky-bar.desconto{background:linear-gradient(90deg,#7A1A12 0%,#A8281A 55%,#7A1A12 100%);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 4px 18px rgba(122,26,18,0.35)}
-  .sticky-bar.desconto .sticky-bar-inner{font-size:13.5px;padding:9px 20px}
-  .sticky-bar.desconto .sticky-bar-msg{color:#fff}
-  .sticky-bar.desconto .sticky-bar-msg strong{font-weight:800;letter-spacing:0.02em}
-  .sticky-bar.desconto .sticky-bar-dot{background:#fff;margin-top:0;align-self:center}
-  .sticky-bar.desconto .sticky-bar-sep{color:rgba(255,255,255,0.45)}
-  .sticky-bar.desconto .sticky-bar-relogio{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:6px;background:rgba(0,0,0,0.3);font-size:14.5px;font-weight:800}
-  .sticky-bar.desconto .sticky-bar-cta{background:#fff;color:#7A1A12;border-color:#fff;font-weight:800}
-  .sticky-bar.desconto .sticky-bar-cta:hover{background:#FCEBE8;color:#7A1A12;border-color:#FCEBE8}
-  body.bar-desconto .hero{padding-top:52px}
-  body.bar-desconto #preco{scroll-margin-top:60px}
-  @media (max-width:720px){
-    .sticky-bar-tempo{display:block}
-    .sticky-bar-msg .sticky-bar-sep{display:none}
-    .sticky-bar.desconto .sticky-bar-inner{font-size:12.5px;padding:8px 14px}
-    .sticky-bar.desconto .sticky-bar-tempo{margin-top:3px}
-    .sticky-bar.desconto .sticky-bar-relogio{font-size:13.5px;margin-left:4px}
-    .sticky-bar.desconto .sticky-bar-cta{padding:8px 14px}
-    body.bar-desconto .hero{padding-top:68px}
-    body.bar-desconto #preco{scroll-margin-top:76px}
-  }
-</style>
-<script>
-// Desconto do evento: R$ 1.000 a menos (R$ 3.997 no PIX em vez de R$ 4.997) só no
-// domingo 18/10, da abertura das matrículas até 23h59. Nesse intervalo a barra do
-// topo mostra o prazo com um relógio. À 0h de 19/10 ela some (a barra normal só
-// volta em 26/10). Roda antes da primeira pintura, então a página não pula.
-// ?desconto=on mostra antes da hora, para conferir. O robô da virada
-// (scripts/virar-preco-cheio.mjs) apaga este bloco depois.
-(function(){
-  try {
-    var ABRE = Date.UTC(2026, 9, 18, 14, 25, 0); // 18/10 11:25 BRT = 14:25 UTC (os botões de compra aparecem)
-    var FIM = Date.UTC(2026, 9, 19, 3, 0, 0); // 19/10 00:00 BRT = 03:00 UTC (entra o valor cheio)
-    var busca = location.search;
-    if (/[?&]preco=cheio\b/.test(busca)) return;
-    var teste = /[?&]desconto=on\b/.test(busca);
-    var bar = document.getElementById('stickyBar');
-    var msg = bar && bar.querySelector('.sticky-bar-msg');
-    var cta = bar && bar.querySelector('.sticky-bar-cta');
-    if (!msg || !cta) return;
-    var original = { msg: msg.innerHTML, cta: cta.innerHTML, hidden: bar.hidden };
-    var relogio = null;
-    var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
-    var ligar = function(){
-      msg.innerHTML = '<span class="sticky-bar-lg"><strong>Últimas horas:</strong> R$ 1.000 de desconto só até hoje, às 23h59</span>'
-        + '<span class="sticky-bar-sm"><strong>R$ 1.000 OFF</strong> só até hoje, 23h59</span>'
-        + '<span class="sticky-bar-sep">·</span><span class="sticky-bar-tempo">Acaba em <b class="sticky-bar-relogio">--:--:--</b></span>';
-      cta.innerHTML = '<span class="sticky-bar-lg">Garantir meu desconto</span><span class="sticky-bar-sm">Garantir</span>';
-      relogio = msg.querySelector('.sticky-bar-relogio');
-      bar.classList.add('desconto');
-      bar.hidden = false;
-      document.body.classList.add('bar-on');
-      document.body.classList.add('bar-desconto');
-    };
-    var desligar = function(){
-      msg.innerHTML = original.msg;
-      cta.innerHTML = original.cta;
-      bar.classList.remove('desconto');
-      document.body.classList.remove('bar-desconto');
-      bar.hidden = original.hidden;
-      if (original.hidden) document.body.classList.remove('bar-on');
-      relogio = null;
-    };
-    var tick = function(){
-      var agora = Date.now();
-      if (agora >= FIM) { if (relogio) desligar(); return false; }
-      if (agora < ABRE && !teste) return true;
-      if (!relogio) ligar();
-      var s = Math.floor((FIM - agora) / 1000);
-      relogio.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
-      return true;
-    };
-    if (!tick()) return;
-    var iv = setInterval(function(){ try { if (!tick()) clearInterval(iv); } catch (e) { clearInterval(iv); } }, 1000);
-  } catch (e) {}
-})();
-</script>
-<!-- /DESCONTO EVENTO -->
 <!-- /STICKY URGENCY BAR -->
 
 <main>
@@ -1408,14 +1325,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="pr-old">De <s>R$ 19.964</s></p>
 
     <p class="big-price pr-main fm" id="big-price">
-      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val" data-cheio="490">390</span>
+      <span class="pr-tx">12x</span><span class="pr-rs">de R$</span><span class="pr-val">490</span>
     </p>
     <p class="pr-meta">sem juros, no plano anual</p>
 
     <div class="pr-or"><span>OU</span></div>
 
     <div class="pr-pix-row">
-      <p class="pr-pix-val fm" data-cheio="R$ 4.997">R$ 3.997</p>
+      <p class="pr-pix-val fm">R$ 4.997</p>
       <p class="pr-pix-save">Valor com desconto de 15% no PIX</p>
     </div>
 
@@ -1434,104 +1351,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="pr-actions" id="pr-actions" hidden>
-      <a href="https://www.asaas.com/c/2x3ccx7lhp4q23up" data-href-cheio="https://www.asaas.com/000/c/aqx4edxpcwhpble7" target="_blank" class="pr-btn primary">
+      <a href="https://www.asaas.com/000/c/aqx4edxpcwhpble7" target="_blank" class="pr-btn primary">
         <span>Pagar no PIX</span>
         <span class="pr-btn-tag">15% OFF</span>
       </a>
       <div class="pr-btn-row">
-        <a href="https://pay.hotmart.com/U104887798W?bid=1774198329832" data-href-cheio="https://pay.hotmart.com/U104887798W?off=i6fqs2yb&checkoutMode=6&bid=1792004316445" target="_blank" class="pr-btn ghost">
+        <a href="https://pay.hotmart.com/U104887798W?off=i6fqs2yb&checkoutMode=6&bid=1792004316445" target="_blank" class="pr-btn ghost">
           Cartão 12x sem juros
         </a>
-        <a href="https://pay.tmb.com.br/RodrigoRosar/M4E188885X5" data-href-cheio="https://pay.tmb.com.br/RodrigoRosar/AE83033554V" target="_blank" class="pr-btn ghost">
+        <a href="https://pay.tmb.com.br/RodrigoRosar/AE83033554V" target="_blank" class="pr-btn ghost">
           Boleto parcelado
         </a>
       </div>
     </div>
-<!-- VIRADA PRECO CHEIO -->
-    <style>
-      .pr-urg{margin-top:16px;padding:16px 18px;border:1px solid rgba(217,117,87,0.5);background:rgba(217,117,87,0.08);border-radius:14px}
-      .pr-urg[hidden]{display:none !important}
-      .pr-urg-msg{font-family:'Maven Pro';font-weight:700;font-size:15px;color:var(--black);line-height:1.35}
-      .pr-urg-msg strong{color:#A6461F}
-      .pr-urg-time{margin-top:6px;font-family:'Maven Pro';font-weight:600;font-size:13px;color:var(--graphite)}
-      .pr-urg-num{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums;letter-spacing:0.02em;color:var(--black)}
-      .pr-urg-sub{margin-top:6px;font-size:12.5px;color:var(--g500);line-height:1.45}
-    </style>
-    <div class="pr-urg" id="pr-urg" hidden>
-      <p class="pr-urg-msg"><strong>R$ 1.000 de desconto</strong> só até hoje, às 23h59</p>
-      <p class="pr-urg-time">Termina em <span class="pr-urg-num" id="urg-t">--:--:--</span></p>
-      <p class="pr-urg-sub">À meia-noite o valor sobe para 12x de R$ 490 ou R$ 4.997 no PIX.</p>
-    </div>
-    <script>
-    // Virada para o valor cheio. Até domingo 18/10 às 23h59 (Brasília) a página
-    // mostra o valor do evento: 12x de R$ 390 ou R$ 3.997 no PIX. À 0h de 19/10,
-    // o valor cheio (12x de R$ 490 ou R$ 4.997 no PIX) e os checkouts da oferta
-    // cheia, que estão nos atributos data-cheio e data-href-cheio do bloco acima.
-    // ?preco=cheio mostra o valor cheio antes da hora, para conferir.
-    // O robô .github/workflows/virar-preco-cheio.yml grava a troca no HTML no
-    // mesmo horário; este script garante a troca na hora certa mesmo que o robô
-    // atrase. Os valores e links moram em scripts/lib/oferta.mjs.
-    (function(){
-      try {
-        var VIRADA = Date.UTC(2026, 9, 19, 3, 0, 0); // 19/10 00:00 BRT = 03:00 UTC (desconto até 18/10 23h59)
-        var virou = false;
-        var virar = function(){
-          if (virou) return;
-          virou = true;
-          try {
-            var textos = document.querySelectorAll('#preco [data-cheio]');
-            for (var i = 0; i < textos.length; i++) textos[i].textContent = textos[i].getAttribute('data-cheio');
-            var links = document.querySelectorAll('#preco [data-href-cheio]');
-            for (var j = 0; j < links.length; j++) {
-              var novo = links[j].getAttribute('data-href-cheio');
-              // O rastreio que já foi colado no link (utm_*, sck, xcod) continua no novo.
-              try {
-                var u = new URL(novo), velho = new URL(links[j].href);
-                velho.searchParams.forEach(function(v, k){ if (!u.searchParams.has(k)) u.searchParams.set(k, v); });
-                novo = u.toString();
-              } catch (e) {}
-              links[j].setAttribute('href', novo);
-            }
-          } catch (e) {}
-        };
-        var agora = Date.now();
-        if (agora >= VIRADA || /[?&]preco=cheio\b/.test(location.search)) { virar(); return; }
-        // Troca na hora, com a página aberta; o intervalo é o reserva do timeout.
-        setTimeout(virar, Math.min(2147483647, VIRADA - agora + 500));
-        setInterval(function(){ if (Date.now() >= VIRADA) virar(); }, 15000);
-      } catch (e) {}
-    })();
-    </script>
-    <script>
-    // Aviso do prazo do desconto, logo abaixo dos botões: aparece junto com os
-    // botões (11h25) e conta até 23h59:59 de domingo. À 0h a virada acima troca o
-    // valor e este aviso some. ?desconto=on mostra antes da hora; ?preco=cheio esconde.
-    (function(){
-      try {
-        var ABRE = Date.UTC(2026, 9, 18, 14, 25, 0); // 18/10 11:25 BRT = 14:25 UTC
-        var FIM = Date.UTC(2026, 9, 19, 3, 0, 0); // 19/10 00:00 BRT = 03:00 UTC
-        var busca = location.search;
-        if (/[?&]preco=cheio\b/.test(busca)) return;
-        var teste = /[?&]desconto=on\b/.test(busca);
-        var caixa = document.getElementById('pr-urg');
-        var relogio = document.getElementById('urg-t');
-        if (!caixa || !relogio) return;
-        var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
-        var tick = function(){
-          var agora = Date.now();
-          if (agora >= FIM) { caixa.hidden = true; return false; }
-          if (agora < ABRE && !teste) return true;
-          var s = Math.floor((FIM - agora) / 1000);
-          relogio.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
-          caixa.hidden = false;
-          return true;
-        };
-        if (!tick()) return;
-        var iv = setInterval(function(){ try { if (!tick()) clearInterval(iv); } catch (e) { clearInterval(iv); } }, 1000);
-      } catch (e) {}
-    })();
-    </script>
-<!-- /VIRADA PRECO CHEIO -->
+<!-- Preço cheio desde 19/10/2026 à 0h, fim do desconto de domingo (gravado por scripts/virar-preco-cheio.mjs). -->
 
     <div class="pr-trust">
       <span><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg> Garantia 97 dias</span>
@@ -1897,7 +1730,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="padding:80px 24px 48px;text-align:center;position:relative;z-index:1">
     <p class="gs fm" style="font-weight:800;font-size:clamp(36px,7vw,64px);color:#fff;letter-spacing:0.02em">INSCRIÇÕES ABREM ÀS 15H.</p>
     <p class="gs" style="font-size:clamp(15px,2vw,18px);color:var(--g300);margin-top:20px;max-width:460px;margin:20px auto 0;line-height:1.6">Aproveite o intervalo para pensar. Nos vemos às 15h.</p>
-    <p class="gs" style="font-size:16px;color:var(--g500);margin-top:24px">12x de R$ 390 sem juros · ou R$ 3.997 no PIX</p>
+    <p class="gs" style="font-size:16px;color:var(--g500);margin-top:24px">12x de R$ 490 sem juros · ou R$ 4.997 no PIX</p>
   </div>
   <div style="padding:32px 24px 80px;position:relative;z-index:1">
     <div class="gs sn" style="margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:clamp(32px,5vw,56px);text-align:center">
