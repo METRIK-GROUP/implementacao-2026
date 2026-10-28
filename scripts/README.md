@@ -106,7 +106,10 @@ Run workflow. Ou rode localmente `node scripts/virar-preco-cheio.mjs` e envie.
 
 O teste `node --test scripts/testar-virada.mjs` confere que o `vendas.html`,
 o script de gravação e os builds das variantes concordam entre si, antes e
-depois da virada. Roda no GitHub a cada push.
+depois da virada. Rodava no GitHub a cada push até a virada de 19/10; depois
+dela o `vendas.html` já não tem o script da virada e o teste falha por
+construção, então saiu do workflow. Para reaproveitar numa próxima turma,
+volte o passo em `.github/workflows/build-variantes.yml`.
 
 A página de upgrade não participa: ela tem preço próprio (R$ 1.997) e
 `build-upgrade.mjs` tira a virada antes de montar as âncoras.
