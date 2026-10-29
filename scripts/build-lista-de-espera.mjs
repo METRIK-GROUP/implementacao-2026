@@ -16,6 +16,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { semEncerramento } from './lib/encerramento.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = join(ROOT, 'vendas.html');
@@ -61,6 +62,18 @@ function replaceAll(html, label, pattern, to) {
 // transformações (as âncoras deste script usam LF) e regravamos com CRLF.
 const CRLF = /\r\n/.test(readFileSync(SOURCE, 'utf8').slice(0, 4096));
 let html = readFileSync(SOURCE, 'utf8').replace(/\r\n/g, '\n');
+
+// ---------------------------------------------------------------------------
+// 0. Encerramento das matrículas (30/10/2026): fora
+// O bloco do <head> manda a página para /lista-de-espera/ depois do prazo.
+// Aqui ele viraria um loop infinito. Some sozinho depois que o robô do
+// encerramento apaga os blocos do vendas.html.
+// ---------------------------------------------------------------------------
+{
+  const r = semEncerramento(html);
+  html = r.html;
+  applied.push(`encerramento das matrículas: fora (${r.encerramento ? 'removido' : 'ausente'})`);
+}
 
 // ---------------------------------------------------------------------------
 // 1. Caminhos absolutos
@@ -465,6 +478,7 @@ const FORBIDDEN = [
   ['pill de aviso no hero (removida: repetia o botão)', /hero-date-note|h-date-note/],
   ['janela de pré-checkout', /pre-checkout\.js/],
   ['virada de preço (só da página de vendas)', /data-cheio=|data-href-cheio=|VIRADA PRECO CHEIO/],
+  ['encerramento das matrículas (aqui seria loop de redirecionamento)', /ENCERRAMENTO -->|ULTIMAS HORAS -->|location\.replace\('\/lista-de-espera\//],
 ];
 for (const [label, re] of FORBIDDEN) {
   if (re.test(html)) throw new Error(`Guarda falhou: ${label} ainda presente no HTML gerado (${re})`);

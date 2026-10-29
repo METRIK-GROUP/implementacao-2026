@@ -7,6 +7,30 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<!-- ENCERRAMENTO -->
+<script>
+// Matrículas da Ed.8 até sexta 30/10 às 23h59 (Brasília). A partir da 0h de
+// sábado 31/10, quem abrir a página vai para a lista de espera, levando junto a
+// busca (UTMs) e a âncora. Roda no <head>, antes de qualquer pintura.
+// Página já aberta na virada: sai na hora, mas espera a janela de pré-checkout
+// fechar (o checkout abre em outra aba, então quem já clicou não perde nada).
+// O robô .github/workflows/encerrar-matriculas.yml grava o encerramento e apaga
+// este bloco. Os builds da lista de espera e do upgrade também o tiram.
+(function(){
+  try {
+    var FIM = Date.UTC(2026, 9, 31, 3, 0, 0); // 31/10 00:00 BRT = 03:00 UTC
+    var ir = function(){ location.replace('/lista-de-espera/' + location.search + location.hash); };
+    var agora = Date.now();
+    if (agora >= FIM) { ir(); return; }
+    var esperar = function(){
+      if (document.querySelector('dialog.pck[open]')) { setTimeout(esperar, 1000); return; }
+      ir();
+    };
+    setTimeout(esperar, Math.min(2147483647, FIM - agora + 500));
+  } catch (e) {}
+})();
+</script>
+<!-- /ENCERRAMENTO -->
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -231,6 +255,74 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 })();
 </script>
+<!-- ULTIMAS HORAS -->
+<style>
+  .sticky-bar-relogio{font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+  .sticky-bar-tempo{white-space:nowrap}
+  /* Últimas horas: vermelho escuro, sólido, com o relógio em destaque (mesmo visual do desconto de 18/10). */
+  .sticky-bar.urgente{background:linear-gradient(90deg,#7A1A12 0%,#A8281A 55%,#7A1A12 100%);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 4px 18px rgba(122,26,18,0.35)}
+  .sticky-bar.urgente .sticky-bar-inner{font-size:13.5px;padding:9px 20px}
+  .sticky-bar.urgente .sticky-bar-msg{color:#fff}
+  .sticky-bar.urgente .sticky-bar-msg strong{font-weight:800;letter-spacing:0.02em}
+  .sticky-bar.urgente .sticky-bar-dot{background:#fff;margin-top:0;align-self:center}
+  .sticky-bar.urgente .sticky-bar-sep{color:rgba(255,255,255,0.45)}
+  .sticky-bar.urgente .sticky-bar-relogio{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:6px;background:rgba(0,0,0,0.3);font-size:14.5px;font-weight:800}
+  .sticky-bar.urgente .sticky-bar-cta{background:#fff;color:#7A1A12;border-color:#fff;font-weight:800}
+  .sticky-bar.urgente .sticky-bar-cta:hover{background:#FCEBE8;color:#7A1A12;border-color:#FCEBE8}
+  body.bar-urgente .hero{padding-top:52px}
+  body.bar-urgente #preco{scroll-margin-top:60px}
+  @media (max-width:720px){
+    .sticky-bar-tempo{display:block}
+    .sticky-bar.urgente .sticky-bar-msg .sticky-bar-sep{display:none}
+    .sticky-bar.urgente .sticky-bar-inner{font-size:12.5px;padding:8px 14px}
+    .sticky-bar.urgente .sticky-bar-tempo{margin-top:3px}
+    .sticky-bar.urgente .sticky-bar-relogio{font-size:13.5px;margin-left:4px}
+    .sticky-bar.urgente .sticky-bar-cta{padding:8px 14px}
+    body.bar-urgente .hero{padding-top:68px}
+    body.bar-urgente #preco{scroll-margin-top:76px}
+  }
+</style>
+<script>
+// Sexta 30/10, o dia todo: a barra vira "Últimas horas", em vermelho, com um
+// relógio até 23h59. O botão continua o mesmo (leva ao bloco de compra). À 0h
+// de sábado o bloco ENCERRAMENTO, no <head>, leva a página para a lista de espera.
+// ?ultimas=on mostra antes da hora, para conferir. O robô do encerramento
+// (scripts/encerrar-matriculas.mjs) apaga este bloco depois.
+(function(){
+  try {
+    var INICIO = Date.UTC(2026, 9, 30, 3, 0, 0); // 30/10 00:00 BRT = 03:00 UTC
+    var FIM = Date.UTC(2026, 9, 31, 3, 0, 0); // 31/10 00:00 BRT = 03:00 UTC
+    var teste = /[?&]ultimas=on\b/.test(location.search);
+    var bar = document.getElementById('stickyBar');
+    var msg = bar && bar.querySelector('.sticky-bar-msg');
+    if (!msg) return;
+    var relogio = null;
+    var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
+    var ligar = function(){
+      msg.innerHTML = '<span class="sticky-bar-lg"><strong>Últimas horas:</strong> as matrículas encerram hoje, às 23h59</span>'
+        + '<span class="sticky-bar-sm"><strong>Últimas horas:</strong> só até hoje, 23h59</span>'
+        + '<span class="sticky-bar-sep">·</span><span class="sticky-bar-tempo">Encerra em <b class="sticky-bar-relogio">--:--:--</b></span>';
+      relogio = msg.querySelector('.sticky-bar-relogio');
+      bar.classList.add('urgente');
+      bar.hidden = false;
+      document.body.classList.add('bar-on');
+      document.body.classList.add('bar-urgente');
+    };
+    var tick = function(){
+      var agora = Date.now();
+      if (agora >= FIM) return false;
+      if (agora < INICIO && !teste) return true;
+      if (!relogio) ligar();
+      var s = Math.floor((FIM - agora) / 1000);
+      relogio.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
+      return true;
+    };
+    if (!tick()) return;
+    var iv = setInterval(function(){ try { if (!tick()) clearInterval(iv); } catch (e) { clearInterval(iv); } }, 1000);
+  } catch (e) {}
+})();
+</script>
+<!-- /ULTIMAS HORAS -->
 <!-- /STICKY URGENCY BAR -->
 
 <main>

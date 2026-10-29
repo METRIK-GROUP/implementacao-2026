@@ -114,6 +114,42 @@ volte o passo em `.github/workflows/build-variantes.yml`.
 A página de upgrade não participa: ela tem preço próprio (R$ 1.997) e
 `build-upgrade.mjs` tira a virada antes de montar as âncoras.
 
+## O encerramento das matrículas de 30/10 às 23h59
+
+Decisão do Rodrigo em 29/10/2026: as matrículas da Ed.8 vão até **sexta 30/10 às
+23h59 (Brasília)**.
+
+| Quando | O que a página faz |
+|---|---|
+| Sexta 30/10, o dia todo | A barra do topo fica vermelha: "Últimas horas: as matrículas encerram hoje, às 23h59", com relógio. O botão continua levando ao bloco de compra |
+| Sábado 31/10, 0h | Quem abrir a raiz vai para `/lista-de-espera/` (sem checkout, com o formulário), levando UTMs e âncora. Quem estiver com a página aberta sai sozinho na virada; se estiver preenchendo a janela de pré-checkout, sai quando ela fechar |
+
+As datas moram em `scripts/lib/encerramento.mjs`. Na página, são dois blocos
+marcados no `vendas.html`: `<!-- ENCERRAMENTO -->` (no `<head>`, faz o
+redirecionamento) e `<!-- ULTIMAS HORAS -->` (dentro da barra). Os builds da lista
+de espera e do upgrade tiram os dois: na lista o redirecionamento seria loop, e o
+upgrade não tem prazo.
+
+Como no preço cheio, a troca acontece em duas camadas: o script da página faz na
+hora exata, e o robô `.github/workflows/encerrar-matriculas.yml` (cron de 31/10 às
+03:00 UTC) grava de vez: roda `node scripts/encerrar-matriculas.mjs`, que troca o
+`index.html` pela página de redirecionamento (o mesmo modelo de 24/08) e apaga os
+dois blocos do `vendas.html`, regenera as variantes e se apaga. Antes da hora o
+script se recusa a rodar.
+
+Para ver antes da hora: `?ultimas=on` mostra a barra de Últimas horas.
+
+Se no sábado de manhã o `index.html` da main ainda tiver `<!-- ENCERRAMENTO -->`,
+o robô não rodou: Actions → "Encerrar matriculas" → Run workflow.
+
+O teste `node --test scripts/testar-encerramento.mjs` roda a cada push e sabe em
+que fase está: antes do robô, simula o relógio (quinta, sexta, 23h59:59, sábado,
+janela aberta) e o próprio robô numa cópia; depois, confere que a raiz ficou
+como redirecionamento.
+
+**Reabrir a próxima turma:** `cp vendas.html index.html` (depois de atualizar
+datas e textos) volta a página de vendas para a raiz.
+
 ## Conferir se os botões de compra estão de pé
 
 ```bash

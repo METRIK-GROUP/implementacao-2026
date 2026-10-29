@@ -34,6 +34,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createTransform, absolutizeAssets } from './lib/html-transform.mjs';
 import { semVirada, OFERTA_EVENTO, OFERTA_CHEIA } from './lib/oferta.mjs';
+import { semEncerramento } from './lib/encerramento.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = join(ROOT, 'vendas.html');
@@ -72,6 +73,18 @@ const t = createTransform(SOURCE);
 // Os valores moram em scripts/lib/oferta.mjs.
 // ---------------------------------------------------------------------------
 const OFERTA = semVirada(t);
+
+// ---------------------------------------------------------------------------
+// 0b. O encerramento das matrículas (30/10/2026) também é só da página de
+// vendas: o aluno pode fazer upgrade a qualquer momento, então nada de
+// "Últimas horas" nem de ir para a lista de espera. Some sozinho depois que o
+// robô do encerramento apaga os blocos do vendas.html.
+// ---------------------------------------------------------------------------
+{
+  const r = semEncerramento(t.html);
+  t.html = r.html;
+  t.applied.push(`encerramento das matrículas: fora (${r.encerramento ? 'removido' : 'ausente'})`);
+}
 
 // ---------------------------------------------------------------------------
 // 1. Caminhos absolutos: a página vive em /upgrade/, então img/ e video/
@@ -728,6 +741,7 @@ t.guard([
   // de baixo pontilhada. O card agora é `.pr-card-upgrade`; isto impede a volta.
   ['classe pr-upgrade (estilo de link do vendas.html, achata os botões)', /class="[^"]*\bpr-upgrade\b/],
   ['janela de pré-checkout (só da página de vendas)', /pre-checkout\.js/],
+  ['encerramento das matrículas (só da página de vendas)', /ENCERRAMENTO -->|ULTIMAS HORAS -->|location\.replace\('\/lista-de-espera\//],
 ]);
 
 function literal(s) {

@@ -1,0 +1,71 @@
+name: Encerrar matriculas
+
+# Encerramento das matrículas da Implementação Ed.8 (decisão do Rodrigo, 29/10/2026).
+#
+# Matrículas até sexta 30/10 às 23h59 (Brasília). À 0h de sábado 31/10 a raiz do
+# site deixa de ser a página de vendas e passa a levar para a lista de espera,
+# sem checkout.
+#
+# A troca na tela quem faz é o bloco ENCERRAMENTO da própria página, na hora
+# exata, no relógio de quem está olhando. Este robô grava o encerramento de vez
+# (scripts/encerrar-matriculas.mjs): a raiz vira página de redirecionamento, o
+# vendas.html perde os blocos do prazo e as variantes são regeneradas. Assim o
+# repositório, o Google e quem não roda JavaScript ficam certos também.
+#
+# O agendamento do GitHub atrasa (em 19/10 rodou 5h depois da hora). Não tem
+# problema: a página já saiu sozinha. Se no sábado de manhã o index.html da main
+# ainda tiver "<!-- ENCERRAMENTO -->", dispare à mão na aba Actions (Run
+# workflow). Antes da hora o script se recusa a rodar. Depois de rodar, o
+# próprio workflow se apaga.
+#
+# Só roda a partir da main: o pull request precisa estar mergeado antes de sexta
+# 23h59, senão o cron não encontra este arquivo.
+
+on:
+  schedule:
+    - cron: '0 3 31 10 *' # 31/10 03:00 UTC = 31/10 00:00 em Brasília (matrículas até 30/10 23h59)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-variantes
+  cancel-in-progress: false
+
+jobs:
+  encerrar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Encerrar (raiz vai para a lista de espera)
+        run: node scripts/encerrar-matriculas.mjs
+
+      - name: Regenerar as variantes
+        run: node scripts/build.mjs
+
+      - name: Conferir o resultado
+        run: |
+          grep -q "location.replace('/lista-de-espera/'" index.html || { echo "::error::index.html não leva para a lista de espera."; exit 1; }
+          if grep -q 'asaas\.com\|pay\.hotmart\.com\|pay\.tmb\.com\.br' index.html; then echo "::error::Ainda há checkout na raiz."; exit 1; fi
+          if grep -q 'ENCERRAMENTO -->\|ULTIMAS HORAS -->' vendas.html index.html lista-de-espera/index.html upgrade/index.html; then echo "::error::Ainda há bloco do encerramento no HTML."; exit 1; fi
+          grep -q 'id="wl-form"' lista-de-espera/index.html || { echo "::error::A lista de espera ficou sem o formulário."; exit 1; }
+          node --test scripts/testar-encerramento.mjs
+
+      - name: Remover este workflow (o encerramento é único)
+        run: git rm -q .github/workflows/encerrar-matriculas.yml
+
+      - name: Commit e push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: matrículas da Implementação Ed.8 encerradas (30/10 às 23h59); raiz vai para a lista de espera"
+          git push origin main
