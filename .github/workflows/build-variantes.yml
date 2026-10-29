@@ -44,6 +44,9 @@ jobs:
       - name: Testar a janela de pré-checkout
         run: node --test scripts/testar-pre-checkout.mjs
 
+      - name: Testar o encerramento das matrículas (30/10)
+        run: node --test scripts/testar-encerramento.mjs
+
       - name: Gerar variantes a partir de vendas.html
         run: node scripts/build.mjs
 
